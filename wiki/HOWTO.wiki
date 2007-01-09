@@ -34,13 +34,13 @@ The following are some of the key components of the repository:
 
 *NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available unde the Downloads tab of this project's Google Code page. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
 
-1. Install the Kernel Extension and Associated Components
+==1. Install the Kernel Extension and Associated Components==
 
 The core and the most critial component of MacFUSE is the kernel extension (fusefs.kext). The fusefs/ subdirectory in the repository contains the source for this kext. Moreover, it contains the sources for the mount_fusefs and load_fusefs command-line programs, as well as the fusefs.fs bundle. Here's what you do with these things:
 
 *NB* By default, all compilations are Universal.
 
-==Compile fusefs.kext==
+===Compile fusefs.kext===
 
 {{{
 $ xcodebuild -target fusefs -configuration Release
@@ -53,7 +53,7 @@ $ sudo cp -pR build/Release/fusefs.kext /System/Library/Extensions/
 $ sudo chown -R root:wheel /System/Library/Extensions/fusefs.kext
 }}}
 
-==Compile load_fusefs==
+===Compile load_fusefs===
 
 {{{
 $ xcodebuild -target load_fusefs -configuration Release
@@ -70,14 +70,14 @@ $ sudo chmod u+s \
     /System/Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 }}}
 
-==Copy the fusefs.fs bundle to its destination==
+===Copy the fusefs.fs bundle to its destination===
 
 {{{
 $ sudo cp -pR fusefs.fs /System/Library/Filesystems/
 $ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs
 }}}
 
-==Compile mount_fusefs==
+===Compile mount_fusefs===
 
 {{{
 $ xcodebuild -target mount_fusefs -configuration Release
@@ -98,7 +98,7 @@ $ sudo ln -s /System/Library/Filesystems/fusefs.fs/mount_fusefs \
     /usr/local/bin/mount_fusefs
 }}}
 
-2. Install pkg-config
+==2. Install pkg-config==
 
 pkg-config is an open source helper tool used when compiling applications and libraries. To download its source and learn more about it, go here:
 
@@ -118,7 +118,7 @@ $ sudo make install
 
 This installs pkg-config under the /usr/local/ hierarchy.
 
-3. Install the FUSE User-Space Library
+==3. Install the FUSE User-Space Library==
 
 You need the FUSE user-space library to develop your own FUSE-based file systems and also to run precompiled file systems that are dynamically linked with the library.
 
@@ -142,7 +142,7 @@ $ sudo make install
 
 This installs the FUSE user-space library and headers under the /usr/local/ hierarchy.
 
-4. Install glib
+==4. Install glib==
 
 Some FUSE-based file systems, such as sshfs, depend on glib, which is not available by default on Mac OS X. To compile glib without pain, you will also need the GNU gettext package installed.
 
@@ -195,7 +195,7 @@ fuse                  fuse - Filesystem in Userspace
 
 Now you should also be able to compile many generally available FUSE file systems. Let us look at sshfs.
 
-5. Install sshfs
+==5. Install sshfs==
 
 sshfs can be downloaded from:
 
@@ -222,13 +222,13 @@ As noted earlier, you can choose to install a precompiled binary distribution in
 
 Binary distributions are available under the Download tab of this project's Google Code page. The precompiled tarball fuse-<version>.tar.bz2 contains the following components: 
 
-* fusefs.kext and its subcomponents (load_fusefs)
-* fusefs.fs and its subcomponents (mount_fusefs)
-* FUSE user-space library and headers
-* pkg-config
-* glib
-* gettext
-* sshfs
+*  fusefs.kext and its subcomponents (load_fusefs)
+*  fusefs.fs and its subcomponents (mount_fusefs)
+*  FUSE user-space library and headers
+*  pkg-config
+*  glib
+*  gettext
+*  sshfs
 
 Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs, which goes under /System/Library/Filesystems/, everything else goes under /usr/local/. Note that the load_fusefs program within the kext bundle is installed setuid root.  
 
