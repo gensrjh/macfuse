@@ -42,7 +42,9 @@ The core and the most critial component of MacFUSE is the kernel extension (fuse
 
 * Compile fusefs.kext:
 
+{{{
 $ xcodebuild -target fusefs -configuration Release
+}}}
 
 This will build the kext as build/Release/fusefs.kext. The kext should go in /System/Library/Extensions/ and must have the appropriate permissions.
 
