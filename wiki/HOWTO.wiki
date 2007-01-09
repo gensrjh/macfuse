@@ -22,7 +22,7 @@ The following are some of the key components of the repository:
 
 {{{
     binaries/
-            |_ fuse-<version>.tar.bz2                              # Binary distributions
+            |_ fuse-<version>.tar.bz2                             # Binary distributions
     filesystems/
             |_ sshfs/
                    |_ sshfs-fuse-<version>-macosx.patch  # Mac OS X patches for sshfs
