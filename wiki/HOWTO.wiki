@@ -32,7 +32,7 @@ The following are some of the key components of the repository:
     util/                                                                        # Miscellaneous utilities and scripts
 }}}
 
-*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available in the binaries/ subdirectory. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
+*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available unde the Downloads tab of this project's Google Code page. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
 
 1. Install the Kernel Extension and Associated Components
 
@@ -47,6 +47,7 @@ $ xcodebuild -target fusefs -configuration Release
 This will build the kext as build/Release/fusefs.kext. The kext should go in /System/Library/Extensions/ and must have the appropriate permissions.
 
 $ sudo cp -pR build/Release/fusefs.kext /System/Library/Extensions/
+
 $ sudo chown -R root:wheel /System/Library/Extensions/fusefs.kext
 
 * Compile load_fusefs:
@@ -211,4 +212,3 @@ Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs
 You can simply unpack this tarball as root.
 
 $ sudo tar -C / -jxvf fuse-0.1.0b004.tar.bz2
-
