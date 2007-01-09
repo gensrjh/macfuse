@@ -222,13 +222,13 @@ As noted earlier, you can choose to install a precompiled binary distribution in
 
 Binary distributions are available under the Download tab of this project's Google Code page. The precompiled tarball fuse-<version>.tar.bz2 contains the following components: 
 
-* fusefs.kext and its subcomponents (load_fusefs)
-* fusefs.fs and its subcomponents (mount_fusefs)
-* FUSE user-space library and headers
-* pkg-config
-* glib
-* gettext
-* sshfs
+- fusefs.kext and its subcomponents (load_fusefs)
+- fusefs.fs and its subcomponents (mount_fusefs)
+- FUSE user-space library and headers
+- pkg-config
+- glib
+= gettext
+= sshfs
 
 Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs, which goes under /System/Library/Filesystems/, everything else goes under /usr/local/. Note that the load_fusefs program within the kext bundle is installed setuid root.  
 
