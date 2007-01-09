@@ -90,7 +90,7 @@ To compile and install pkg-config as a set of Universal binaries, do the followi
 
 $ tar -xzvf pkg-config-<version>.gz
 $ cd pkg-config-<version>/
-$ CFLAGS="-O -g -arch i386 -arch ppc" \
+$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
     LDFLAGS="-arch i386 -arch ppc" \
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
