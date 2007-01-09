@@ -48,13 +48,16 @@ $ xcodebuild -target fusefs -configuration Release
 
 This will build the kext as build/Release/fusefs.kext. The kext should go in /System/Library/Extensions/ and must have the appropriate permissions.
 
+{{{
 $ sudo cp -pR build/Release/fusefs.kext /System/Library/Extensions/
-
 $ sudo chown -R root:wheel /System/Library/Extensions/fusefs.kext
+}}}
 
 * Compile load_fusefs:
 
+{{{
 $ xcodebuild -target load_fusefs -configuration Release
+}}}
 
 load_fusefs is a small helper program that the FUSE library calls to load fusefs.kext if the latter isn't already loaded. Note that load_fusefs needs to be installed setuid root. It is installed as a resource within the fusefs.kext bundle.
 
@@ -69,23 +72,31 @@ $ sudo chmod u+s \
 
 * Copy the fusefs.fs bundle to its destination:
 
+{{{
 $ sudo cp -pR fusefs.fs /System/Library/Filesystems/
 $ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs
+}}}
 
 * Compile mount_fusefs:
 
+{{{
 $ xcodebuild -target mount_fusefs -configuration Release
+}}}
 
 mount_fusefs is called by the FUSE library to perform the mount() system call. It is installed within the fusefs.fs bundle (setuid NOT required).
 
+{{{
 $ sudo cp build/Release/mount_fusefs \
     /System/Library/Filesystems/fusefs.fs/
 $ sudo chown root:wheel /System/Library/Filesystems/fusefs.fs/mount_fusefs
+}}}
 
 There must be a symbolic link to mount_fusefs in /usr/lcoal/bin/.
 
+{{{
 $ sudo ln -s /System/Library/Filesystems/fusefs.fs/mount_fusefs \
     /usr/local/bin/mount_fusefs
+}}}
 
 2. Install pkg-config
 
@@ -117,6 +128,7 @@ http://fuse.sourceforge.net
 
 Suppose you downloaded fuse-2.6.1.tar.gz. You'll need to patch this source using an appropriate patch file available in the libfuse/ subdirectory in the MacFUSE subversion repository.
 
+{{{
 $ tar -xzvf fuse-2.6.1.tar.gz
 $ cd fuse-2.6.1
 $ patch -p1 < /path/to/fuse-2.6.1-macosx.patch
@@ -126,6 +138,7 @@ $ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc" \
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
+}}}
 
 This installs the FUSE user-space library and headers under the /usr/local/ hierarchy.
 
@@ -139,6 +152,7 @@ ftp://ftp.gnu.org/pub/gnu/gettext/
 
 You can compile gettext (Universally) as follows:
 
+{{{
 $ tar -xzvf gettext-0.16.1.tar.gz
 $ cd gettext-0.16.1
 $ CFLAGS="-O -g -arch i386 -arch ppc" \
@@ -146,6 +160,7 @@ $ CFLAGS="-O -g -arch i386 -arch ppc" \
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
+}}}
 
 You can download glib from:
 
@@ -153,6 +168,7 @@ ftp://ftp.gtk.org/pub/glib/
 
 You can compile glib (Universally) as follows:
 
+{{{
 $ tar -xzvf glib-2.12.7.tar.gz
 $ cd glib-2.12.7
 $ cd gettext-0.16.1
@@ -161,9 +177,11 @@ $ CFLAGS="-O -g -arch i386 -arch ppc" \
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
+}}}
 
 At this point, you should be able to do the following:
 
+{{{
 $ pkg-config --list-all
 ...
 gmodule-export-2.0    GModule - Dynamic module loader for GLib
@@ -173,6 +191,7 @@ gobject-2.0           GObject - GLib Type, Object, Parameter and Signal Library
 gthread-2.0           GThread - Thread support for GLib
 gmodule-no-export-2.0 GModule - Dynamic module loader for GLib
 fuse                  fuse - Filesystem in Userspace
+}}}
 
 Now you should also be able to compile many generally available FUSE file systems. Let us look at sshfs.
 
@@ -184,6 +203,7 @@ http://fuse.sourceforge.net/sshfs.html
 
 Suppose you downloaded sshfs-fuse-1.7.tar.gz. You'll need to patch this source using an appropriate patch file available in the filesystems/sshfs/ subdirectory in the MacFUSE subversion repository.
    
+{{{
 $ tar -xzvf sshfs-fuse-1.7.tar.gz
 $ cd sshfs-fuse-1.7
 $ patch -p1 < /path/to/sshfs-fuse-1.7-macosx.patch
@@ -192,6 +212,7 @@ $ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc" \
     LDFLAGS="-arch i386 -arch ppc" \
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ sudo make install
+}}}
 
 This will install the sshfs command-line program under /usr/local/bin/.
 
@@ -199,7 +220,7 @@ This will install the sshfs command-line program under /usr/local/bin/.
 
 As noted earlier, you can choose to install a precompiled binary distribution instead of downloading and compiling all components yourself, even though compiling yourself is the preferred way, especially if you have more than a passing interest in MacFUSE.  
 
-Binary distributions are available in the binaries/ subdirectory within the MacFUSE subversion repository. The precompiled tarball contains the following components: 
+Binary distributions are available under the Download tab of this project's Google Code page. The precompiled tarball fuse-<version>.tar.bz2 contains the following components: 
 
 * fusefs.kext and its subcomponents (load_fusefs)
 * fusefs.fs and its subcomponents (mount_fusefs)
