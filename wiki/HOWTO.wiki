@@ -40,7 +40,7 @@ The core and the most critial component of MacFUSE is the kernel extension (fuse
 
 *NB* By default, all compilations are Universal.
 
-* Compile fusefs.kext:
+==Compile fusefs.kext==
 
 {{{
 $ xcodebuild -target fusefs -configuration Release
@@ -53,7 +53,7 @@ $ sudo cp -pR build/Release/fusefs.kext /System/Library/Extensions/
 $ sudo chown -R root:wheel /System/Library/Extensions/fusefs.kext
 }}}
 
-* Compile load_fusefs:
+==Compile load_fusefs==
 
 {{{
 $ xcodebuild -target load_fusefs -configuration Release
@@ -70,14 +70,14 @@ $ sudo chmod u+s \
     /System/Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 }}}
 
-* Copy the fusefs.fs bundle to its destination:
+==Copy the fusefs.fs bundle to its destination==
 
 {{{
 $ sudo cp -pR fusefs.fs /System/Library/Filesystems/
 $ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs
 }}}
 
-* Compile mount_fusefs:
+==Compile mount_fusefs==
 
 {{{
 $ xcodebuild -target mount_fusefs -configuration Release
@@ -216,19 +216,19 @@ $ sudo make install
 
 This will install the sshfs command-line program under /usr/local/bin/.
 
-* Binary Distribution
+=Binary Distribution=
 
 As noted earlier, you can choose to install a precompiled binary distribution instead of downloading and compiling all components yourself, even though compiling yourself is the preferred way, especially if you have more than a passing interest in MacFUSE.  
 
 Binary distributions are available under the Download tab of this project's Google Code page. The precompiled tarball fuse-<version>.tar.bz2 contains the following components: 
 
-- fusefs.kext and its subcomponents (load_fusefs)
-- fusefs.fs and its subcomponents (mount_fusefs)
-- FUSE user-space library and headers
-- pkg-config
-- glib
-= gettext
-= sshfs
+* fusefs.kext and its subcomponents (load_fusefs)
+* fusefs.fs and its subcomponents (mount_fusefs)
+* FUSE user-space library and headers
+* pkg-config
+* glib
+* gettext
+* sshfs
 
 Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs, which goes under /System/Library/Filesystems/, everything else goes under /usr/local/. Note that the load_fusefs program within the kext bundle is installed setuid root.  
 
