@@ -12,14 +12,15 @@ http://code.google.com/p/macfuse/
 
 You can anonymously check out the latest project source code as follows:
 
-svn checkout http://macfuse.googlecode.com/svn/trunk/ macfuse
+`svn checkout http://macfuse.googlecode.com/svn/trunk/ macfuse`
 
 If you have developer access to the repository, you can do the following:
 
-svn checkout https://macfuse.googlecode.com/svn/trunk macfuse --username <user>
+`svn checkout https://macfuse.googlecode.com/svn/trunk macfuse --username <user>`
 
 The following are some of the key components of the repository:
 
+{{{
     binaries/
             |_ fuse-<version>.tar.bz2                              # Binary distributions
     filesystems/
@@ -29,6 +30,7 @@ The following are some of the key components of the repository:
     libfuse/
             |_ fuse-<version>-macosx.patch                   # Mac OS X patches for libfuse
     util/                                                                        # Miscellaneous utilities and scripts
+}}}
 
 *NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available in the binaries/ subdirectory. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
 
@@ -53,12 +55,14 @@ $ xcodebuild -target load_fusefs -configuration Release
 
 load_fusefs is a small helper program that the FUSE library calls to load fusefs.kext if the latter isn't already loaded. Note that load_fusefs needs to be installed setuid root. It is installed as a resource within the fusefs.kext bundle.
 
+{{{
 $ sudo cp build/Release/load_fusefs \
     /System/Library/Extensions/fusefs.kext/Contents/Resources/
 $ sudo chown root:wheel \
     /System/Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 $ sudo chmod u+s \
     /System/Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
+}}}
 
 * Copy the fusefs.fs bundle to its destination:
 
@@ -88,6 +92,7 @@ http://pkgconfig.freedesktop.org/wiki/
 
 To compile and install pkg-config as a set of Universal binaries, do the following:
 
+{{{
 $ tar -xzvf pkg-config-<version>.gz
 $ cd pkg-config-<version>/
 $ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
@@ -95,6 +100,7 @@ $ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" 
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
+}}}
 
 This installs pkg-config under the /usr/local/ hierarchy.
 
@@ -205,3 +211,4 @@ Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs
 You can simply unpack this tarball as root.
 
 $ sudo tar -C / -jxvf fuse-0.1.0b004.tar.bz2
+
