@@ -32,11 +32,11 @@ The following are some of the key components of the repository:
     util/                                                                        # Miscellaneous utilities and scripts
 }}}
 
-*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available unde the Downloads tab of this project's Google Code page. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
+*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available under the Downloads tab of this project's Google Code page. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
 
 ==1. Install the Kernel Extension and Associated Components==
 
-The core and the most critial component of MacFUSE is the kernel extension (fusefs.kext). The fusefs/ subdirectory in the repository contains the source for this kext. Moreover, it contains the sources for the mount_fusefs and load_fusefs command-line programs, as well as the fusefs.fs bundle. Here's what you do with these things:
+The core and the most critical component of MacFUSE is the kernel extension (fusefs.kext). The fusefs/ subdirectory in the repository contains the source for this kext. Moreover, it contains the sources for the mount_fusefs and load_fusefs command-line programs, as well as the fusefs.fs bundle. Here's what you do with these things:
 
 *NB* By default, all compilations are Universal.
 
@@ -172,9 +172,15 @@ You can compile glib (Universally) as follows:
 {{{
 $ tar -xzvf glib-2.12.7.tar.gz
 $ cd glib-2.12.7
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-    LDFLAGS="-arch i386 -arch ppc" \
-      ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include"
+     LDFLAGS="-arch i386 -arch ppc -L/usr/local/lib"
+       ./configure --prefix=/usr/local --disable-dependency-tracking
+}}}
+
+If you are on a *PowerPC* Mac, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
+
+Continuing on any Mac:
+{{{
 $ make
 $ sudo make install
 }}}
