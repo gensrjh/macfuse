@@ -133,7 +133,7 @@ $ tar -xzvf fuse-2.6.1.tar.gz
 $ cd fuse-2.6.1
 $ patch -p1 < /path/to/fuse-2.6.1-macosx.patch
 ...
-$ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc" \
+$ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
     LDFLAGS="-arch i386 -arch ppc" \
       ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
