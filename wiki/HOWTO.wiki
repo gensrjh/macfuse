@@ -156,8 +156,9 @@ You can compile gettext (Universally) as follows:
 $ tar -xzvf gettext-0.16.1.tar.gz
 $ cd gettext-0.16.1
 $ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-    LDFLAGS="-arch i386 -arch ppc" \
-      ./configure --prefix=/usr/local --disable-dependency-tracking
+    LDFLAGS="-arch i386 -arch ppc -fno-common" \
+      ./configure --prefix=/usr/local --disable-dependency-tracking \
+        --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
 $ make
 $ sudo make install
 }}}
