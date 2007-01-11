@@ -1,0 +1,28 @@
+#summary Existing FUSE File Systems Tested With MacFUSE
+
+= Existing FUSE File Systems Tested With MacFUSE =
+
+This is a list of *existing* FUSE file systems that have been compiled and tested to work with MacFUSE on Mac OS X. Take the term "testing" loosely here, though. It typically means "seems to work fine."
+
+
+= Details =
+
+BeagleFS
+
+BindFS
+
+CryptoFS
+
+EncFS
+
+NTFS-3g
+
+FTPFS
+
+SSHFS
+
+UnionFS
+
+WebDAVFS
+
+
