@@ -251,3 +251,9 @@ $ sudo tar -C / -jxvf fuse-0.1.0b004.tar.bz2
 }}}
 
 Please note that we are only making this binary distribution available as a one-time thing for convenience to the early (earliest) adopters who can't even wait to compile MacFUSE and things like glib, which some existing FUSE file systems need. We *do not* intend to maintain binary distributions on this project page.
+
+= Compiling FUSE File Systems =
+
+Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
+
+When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
