@@ -1,0 +1,24 @@
+#summary Using MacFUSE in a Pinch.
+
+= Quick(er) Start Guide =
+
+Using a FUSE file system.
+
+
+= Details =
+
+This assumes you have the MacFUSE runtime environment installed: either through the binary tarball or through compilation from scratch. For details on setting up MacFUSE, see the HOWTO page.
+
+{{{
+# Mounting the SSH file system
+$ mkdir /some/mount/point # or use one that already exists
+$ sshfs user@host:/some/directory /some/mount/point -oping_diskarb,volname=<volname>
+}}}
+
+<volname> should be a string you wish to use as the name of the newly mounted volume. If everything went fine, you should see the volume on your Desktop and in the Finder (unless you have disabled remote volumes from showing up in these places).
+
+Once you are done using sshfs, you can unmount the volume either using the eject icon in the Finder or other common user-interface means of ejecting. Alternatively, you can do the following from the command line:
+
+{{{
+$ umount /some/mount/point
+}}}
