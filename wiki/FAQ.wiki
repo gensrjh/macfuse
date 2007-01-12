@@ -1,4 +1,5 @@
 #summary Frequently asked questions (and answers)
+#labels Featured
 
 = fusermount =
 
@@ -6,4 +7,16 @@ Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anyw
 
 A: `umount`.
 
+= failed to exec mount program =
 
+Q: When trying to use a fuse-based filesystem, I get:
+
+{{{
+fuse: failed to exec mount program: No such file or directory
+}}}
+
+A: The fuse library calls out to `mount_fusefs` to do the mount. By default, it's located in `/usr/local/bin`. So check:
+
+  # Is `/usr/local/bin` in your `PATH`?
+  # Is `mount_fusefs` there? It should be a symlink to `/System/Library/Filesystems/fusefs.fs/mount_fusefs`.
+  # The target of the symlink should exist.
