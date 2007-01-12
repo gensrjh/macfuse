@@ -251,6 +251,14 @@ $ sudo tar -C / -jxvpf fuse-binaries-0.1.0b006.tar.bz2
 
 Please note that we are only making this binary distribution available as a one-time thing for convenience to the early (earliest) adopters who can't even wait to compile MacFUSE and things like glib, which some existing FUSE file systems need. We *do not* intend to maintain binary distributions on this project page.
 
+*NB* If you overwrite one binary package with another (typically when installing a newer version), and you run into strange kernel extension loading issues, try the following:
+
+{{{
+$ sudo touch /System/Library/Extensions
+
+/* Now reboot. */
+}}}
+
 = Compiling FUSE File Systems =
 
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
