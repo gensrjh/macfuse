@@ -44,3 +44,14 @@ A: The fuse library calls out to `mount_fusefs` to do the mount. By default, it'
 Q: All my filesystems are showing up in the Finder as "FUSE Volume n" for some number n. What should I do?
 
 A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_diskarb`.
+
+= Problems with an Updated Kernel Extension =
+
+Q: I upgraded to a newer version of the binary tarball and now I am having issues with loading fusefs.kext (I keep getting errors about fusefs being not available).
+
+A: Try doing the following:
+
+{{{
+$ sudo touch /System/Library/Extensions
+/* Now reboot. */
+}}}
