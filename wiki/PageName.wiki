@@ -1,4 +1,5 @@
 #summary Using MacFUSE in a Pinch.
+#labels Deprecated
 
 = Quick(er) Start Guide =
 
