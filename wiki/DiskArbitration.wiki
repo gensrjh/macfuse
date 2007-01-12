@@ -2,16 +2,23 @@
 
 = Introduction =
 
-FUSE lives down deep at the Darwin kernel level, but needs to interact with the Core File Manager. It does so by talking to a framework called Disk Arbitration. It works well most of the time, but there are still issues with the current build.
+MacFUSE lives down deep at the Darwin kernel level, but needs to interact with the Core File Manager. It does so by talking to a framework called Disk Arbitration. It works well most of the time, but there are still issues with the current build.
 
 = Details =
 
 == A Paranoid KEXT ==
 
-FUSE lives a very tricky life and has to be accordingly paranoid. While it lives in the kernel, it implements a filesystem described by a process in userland. This requires from FUSE a decent level of paranoia. What if the userland daemon isn't ready yet? What if it's crashed?
+MacFUSE lives a very tricky life and has to be accordingly paranoid. While it lives in the kernel, it implements a filesystem described by a process in userland (the "filesystem daemon"). This requires from MacFUSE a decent level of paranoia. What if the filesystem daemon isn't ready yet? What if it's crashed?
+
+Most of the time, when the kernel asks MacFUSE for information about the file system, MacFUSE can just turn around and pass the request up to the filesystem daemon. However, there are two cases when it cannot.
+
+The first is during initialization. The initialization request from MacFUSE to the filesystem daemon is asynchronous, and while a reply is pending a stat request may come in. Since MacFUSE isn't sure if the filesystem daemon is ready, it will return a zero-ed out buffer.
+
+The second case is when the filesystem daemon has crashed. The user will likely want to umount the mount, but MacFUSE will need to reply to one last stat. In that case, too, MacFUSE will also return a zero-ed out buffer.
 
 == The File Manager and Disk Arbitration ==
 
+Now let's look at the difference between the classic MacOS view of the world and the Unix view of the world.
 
 == The Solution ==
 
