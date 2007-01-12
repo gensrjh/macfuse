@@ -22,8 +22,6 @@ If you have developer access to the repository, you can do the following:
 The following are some of the key components of the repository:
 
 {{{
-    binaries/
-            |_ fuse-<version>.tar.bz2                             # Binary distributions
     filesystems/
             |_ sshfs/
                    |_ sshfs-fuse-<version>-macosx.patch  # Mac OS X patches for sshfs
@@ -227,7 +225,7 @@ This will install the sshfs command-line program under /usr/local/bin/.
 
 As noted earlier, you can choose to install a precompiled binary distribution instead of downloading and compiling all components yourself, even though compiling yourself is the preferred way, especially if you have more than a passing interest in MacFUSE.  
 
-Initially, a binary distribution is being made available under the Download tab of this project's Google Code page. The precompiled tarball fuse-<version>.tar.bz2 contains the following components: 
+Initially, a binary distribution is being made available under the Download tab of this project's Google Code page. The precompiled tarball fuse-binaries-<version>.tar.bz2 contains the following components: 
 
 fusefs.kext and its subcomponents (load_fusefs)
 
