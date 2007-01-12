@@ -1,0 +1,9 @@
+#summary Frequently asked questions (and answers)
+
+= fusermount =
+
+Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anywhere.
+
+A: `umount`.
+
+
