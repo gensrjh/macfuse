@@ -1,0 +1,9 @@
+#summary What is Disk Arbitration, and why you should care
+
+= Introduction =
+
+FUSE lives down deep at the Darwin kernel level, but needs to interact with the Core File Manager. It does so by talking to a framework called Disk Arbitration. It works well most of the time, but there are still issues with the current build.
+
+= Details =
+
+...being written...
