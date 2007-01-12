@@ -1,5 +1,5 @@
 #summary Setting up MacFUSE on your Mac OS X system.
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 = Introduction =
 
