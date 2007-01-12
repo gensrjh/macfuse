@@ -248,7 +248,7 @@ Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs
 You can simply unpack this tarball as root.
 
 {{{
-$ sudo tar -C / -jxvf fuse-0.1.0b004.tar.bz2
+$ sudo tar -C / -jxvpf fuse-0.1.0b004.tar.bz2
 }}}
 
 Please note that we are only making this binary distribution available as a one-time thing for convenience to the early (earliest) adopters who can't even wait to compile MacFUSE and things like glib, which some existing FUSE file systems need. We *do not* intend to maintain binary distributions on this project page.
