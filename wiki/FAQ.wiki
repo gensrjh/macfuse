@@ -1,6 +1,12 @@
 #summary Frequently asked questions (and answers)
 #labels Featured
 
+= Ejecting in the Finder =
+
+Q: I can't eject a MacFUSE volume using the eject icon in the Finder.
+
+A: Please read http://code.google.com/p/macfuse/wiki/MACFUSE_AND_THE_FINDER
+
 = fusermount =
 
 Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anywhere.
