@@ -1,6 +1,18 @@
 #summary Frequently asked questions (and answers)
 #labels Featured
 
+= Compiling a FUSE File System =
+
+Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?
+
+A: Besides any other file-system-specific compile- or configure-time options, you need to have `-D__FreeBSD__=10` in your `CFLAGS`. Try something like:
+
+{{{
+$ CFLAGS="-D__FreeBSD__=10" ./configure --prefix=/usr/local
+}}}
+
+You may also need `-D_FILE_OFFSET_BITS=64` in `CFLAGS` unless it's already there.
+
 = Ejecting in the Finder =
 
 Q: I can't eject a MacFUSE volume using the eject icon in the Finder.
