@@ -42,6 +42,7 @@ The core and the most critical component of MacFUSE is the kernel extension (fus
 ===Compile fusefs.kext===
 
 {{{
+$ cd fusefs # Go to the kernel extension source directory
 $ xcodebuild -target fusefs -configuration Release
 }}}
 
