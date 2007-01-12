@@ -41,10 +41,9 @@ But suppose the filesystem daemon isn't ready. If the `stat` request comes in _b
 
 == What Is To Be Done? ==
 
-The solution is, of course, to ensure that when `-oping_diskarb` is used, that the filesystem daemon is fully initialized before Disk Arbitration is notified of the new disk. Yes, we're working on this, and we hope to get it in soon.
+The solution is, of course, to ensure that when `-oping_diskarb` is used, that the filesystem daemon is fully initialized before Disk Arbitration is notified of the new disk. This might depend on the filesystem in question, but we have some ideas on how a generic solution could be implemented that works in practice almost always. If we get around to implementing that solution, we will, of course, release the source.
 
 But until then, we wanted to do a quick writeup to fill you guys in on what's going on behind the scenes.
-
 
 
 
