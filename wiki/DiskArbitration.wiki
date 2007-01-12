@@ -6,4 +6,16 @@ FUSE lives down deep at the Darwin kernel level, but needs to interact with the 
 
 = Details =
 
-...being written...
+== A Paranoid KEXT ==
+
+FUSE lives a very tricky life and has to be accordingly paranoid. While it lives in the kernel, it implements a filesystem described by a process in userland. This requires from FUSE a decent level of paranoia. What if the userland daemon isn't ready yet? What if it's crashed?
+
+== The File Manager and Disk Arbitration ==
+
+
+== The Solution ==
+
+== The Race Condition ==
+
+
+.. being written; please be patient ..
