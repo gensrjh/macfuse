@@ -31,7 +31,7 @@ The following are some of the key components of the repository:
     util/                                                                        # Miscellaneous utilities and scripts
 }}}
 
-*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled binary distribution available under the Downloads tab of this project's Google Code page. Go to "Binary Distribution" in this document to see details of what's contained in the distribution and how to unpack it.  
+*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled version available under the Downloads tab of this project's Google Code page. Go to "Precompiled Binaries" in this document to see details of what's contained in the distribution and how to unpack it.  
 
 ==1. Install the Kernel Extension and Associated Components==
 
@@ -222,11 +222,29 @@ $ sudo make install
 
 This will install the sshfs command-line program under /usr/local/bin/.
 
-=Binary Distribution=
+= Compiling FUSE File Systems =
 
-As noted earlier, you can choose to install a precompiled binary distribution instead of downloading and compiling all components yourself, even though compiling yourself is the preferred way, especially if you have more than a passing interest in MacFUSE.  
+Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
-Initially, a binary distribution is being made available under the Download tab of this project's Google Code page. The precompiled tarball fuse-binaries-<version>.tar.bz2 contains the following components: 
+When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical! Oh,  and since so many people seem to want NTFS-3g (http://www.ntfs-3g.org/), *yes*, NTFS-3g does work.
+
+= Precompiled Binaries =
+
+As noted earlier, you can choose to install a precompiled binary distribution instead of downloading and compiling all components yourself, even though compiling yourself is the preferred way, especially if you have more than a passing interest in MacFUSE.
+
+== Mac OS X Installer Disk Image (Unsupported) ==
+
+A Mac OS X Installer Disk Image (dmg) is available under the Download tab of this project's Google Code page. The dmg contains a meta package consisting of three subpackages:
+
+1. Core (the VFS kernel extension and related software, the FUSE user-space library, and headers)
+
+2. Support (pkg-config, glib, and gettext; these are needed by several FUSE file systems)
+
+3. sshfs
+
+== Binaries Tarball (Unsupported) ==
+
+Initially, a binary distribution was made available under the Download tab of this project's Google Code page. The tarball version will be phased out once we're sure that the Mac OS X Installer package works well. The precompiled tarball fuse-binaries-<version>.tar.bz2 contains the following components: 
 
 fusefs.kext and its subcomponents (load_fusefs)
 
@@ -259,9 +277,3 @@ $ sudo touch /System/Library/Extensions
 
 /* Now reboot. */
 }}}
-
-= Compiling FUSE File Systems =
-
-Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
-
-When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical! Oh,  and since so many people seem to want NTFS-3g (http://www.ntfs-3g.org/), *yes*, NTFS-3g does work.
