@@ -242,6 +242,8 @@ A Mac OS X Installer Disk Image (dmg) is available under the Download tab of thi
 
 3. sshfs
 
+*Even if you install MacFUSE using this Installer package, you must have `/usr/local/bin/` in your `PATH`. In a future build, this will be taken care of by the library.
+
 == Binaries Tarball (Unsupported) ==
 
 Initially, a binary distribution was made available under the Download tab of this project's Google Code page. The tarball version will be phased out once we're sure that the Mac OS X Installer package works well. The precompiled tarball fuse-binaries-<version>.tar.bz2 contains the following components: 
