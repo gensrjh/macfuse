@@ -1,0 +1,8 @@
+#summary Random Thoughts on MacFUSE from the Developers
+
+= Introduction =
+
+This page contains random anecdotes, musings, tidbits, tips, tricks, trivia, and other miscellaneous information about MacFUSE. If we think of something that might be useful or interesting to MacFUSE users, and we are too lazy to find an appropriate document or wiki article to house that information, we'll just put it here.
+
+
+= Details =
