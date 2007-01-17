@@ -14,4 +14,4 @@ That said, it 's sort of possible too.
 
 Theoretically speaking, one could reverse engineer the plugin interface. Too much work.
 
-Even simpler, one could just copy, say, `nfs.URLMounter`, to `ssh.URLMounter`. Edit whatever needs to be edited in the plist and the binary. Reboot/relogin etc. The code will call out to mount_ssh, and one could take it from there. Of course, there are things like UUIDs that you need to take care of. Hardly pretty (you wouldn't want to ship a product this way), but works for a demo.
+Even simpler, one could just copy, say, `nfs.URLMounter`, to `ssh.URLMounter`. Edit whatever needs to be edited in the plist and the binary. Reboot/relogin etc. The code will call out to `mount_ssh`, and one could take it from there. Of course, there are things like UUIDs that you need to take care of. Hardly pretty (you wouldn't want to ship a product this way), but works for a demo.
