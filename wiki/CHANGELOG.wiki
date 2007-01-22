@@ -12,7 +12,7 @@
 
   * Fixed a problem with 64-bit file offsets that was causing issues with files greater than 4GB.
 
-  * `mount_fusefs` will no longer automatically append a `"@%d"` (%d being the MacFUSE device number) to the fsname. This is for the benefit of those running ntfs-3g with disk utility.
+  * `mount_fusefs` will no longer automatically append a `"@%d"` (`%d` being the MacFUSE device number) to the fsname. This is for the benefit of those running ntfs-3g with disk utility.
 
   * Improved support for the `ping_diskarb` mount option (See issue #10). The `mount_fusefs` program with the `ping_diskarb` option now waits for the file system to initialize before notifying Disk Arbitration that the mount occurred. Currently it will wait for up to 6 seconds at most and then cancel the "ping" if the file system does not initialize within that time.
 
