@@ -1,0 +1,3 @@
+#summary The Spotlight File System for MacFUSE
+
+= The Spotlight File System for MacFUSE =
