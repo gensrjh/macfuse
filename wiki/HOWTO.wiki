@@ -5,6 +5,8 @@
 
 This document briefly describes the steps you need to take to get a MacFUSE development environment set up starting from scratch (that is, compiling everything yourself).
 
+*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled version available under the Downloads tab of this project's Google Code page (http://code.google.com/p/macfuse/downloads/list). Please read the QUICKER_START_GUIDE document to get started with MacFUSE the fastest way.
+
 = Details =
 
 The MacFUSE subversion repository is located at:
@@ -29,9 +31,7 @@ The following are some of the key components of the repository:
     libfuse/
             |_ fuse-<version>-macosx.patch                   # Mac OS X patches for libfuse
     util/                                                                        # Miscellaneous utilities and scripts
-}}}
-
-*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled version available under the Downloads tab of this project's Google Code page. Go to "Precompiled Binaries" in this document to see details of what's contained in the distribution and how to unpack it.  
+}}}  
 
 ==1. Install the Kernel Extension and Associated Components==
 
@@ -100,7 +100,7 @@ $ sudo ln -s /System/Library/Filesystems/fusefs.fs/mount_fusefs \
 
 ==2. Install pkg-config==
 
-pkg-config is an open source helper tool used when compiling applications and libraries. To download its source and learn more about it, go here:
+pkg-config is an open source helper tool used when compiling applications and libraries. You don't *need* pkg-config to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having pkg-config will be helpful in many cases. To download its source and learn more about it, go here:
 
 http://pkgconfig.freedesktop.org/wiki/
 
@@ -144,7 +144,7 @@ This installs the FUSE user-space library and headers under the /usr/local/ hier
 
 ==4. Install glib==
 
-Some FUSE-based file systems, such as sshfs, depend on glib, which is not available by default on Mac OS X. To compile glib without pain, you will also need the GNU gettext package installed.
+Some FUSE-based file systems depend on glib, which is not available by default on Mac OS X.  You don't *need* glib to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having glib will be required in some cases.To compile glib without pain, you will also need the GNU gettext package installed.
 
 You can download gettext from:
 
@@ -227,55 +227,3 @@ This will install the sshfs command-line program under /usr/local/bin/.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical! Oh,  and since so many people seem to want NTFS-3g (http://www.ntfs-3g.org/), *yes*, NTFS-3g does work.
-
-= Precompiled Binaries =
-
-As noted earlier, you can choose to install a precompiled binary distribution instead of downloading and compiling all components yourself, even though compiling yourself is the preferred way, especially if you have more than a passing interest in MacFUSE.
-
-== Mac OS X Installer Disk Image (Unsupported) ==
-
-A Mac OS X Installer Disk Image (dmg) is available under the Download tab of this project's Google Code page. The dmg contains a meta package consisting of three subpackages:
-
-1. Core (the VFS kernel extension and related software, the FUSE user-space library, and headers)
-
-2. Support (pkg-config, glib, and gettext; these are needed by several FUSE file systems)
-
-3. sshfs
-
-*Even if you install MacFUSE using this Installer package, you must have `/usr/local/bin/` in your `PATH`. In a future build, this will be taken care of by the library.
-
-== Binaries Tarball (Unsupported) ==
-
-Initially, a binary distribution was made available under the Download tab of this project's Google Code page. The tarball version will be phased out once we're sure that the Mac OS X Installer package works well. The precompiled tarball fuse-binaries-<version>.tar.bz2 contains the following components: 
-
-fusefs.kext and its subcomponents (load_fusefs)
-
-fusefs.fs and its subcomponents (mount_fusefs)
-
-FUSE user-space library and headers
-
-pkg-config
-
-glib
-
-gettext
-
-sshfs
-
-Other than the kext, which goes under /System/Library/Extensions/, and fusefs.fs, which goes under /System/Library/Filesystems/, everything else goes under /usr/local/. Note that the load_fusefs program within the kext bundle is installed setuid root.  
-
-You can simply unpack this tarball as root.
-
-{{{
-$ sudo tar -C / -jxvpf fuse-binaries-0.1.0b006.tar.bz2
-}}}
-
-Please note that we are only making this binary distribution available as a one-time thing for convenience to the early (earliest) adopters who can't even wait to compile MacFUSE and things like glib, which some existing FUSE file systems need. We *do not* intend to maintain binary distributions on this project page.
-
-*NB* If you overwrite one binary package with another (typically when installing a newer version), and you run into strange kernel extension loading issues, try the following:
-
-{{{
-$ sudo touch /System/Library/Extensions
-
-/* Now reboot. */
-}}}
