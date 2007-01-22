@@ -17,7 +17,7 @@ You may also need `-D_FILE_OFFSET_BITS=64` in `CFLAGS` unless it's already there
 
 Q: I can't eject a MacFUSE volume using the eject icon in the Finder.
 
-A: Please read http://code.google.com/p/macfuse/wiki/MACFUSE_AND_THE_FINDER
+A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. To learn more about Finder-related woes, please read http://code.google.com/p/macfuse/wiki/MACFUSE_AND_THE_FINDER
 
 = fusermount =
 
@@ -33,11 +33,7 @@ Q: When trying to use a fuse-based filesystem, I get:
 fuse: failed to exec mount program: No such file or directory
 }}}
 
-A: The fuse library calls out to `mount_fusefs` to do the mount. By default, it's located in `/usr/local/bin`. So check:
-
-  # Is `/usr/local/bin` in your `PATH`?
-  # Is `mount_fusefs` there? It should be a symlink to `/System/Library/Filesystems/fusefs.fs/mount_fusefs`.
-  # The target of the symlink should exist.
+A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. You shouldn't see this error in newer releases (beginning with MacFUSE 0.1.0b007).
 
 = FUSE Volume 0 =
 
@@ -45,13 +41,8 @@ Q: All my filesystems are showing up in the Finder as "FUSE Volume n" for some n
 
 A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_diskarb`.
 
-= Problems with an Updated Kernel Extension =
+= Finder "Beachballing" When SSH Connection Drops/Resets/Changes =
 
-Q: I upgraded to a newer version of the binary tarball and now I am having issues with loading fusefs.kext (I keep getting errors about fusefs being not available).
+Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs.
 
-A: Try doing the following:
-
-{{{
-$ sudo touch /System/Library/Extensions
-/* Now reboot. */
-}}}
+A: Try using the `-o reconnect` option to `sshfs`.
