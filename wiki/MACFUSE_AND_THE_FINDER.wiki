@@ -1,7 +1,7 @@
 #summary MacFUSE and the Finder
 _aka What Disk Arbitration is, and Why You Should Care_
 
-*The issues described in this document are addressed to a large extent in MacFUSE Core version 0.1.0b007. If you are using an earlier release, please upgrade to the latest. The document is still here for posterity.*
+*The issues described in this document are addressed to a large extent in MacFUSE Core version 0.1.7. If you are using an earlier release, please upgrade to the latest. The document is still here for posterity.*
 
 = Introduction =
 
