@@ -33,7 +33,7 @@ Q: When trying to use a fuse-based filesystem, I get:
 fuse: failed to exec mount program: No such file or directory
 }}}
 
-A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. You shouldn't see this error in newer releases (beginning with MacFUSE 0.1.0b007).
+A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. You shouldn't see this error in newer releases (beginning with MacFUSE 0.1.7).
 
 = FUSE Volume 0 =
 
