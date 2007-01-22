@@ -2,7 +2,7 @@
 
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
-== MacFUSE 0.1.0b007 ==
+== MacFUSE 0.1.7 ==
 
   * The file `/usr/local/bin/mount_fusefs` is removed. The `mount_fusefs` in the `fusefs.fs` bundle is the actual binary used by the user-spce FUSE library. This obviates the need to have `/usr/local/bin` in your path, making it a bit easier to write fuse file system apps.
 
