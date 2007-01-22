@@ -1,0 +1,23 @@
+#summary Changes and Feature Additions in MacFUSE Core Binary Releases
+
+= Changes and Feature Additions in MacFUSE Core Binary Releases =
+
+== MacFUSE 0.1.0b007 ==
+
+  * The file `/usr/local/bin/mount_fusefs` is removed. The `mount_fusefs` in the `fusefs.fs` bundle is the actual binary used by the user-spce FUSE library. This obviates the need to have `/usr/local/bin` in your path, making it a bit easier to write fuse file system apps.
+
+  * The MacFUSE kernel extension (kext) has been moved from `/System/Library/Extensions` to `/Library/Extensions`. Dynamically loading the kext on first mount seems to be working well enough, so we don't anticipate a need to load at boot-time. This move will also free us from having to worry about the kext cache.
+
+  * Fix for timestamp issues (See issue #33).
+
+  * Fixed a problem with 64-bit file offsets that was causing issues with files greater than 4GB.
+
+  * `mount_fusefs` will no longer automatically append a `"@%d"` (%d being the MacFUSE device number) to the fsname. This is for the benefit of those running ntfs-3g with disk utility.
+
+  * Improved support for the `ping_diskarb` mount option (See issue #10). The `mount_fusefs` program with the `ping_diskarb` option now waits for the file system to initialize before notifying Disk Arbitration that the mount occurred. Currently it will wait for up to 6 seconds at most and then cancel the "ping" if the file system does not initialize within that time.
+
+  * The `mount_fusefs` program will wait for the file system to initialize (similar to the `ping_diskarb` case above).  It will then send the notification `"com.google.filesystems.fusefs.unotifications.mounted"` with a string containing the mount path as the object to the distributed notification center.  This is so that projects like MacFUSE ntfs-3g can create their own mount wrapper that waits until the file system is initialized before exiting.
+
+  * Support for operation with buffer cache and readahead turned off for the cases where the "remote" file size is changing without the local file system's knowledge.
+
+  * From now on, no more tarballs. We'll only have package installers.
