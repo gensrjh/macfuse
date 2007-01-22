@@ -23,7 +23,7 @@ A: Are you using an older release of MacFUSE? If so, please upgrade to the lates
 
 Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anywhere.
 
-A: `umount`.
+A: Just use the standard `umount` command in Mac OS X. You don't need `fusermount`.
 
 = failed to exec mount program =
 
