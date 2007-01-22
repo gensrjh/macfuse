@@ -4,7 +4,7 @@
 
 == MacFUSE 0.1.7 ==
 
-  * The file `/usr/local/bin/mount_fusefs` is removed. The `mount_fusefs` in the `fusefs.fs` bundle is the actual binary used by the user-spce FUSE library. This obviates the need to have `/usr/local/bin` in your path, making it a bit easier to write fuse file system apps.
+  * The file `/usr/local/bin/mount_fusefs` is removed. The `mount_fusefs` in the `fusefs.fs` bundle is the actual binary used by the user-space FUSE library. This obviates the need to have `/usr/local/bin` in your path, making it a bit easier to write fuse file system apps.
 
   * The MacFUSE kernel extension (kext) has been moved from `/System/Library/Extensions` to `/Library/Extensions`. Dynamically loading the kext on first mount seems to be working well enough, so we don't anticipate a need to load at boot-time. This move will also free us from having to worry about the kext cache.
 
