@@ -1,11 +1,11 @@
 #summary Setting up MacFUSE on your Mac OS X system.
-#labels Phase-Deploy,Featured
+#labels Phase-Deploy
 
 = Introduction =
 
 This document briefly describes the steps you need to take to get a MacFUSE development environment set up starting from scratch (that is, compiling everything yourself).
 
-*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled version available under the Downloads tab of this project's Google Code page (http://code.google.com/p/macfuse/downloads/list). Please read the QUICKER_START_GUIDE document to get started with MacFUSE the fastest way.
+*NB* If you don't wish to compile everything yourself, you have the option of using a precompiled version available under the Downloads tab of this project's Google Code page (http://code.google.com/p/macfuse/downloads/list). Please read the [QUICKER_START_GUIDE] document to get started with MacFUSE the fastest way.
 
 = Details =
 
