@@ -1,3 +1,29 @@
 #summary The SSH File System for MacFUSE
 
 = The SSH File System for MacFUSE =
+
+To use the MacFUSE version of the SSH file system (sshfs), you must have the MacFUSE Core package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
+
+An easy way to use sshfs with MacFUSE is to get sshfs.app.
+
+/* TBD */
+
+The sshfs.app bundle contains a binary called `sshfs-static`. This is the command-line `sshfs` program compiled such that it links dynamically with the FUSE user-space library, but statically with `libglib` and `libintl`. You can create a symbolic link called `sshfs` in `/usr/local/bin/` (or another place that you prefer) that points to this binary, and thus can use the command-line version too. If you prefer to use the command line, you can do something like:
+
+{{{
+# Mounting the SSH file system
+$ mkdir /some/mount/point # or use one that already exists
+$ sshfs user@host:/some/directory /some/mount/point -oreconnect,ping_diskarb,volname=<volname>
+}}}
+
+The `reconnect` option is useful when the network connection goes down and you have a mounted sshfs volume.
+
+The `ping_diskarb` option sends a "ping" to Disk Arbitration, allowing the newly mounted volume to play better with the Finder.
+
+<volname> should be a string you wish to use as the name of the newly mounted volume. If everything went fine, you should see the volume on your Desktop and in the Finder (unless you have disabled remote volumes from showing up in these places).
+
+Once you are done using sshfs, you can unmount the volume either using the eject icon in the Finder or other common user-interface means of ejecting. Alternatively, you can do the following from the command line:
+
+{{{
+$ umount /some/mount/point
+}}}
