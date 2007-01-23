@@ -3,7 +3,7 @@
 
 = The Spotlight File System for MacFUSE =
 
-To use the MacFUSE version of the SpotlightFS file system, you must have the MacFUSE Core package installed. Please read the QUICKER_START_GUIDE document to learn how to install that package.
+To use the MacFUSE version of the SpotlightFS file system, you must have the MacFUSE Core package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
 
 = Introduction =
 
