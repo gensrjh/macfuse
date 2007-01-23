@@ -5,7 +5,7 @@
 
 If you are using any MacFUSE version older than *and* including 0.1.7, *and* you are having trouble seeing your Bootcamp NTFS volume in the Startup Disk preference pane, you can fix the issue as follows:
 
-1. Open the file `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist` in a text editor or a property list editor. Since this file is owned by `root`, you will need super-user access to edit this file.
+1. Open the file `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist` in a text editor or a property list editor. Since this file is owned by `root`, you will need super-user access to edit it.
 
 2. Find the line that says `<key>NTFS</key>` (should be line number `72` or so). Change the line so that it reads:
 
