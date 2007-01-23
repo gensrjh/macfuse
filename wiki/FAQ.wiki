@@ -1,5 +1,27 @@
 #summary Frequently asked questions (and answers)
 
+= NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
+
+Q: After installing MacFUSE and/or ntfs-3g, my NTFS volume doesn't show up in the Startup Disk preference pane.
+
+A: Please find the following line in `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist`:
+
+{{{
+    ...
+    <key>NTFS</key>
+    ...
+}}}
+
+Change the "NTFS" to "NTFS-3g", so that it reads:
+
+{{{
+    ...
+    <key>NTFS-3g</key>
+    ...
+}}}
+
+You'll need administrator privileges to edit this file. Quit and relaunch System Preferences.
+
 = Compiling a FUSE File System =
 
 Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?
