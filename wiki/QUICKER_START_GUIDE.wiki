@@ -3,7 +3,7 @@
 
 = Quick(er) Start Guide =
 
-1. Download and install the MacFUSE Core package available under the "Downloads" tab of this project. You should restart after installing. To make sure you are aware of late breaking caveats (if any) with the MacFUSE release you're using, check the 0_READ_THIS_FIRST page before proceeding.
+1. Download and install the MacFUSE Core package available under the "Downloads" tab of this project. You should restart after installing. To make sure you are aware of late breaking caveats (if any) with the MacFUSE release you're using, check the [0_READ_THIS_FIRST] page before proceeding.
 
 2. Download and try MacFUSE file systems such as SSHFS ([MACFUSE_FS_SSHFS]) and SpotlightFS ([MACFUSE_FS_SPOTLIGHTFS]).
 
