@@ -1,5 +1,4 @@
 #summary Frequently asked questions (and answers)
-#labels Featured
 
 = Compiling a FUSE File System =
 
