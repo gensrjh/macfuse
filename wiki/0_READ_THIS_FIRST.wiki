@@ -1,7 +1,7 @@
 #summary Breaking News, Last Minute Issues, Other Important Stuff
 #labels Featured
 
-= Please Read This =
+= Please Read This Before Using MacFUSE =
 
 If you are using any MacFUSE version older than *and* including 0.1.7, *and* you are having trouble seeing your Bootcamp NTFS volume in the Startup Disk preference pane, you can fix the issue as follows:
 
