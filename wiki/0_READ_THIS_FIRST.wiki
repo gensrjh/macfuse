@@ -1,0 +1,14 @@
+#summary Breaking News, Last Minute Issues, Other Important Stuff
+#labels Featured
+
+= Please Read This =
+
+If you are using any MacFUSE version older than *and* including 0.1.7, *and* you are having trouble seeing your Bootcamp NTFS volume in the Startup Disk preference pane, you can fix the issue as follows:
+
+1. Open the file `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist` in a text editor or a property list editor. Since this file is owned by `root`, you will need super-user access to edit this file.
+
+2. Find the line that says `<key>NTFS</key>` (should be line number `72` or so). Change the line so that it reads:
+
+`<key>NTFS-3g</key>`
+
+3. Save the file. Quit System Preferences if it is running. Start System Preferences. You should see the NTFS volume in the Startup Disk preference pane now.
