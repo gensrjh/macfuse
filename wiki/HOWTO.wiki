@@ -49,8 +49,12 @@ $ xcodebuild -target fusefs -configuration Release
 This will build the kext as build/Release/fusefs.kext. The kext should go in /System/Library/Extensions/ and must have the appropriate permissions.
 
 {{{
-$ sudo cp -pR build/Release/fusefs.kext /System/Library/Extensions/
-$ sudo chown -R root:wheel /System/Library/Extensions/fusefs.kext
+$ sudo mkdir -p /Library/Extensions/
+$ sudo chown root:admin /Library
+$ sudo chown root:wheel /Library/Extensions
+$ sudo chmod +t /Library
+$ sudo cp -pR build/Release/fusefs.kext /Library/Extensions/
+$ sudo chown -R root:wheel /Library/Extensions/fusefs.kext
 }}}
 
 ===Compile load_fusefs===
@@ -63,11 +67,11 @@ load_fusefs is a small helper program that the FUSE library calls to load fusefs
 
 {{{
 $ sudo cp build/Release/load_fusefs \
-    /System/Library/Extensions/fusefs.kext/Contents/Resources/
+    /Library/Extensions/fusefs.kext/Contents/Resources/
 $ sudo chown root:wheel \
-    /System/Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
+    /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 $ sudo chmod u+s \
-    /System/Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
+    /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 }}}
 
 ===Copy the fusefs.fs bundle to its destination===
@@ -89,13 +93,6 @@ mount_fusefs is called by the FUSE library to perform the mount() system call. I
 $ sudo cp build/Release/mount_fusefs \
     /System/Library/Filesystems/fusefs.fs/
 $ sudo chown root:wheel /System/Library/Filesystems/fusefs.fs/mount_fusefs
-}}}
-
-There must be a symbolic link to mount_fusefs in /usr/local/bin/.
-
-{{{
-$ sudo ln -s /System/Library/Filesystems/fusefs.fs/mount_fusefs \
-    /usr/local/bin/mount_fusefs
 }}}
 
 ==2. Install pkg-config==
