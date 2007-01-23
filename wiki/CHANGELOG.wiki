@@ -21,3 +21,5 @@
   * Support for operation with buffer cache and readahead turned off for the cases where the "remote" file size is changing without the local file system's knowledge.
 
   * From now on, no more tarballs. We'll only have package installers.
+
+  * The versioning scheme has changed to the simpler form `x.y.z`.
