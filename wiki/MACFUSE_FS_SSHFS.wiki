@@ -16,7 +16,7 @@ At this point, you're done with the sshfs.app application, and you may quit it i
 
 The second main part is a recent server list. From the list, you may select any server that you've successfully connected to in the past. The password dialog will come up, provide your password, and once again, you're all set.
 
-== Going Commando ==
+== Using the Command Line ==
 
 The sshfs.app bundle contains a binary called `sshfs-static`. This is the command-line `sshfs` program compiled such that it links dynamically with the FUSE user-space library, but statically with `libglib` and `libintl`. You can create a symbolic link called `sshfs` in `/usr/local/bin/` (or another place that you prefer) that points to this binary, and thus can use the command-line version too. If you prefer to use the command line, you can do something like:
 
