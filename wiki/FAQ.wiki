@@ -22,6 +22,8 @@ Change the "NTFS" to "NTFS-3g", so that it reads:
 
 You'll need administrator privileges to edit this file. Quit and relaunch System Preferences.
 
+A related question could be that the volume shows up in Disk Utility as of type "NTFS 3g" or similar. It's the same issue, and can be remedied by the abovementioned change.
+
 = Compiling a FUSE File System =
 
 Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?
