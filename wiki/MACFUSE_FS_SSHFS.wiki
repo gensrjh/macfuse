@@ -7,6 +7,8 @@ To use the MacFUSE version of the SSH file system (sshfs), you must have the Mac
 
 An easy way to use sshfs with MacFUSE is to get sshfs.app. Please look under the "Downloads" tab of this project to download it.
 
+*NB: Please note that the "disk" usage information reported for sshfs is not "real" -- this is how it is implemented in the sshfs program. It's not a MacFUSE issue.*
+
 == Using the Graphical Application ==
 
 There are two main parts to the sshfs application. The first is `File > Connect to SSH Server...`, which lets you specify the server you want to connect to, the username you want to use, and (optionally) the remote directory you want to mount.
@@ -38,3 +40,4 @@ Once you are done using sshfs, you can unmount the volume either using the eject
 {{{
 $ umount /some/mount/point
 }}}
+
