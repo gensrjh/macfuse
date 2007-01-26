@@ -30,7 +30,7 @@ The following are some of the key components of the repository:
     fusefs/                                                                   # Mac OS X FUSE kernel extension
     libfuse/
             |_ fuse-<version>-macosx.patch                   # Mac OS X patches for libfuse
-    util/                                                                        # Miscellaneous utilities and scripts
+    util/                                                                       # Miscellaneous utilities and scripts
 }}}  
 
 ==1. Install the Kernel Extension and Associated Components==
