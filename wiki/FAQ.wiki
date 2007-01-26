@@ -2,7 +2,7 @@
 
 = NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
 
-Q: After installing MacFUSE and/or ntfs-3g, my NTFS volume doesn't show up in the Startup Disk preference pane.
+Q: After installing MacFUSE, my NTFS volume doesn't show up in the Startup Disk preference pane.
 
 A: Please find the following line in `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist`:
 
@@ -23,6 +23,8 @@ Change the "NTFS" to "NTFS-3g", so that it reads:
 You'll need administrator privileges to edit this file. Quit and relaunch System Preferences.
 
 A related question could be that the volume shows up in Disk Utility as of type "NTFS 3g" or similar. It's the same issue, and can be remedied by the abovementioned change.
+
+Note that besides MacFUSE's fusefs.fs bundle, another non-Apple .fs bundle could be "taking over" the NTFS personality too -- so make sure.
 
 = Compiling a FUSE File System =
 
