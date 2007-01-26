@@ -35,7 +35,7 @@ The following are some of the key components of the repository:
 
 ==1. Install the Kernel Extension and Associated Components==
 
-The core and the most critical component of MacFUSE is the kernel extension (fusefs.kext). The fusefs/ subdirectory in the repository contains the source for this kext. Moreover, it contains the sources for the mount_fusefs and load_fusefs command-line programs, as well as the fusefs.fs bundle. Here's what you do with these things:
+The core and the most critical component of MacFUSE is the kernel extension (`fusefs.kext`). The `fusefs/` subdirectory in the repository contains the source for this kext. Moreover, it contains the sources for the `mount_fusefs` and `load_fusefs` command-line programs, as well as the `fusefs.fs` bundle. Here's what you do with these things:
 
 *NB* By default, all compilations are Universal.
 
@@ -46,7 +46,7 @@ $ cd fusefs # Go to the kernel extension source directory
 $ xcodebuild -target fusefs -configuration Release
 }}}
 
-This will build the kext as build/Release/fusefs.kext. The kext should go in /System/Library/Extensions/ and must have the appropriate permissions.
+This will build the kext as `build/Release/fusefs.kext`. The kext should go in `/Library/Extensions/` and must have the appropriate permissions.
 
 {{{
 $ sudo mkdir -p /Library/Extensions/
@@ -63,15 +63,12 @@ $ sudo chown -R root:wheel /Library/Extensions/fusefs.kext
 $ xcodebuild -target load_fusefs -configuration Release
 }}}
 
-load_fusefs is a small helper program that the FUSE library calls to load fusefs.kext if the latter isn't already loaded. Note that load_fusefs needs to be installed setuid root. It is installed as a resource within the fusefs.kext bundle.
+`load_fusefs` is a small helper program that the MacFUSE user library calls to load `fusefs.kext` if the latter isn't already loaded. Note that `load_fusefs` needs to be installed *setuid root*. It is installed as a resource within the `fusefs.kext` bundle.
 
 {{{
-$ sudo cp build/Release/load_fusefs \
-    /Library/Extensions/fusefs.kext/Contents/Resources/
-$ sudo chown root:wheel \
-    /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
-$ sudo chmod u+s \
-    /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
+$ sudo cp build/Release/load_fusefs /Library/Extensions/fusefs.kext/Contents/Resources/
+$ sudo chown root:wheel /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
+$ sudo chmod u+s /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 }}}
 
 ===Copy the fusefs.fs bundle to its destination===
@@ -87,63 +84,60 @@ $ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs
 $ xcodebuild -target mount_fusefs -configuration Release
 }}}
 
-mount_fusefs is called by the FUSE library to perform the mount() system call. It is installed within the fusefs.fs bundle (setuid NOT required).
+`mount_fusefs` is called by the MacFUSE user library to perform the `mount()` system call. It is installed within the `fusefs.fs` bundle (setuid root is *not* required).
 
 {{{
-$ sudo cp build/Release/mount_fusefs \
-    /System/Library/Filesystems/fusefs.fs/
+$ sudo cp build/Release/mount_fusefs /System/Library/Filesystems/fusefs.fs/
 $ sudo chown root:wheel /System/Library/Filesystems/fusefs.fs/mount_fusefs
 }}}
 
+*NB*: The `sshfs` binary package available from this project's website contains an `sshfs-static` binary that is statically linked against `glib` (but dynamically linked against `libfuse`). If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use `sshfs-static` without having to compile anything.
+
 ==2. Install pkg-config==
 
-pkg-config is an open source helper tool used when compiling applications and libraries. You don't *need* pkg-config to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having pkg-config will be helpful in many cases. To download its source and learn more about it, go here:
+`pkg-config` is an open source helper tool used when compiling applications and libraries. You don't *need* pkg-config to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having `pkg-config` will be helpful in many cases. To download its source and learn more about it, go here:
 
 http://pkgconfig.freedesktop.org/wiki/
 
-To compile and install pkg-config as a set of Universal binaries, do the following:
+To compile and install `pkg-config` as a set of Universal binaries, do the following:
 
 {{{
 $ tar -xzvf pkg-config-<version>.gz
 $ cd pkg-config-<version>/
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-    LDFLAGS="-arch i386 -arch ppc" \
-      ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
 }}}
 
-This installs pkg-config under the /usr/local/ hierarchy.
+This installs `pkg-config` under the `/usr/local/` hierarchy.
 
-==3. Install the FUSE User-Space Library==
+==3. Install the MacFUSE User-Space Library==
 
-You need the FUSE user-space library to develop your own FUSE-based file systems and also to run precompiled file systems that are dynamically linked with the library.
+You need the MacFUSE user-space library to develop your own FUSE-based file systems and also to run precompiled file systems that are dynamically linked with the library.
 
-You can download the library source (the "fuse" package) from:
+You can download the library source (the original "fuse" package) from:
 
 http://fuse.sourceforge.net
 
-Suppose you downloaded fuse-2.6.1.tar.gz. You'll need to patch this source using an appropriate patch file available in the libfuse/ subdirectory in the MacFUSE subversion repository.
+Suppose you downloaded `fuse-2.6.1.tar.gz`. You'll need to patch this source using an appropriate patch file available in the `libfuse/` subdirectory in the MacFUSE subversion repository. Be sure to use the `CFLAGS` and `LDFLAGS` specified below! For your convenience, the file `README.MacFUSE` in the library source tree contains the command-line you should use.
 
 {{{
 $ tar -xzvf fuse-2.6.1.tar.gz
 $ cd fuse-2.6.1
 $ patch -p1 < /path/to/fuse-2.6.1-macosx.patch
 ...
-$ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-    LDFLAGS="-arch i386 -arch ppc" \
-      ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-D__FreeBSD__=10 -D_POSIX_C_SOURCE=200112L -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
 }}}
 
-This installs the FUSE user-space library and headers under the /usr/local/ hierarchy.
+This installs the MacFUSE user library and headers under the `/usr/local/` hierarchy.
 
 ==4. Install glib==
 
-Some FUSE-based file systems depend on glib, which is not available by default on Mac OS X.  You don't *need* glib to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having glib will be required in some cases.To compile glib without pain, you will also need the GNU gettext package installed.
+Some FUSE-based file systems depend on `glib`, which is not available by default on Mac OS X.  You don't *need* `glib` to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having `glib` will be required in some cases.To compile `glib` without pain, you will also need the GNU `gettext` package installed.
 
-You can download gettext from:
+You can download `gettext` from:
 
 ftp://ftp.gnu.org/pub/gnu/gettext/
 
@@ -152,31 +146,26 @@ You can compile gettext (Universally) as follows:
 {{{
 $ tar -xzvf gettext-0.16.1.tar.gz
 $ cd gettext-0.16.1
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-    LDFLAGS="-arch i386 -arch ppc -fno-common" \
-      ./configure --prefix=/usr/local --disable-dependency-tracking \
-        --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
+$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk"  LDFLAGS="-arch i386 -arch ppc -fno-common" ./configure --prefix=/usr/local --disable-dependency-tracking --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
 $ make
 $ sudo make install
 }}}
 
-You can download glib from:
+You can download `glib` from:
 
 ftp://ftp.gtk.org/pub/glib/
 
-You can compile glib (Universally) as follows:
+You can compile `glib` (Universally) as follows:
 
 {{{
 $ tar -xzvf glib-2.12.7.tar.gz
 $ cd glib-2.12.7
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" \
-     LDFLAGS="-arch i386 -arch ppc -L/usr/local/lib" \
-       ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" LDFLAGS="-arch i386 -arch ppc -L/usr/local/lib" ./configure --prefix=/usr/local --disable-dependency-tracking
 }}}
 
-If you are on a *PowerPC* Mac, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
+If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
 
-Continuing on any Mac:
+Continuing on any Macintosh (x86 or PowerPC -- not tested on ARM yet :-)):
 {{{
 $ make
 $ sudo make install
@@ -196,15 +185,17 @@ gmodule-no-export-2.0 GModule - Dynamic module loader for GLib
 fuse                  fuse - Filesystem in Userspace
 }}}
 
-Now you should also be able to compile many generally available FUSE file systems. Let us look at sshfs.
+Now you should also be able to compile many generally available FUSE file systems. Let us look at `sshfs`.
 
 ==5. Install sshfs==
 
-sshfs can be downloaded from:
+`sshfs` can be downloaded from:
 
 http://fuse.sourceforge.net/sshfs.html
 
-Suppose you downloaded sshfs-fuse-1.7.tar.gz. You'll need to patch this source using an appropriate patch file available in the filesystems/sshfs/ subdirectory in the MacFUSE subversion repository.
+Suppose you downloaded `sshfs-fuse-1.7.tar.gz`. You'll need to patch this source using an appropriate patch file available in the `filesystems/sshfs/` subdirectory in the MacFUSE subversion repository.
+
+*NB*: The `sshfs` binary package available from this project's website contains an `sshfs-static` binary that is statically linked against `glib` (but dynamically linked against `libfuse`). If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use `sshfs-static` without having to compile anything.
    
 {{{
 $ tar -xzvf sshfs-fuse-1.7.tar.gz
@@ -217,10 +208,10 @@ $ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/
 $ sudo make install
 }}}
 
-This will install the sshfs command-line program under /usr/local/bin/.
+This will install the `sshfs` command-line program under `/usr/local/bin/`.
 
 = Compiling FUSE File Systems =
 
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
-When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical! Oh,  and since so many people seem to want NTFS-3g (http://www.ntfs-3g.org/), *yes*, NTFS-3g does work.
+When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
