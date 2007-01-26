@@ -17,6 +17,8 @@ If you are using any MacFUSE version older than *and* including 0.1.7, *and* you
 
 3. Save the file. Quit System Preferences if it is running. Start System Preferences. You should see the NTFS volume in the Startup Disk preference pane now.
 
+Note that besides MacFUSE's fusefs.fs bundle, another non-Apple .fs bundle could be "taking over" the NTFS personality too -- so make sure.
+
 === Asynchronous Writes ===
 
 Please don't use the `nosyncwrites` option in 0.7.1. It's not fully implemented yet.
