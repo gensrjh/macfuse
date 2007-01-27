@@ -202,9 +202,7 @@ $ tar -xzvf sshfs-fuse-1.7.tar.gz
 $ cd sshfs-fuse-1.7
 $ patch -p1 < /path/to/sshfs-fuse-1.7-macosx.patch
 ...
-$ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-    LDFLAGS="-arch i386 -arch ppc" \
-      ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-D__FreeBSD__=10 -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
 $ sudo make install
 }}}
 
