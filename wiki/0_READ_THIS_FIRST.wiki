@@ -3,6 +3,14 @@
 
 = Please Read This Before Using MacFUSE =
 
+== MacFUSE Core 0.1.9 ==
+
+No breaking news yet.
+
+== MacFUSE Core 0.1.8 ==
+
+0.1.8 was not released.
+
 == MacFUSE Core 0.1.7 and Older ==
 
 === Bootcamp NTFS Volumes ===
