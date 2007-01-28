@@ -1,4 +1,5 @@
 #summary Changes and Feature Additions in MacFUSE Core Binary Releases
+#labels Featured
 
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
