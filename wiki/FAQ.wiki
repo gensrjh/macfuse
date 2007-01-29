@@ -60,7 +60,7 @@ You may also need `-D_FILE_OFFSET_BITS=64` in `CFLAGS` unless it's already there
 
 Q: I can't eject a MacFUSE volume using the eject icon in the Finder.
 
-A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. MacFUSE's interaction with the Finder improved greatly in MacFUSE Core 0.1.9. To learn more about the background of Finder-related woes, please read http://code.google.com/p/macfuse/wiki/MACFUSE_AND_THE_FINDER
+A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. MacFUSE's interaction with the Finder improved greatly in MacFUSE Core 0.1.9. To get better Finder interaction, you must use the `-oping_diskarb` command-line option while mounting a file system from the command line. If using a GUI wrapper, the GUI must do this for you (or perform some other action that keeps the Finder in the loop). To learn more about the background of Finder-related woes, please read http://code.google.com/p/macfuse/wiki/MACFUSE_AND_THE_FINDER
 
 = fusermount =
 
@@ -89,5 +89,4 @@ A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_disk
 Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs.
 
 A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected.
-
 
