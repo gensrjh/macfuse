@@ -1,5 +1,23 @@
 #summary Frequently asked questions (and answers)
 
+= Install/Uninstall =
+
+Q: What is the preferred way to install MacFUSE?
+
+A: Most users and developers of FUSE file systems should install the "MacFUSE Core.pkg" from the latest MacFUSE Core dmg available from the Downloads tab of:
+
+http://code.google.com/p/macfuse/
+
+Q: How can I uninstall MacFUSE Core?
+
+A: If you installed "MacFUSE Core.pkg" version 0.1.9 or greater then you can use the uninstall script. From a terminal window run the following command:
+
+{{{
+sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
+}}}
+
+If you have the 0.1.0b006 or 0.1.7 release installed then it might be easiest to upgrade to the newest release and then run the uninstall script.
+
 = NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
 
 Q: After installing MacFUSE, my NTFS volume doesn't show up in the Startup Disk preference pane.
@@ -71,3 +89,5 @@ A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_disk
 Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs.
 
 A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected.
+
+
