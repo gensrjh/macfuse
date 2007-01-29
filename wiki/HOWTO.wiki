@@ -33,6 +33,10 @@ The following are some of the key components of the repository:
     util/                                                                       # Miscellaneous utilities and scripts
 }}}  
 
+==0. Upgrade to Xcode 2.4==
+
+The current MacFUSE source tree has only been compiled with Xcode 2.4.x. In fact, it may not even compile with older Xcode versions. To avoid mysterious compilation and runtime failures, please upgrade to Xcode 2.4, which is a free download from Apple.
+
 ==1. Install the Kernel Extension and Associated Components==
 
 The core and the most critical component of MacFUSE is the kernel extension (`fusefs.kext`). The `fusefs/` subdirectory in the repository contains the source for this kext. Moreover, it contains the sources for the `mount_fusefs` and `load_fusefs` command-line programs, as well as the `fusefs.fs` bundle. Here's what you do with these things:
