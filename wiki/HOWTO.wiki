@@ -78,7 +78,8 @@ $ sudo chmod u+s /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
 ===Copy the fusefs.fs bundle to its destination===
 
 {{{
-$ sudo cp -pR fusefs.fs /System/Library/Filesystems/
+$ xcodebuild -target fusefs.fs -configuration Release
+$ sudo cp -pR build/Release/fusefs.fs /System/Library/Filesystems/
 $ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs
 }}}
 
