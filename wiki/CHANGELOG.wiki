@@ -9,7 +9,7 @@
 
   * There is now a check that we are installing on at least a 10.4 system.
 
-  * There is an uninstall program.
+  * There is an uninstall program (`/System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh`).
 
   * Fixed a potential kernel panic while unmounting forcibly.
 
