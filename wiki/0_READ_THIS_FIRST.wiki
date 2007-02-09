@@ -5,7 +5,7 @@
 
 == MacFUSE Core 0.2.0 ==
 
-* This is a major and strongly recommended update (please see the [CHANGELOG] for details). Unless you have some very good reason not to, please update to this version as soon as possible.
+  * This is a major and strongly recommended update (please see the [CHANGELOG] for details). Unless you have some very good reason not to, please update to this version as soon as possible.
 
 == MacFUSE Core 0.1.9 ==
 
