@@ -1,14 +1,23 @@
 #summary Frequently asked questions (and answers)
+#labels Featured
 
+= Picking Up "Remote" Changes =
+
+*Q: I'm using sshfs and changed a file "externally" (not through sshfs/MacFUSE) on the server, but in the sshfs volume, I'm not seeing the changes. In fact, when I copy the file through sshfs, I get the old content, etc.
+
+A: MacFUSE itself isn't a distributed remote file system! If you change things "externally" to MacFUSE (like, a file on the remote server in the case of sshfs), in general, things need to be done proactively to tell MacFUSE that something has changed, otherwise you'll get such "incorrect" behavior. For one, if you want this mode of operation (where you can change things remotely at any time) to work better, you should disable caching in sshfs (look at the various `-o cache` options in sshfs, in particular, `-o cache=no`).
+
+Then, additionally, you need to tell MacFUSE not to cache things on its end too. Beginning with MacFUSE Core 0.2.0, you can use the `-o nolocalcaches` option, which turns off readaheads in the kernel, the unified buffer cache, and the pathname resolution cache in the kernel. At the cost of a little overhead, this will give you the behavior where most requests will have to go to the server and will therefore have more up-to-date information.
+ 
 = Install/Uninstall =
 
-Q: What is the preferred way to install MacFUSE?
+*Q: What is the preferred way to install MacFUSE?*
 
 A: Most users and developers of FUSE file systems should install the "MacFUSE Core.pkg" from the latest MacFUSE Core dmg available from the Downloads tab of:
 
 http://code.google.com/p/macfuse/
 
-Q: How can I uninstall MacFUSE Core?
+*Q: How can I uninstall MacFUSE Core?*
 
 A: If you installed "MacFUSE Core.pkg" version 0.1.9 or greater then you can use the uninstall script. From a terminal window run the following command:
 
@@ -20,7 +29,7 @@ If you have the 0.1.0b006 or 0.1.7 release installed then it might be easiest to
 
 = NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
 
-Q: After installing MacFUSE, my NTFS volume doesn't show up in the Startup Disk preference pane.
+* Q: After installing MacFUSE, my NTFS volume doesn't show up in the Startup Disk preference pane. What's going on?*
 
 A: This issue is fixed beginning with MacFUSE Core 0.1.9. If you want to fix an older release for some reason, find the following line in `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist`:
 
@@ -46,7 +55,7 @@ Note that besides MacFUSE's fusefs.fs bundle, another non-Apple .fs bundle could
 
 = Compiling a FUSE File System =
 
-Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?
+*Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?*
 
 A: Besides any other file-system-specific compile- or configure-time options, you need to have `-D__FreeBSD__=10` in your `CFLAGS`. Try something like:
 
@@ -56,37 +65,34 @@ $ CFLAGS="-D__FreeBSD__=10" ./configure --prefix=/usr/local
 
 You may also need `-D_FILE_OFFSET_BITS=64` in `CFLAGS` unless it's already there.
 
-= Ejecting in the Finder =
+MacFUSE Core installs a `fuse.pc` file in `/usr/local/lib/pkgconfig/`. This, in conjunction with the `pkg-config` program, will automatically cause `-D__FreeBSD__=10 -D_FILE_OFFSET_BITS=64` to be included in `CFLAGS`. If your particular installation of `pkg-config` (say, through Fink or Mac Ports) doesn't look under `/usr/local/lib/pkgconfig/` by default, you can set the environment variable `PKG_CONFIG_PATH` to `/usr/local/lib/pkgconfig`.
 
-Q: I can't eject a MacFUSE volume using the eject icon in the Finder.
+= Mounting / Unmounting / Ejecting =
 
-A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. MacFUSE's interaction with the Finder improved greatly in MacFUSE Core 0.1.9. To get better Finder interaction, you must use the `-oping_diskarb` command-line option while mounting a file system from the command line. If using a GUI wrapper, the GUI must do this for you (or perform some other action that keeps the Finder in the loop). To learn more about the background of Finder-related woes, please read http://code.google.com/p/macfuse/wiki/MACFUSE_AND_THE_FINDER
+*Q: I can't eject a MacFUSE volume using the eject icon in the Finder. What to do?*
 
-= fusermount =
+A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. MacFUSE's interaction with the Finder improved greatly in MacFUSE Core 0.1.9. To get better Finder interaction, you must use the `-oping_diskarb` command-line option while mounting a file system from the command line. If using a GUI wrapper, the GUI must do this for you (or perform some other action that keeps the Finder in the loop).
 
-Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anywhere.
+If the Finder is "beachballing" because the user-space file system has lost network connectivity, etc., then you can `kill -TERM` (or `kill -KILL`, if the need be) the file system process, which will cause the volume to be ejected.
 
-A: Just use the standard `umount` command in Mac OS X. You don't need `fusermount`.
+*Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anywhere.*
 
-= failed to exec mount program =
+A: Just use the standard `umount` command in Mac OS X. You don't need `fusermount` with MacFUSE.
 
-Q: When trying to use a fuse-based filesystem, I get:
+*Q: When trying to use a fuse-based filesystem, I get:*
 
 {{{
 fuse: failed to exec mount program: No such file or directory
 }}}
 
-A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. You shouldn't see this error in newer releases (beginning with MacFUSE 0.1.7). If you *do* see this error with a newer release, that means the program you are trying to run is "picking up" an older user library that still wants `mount_fusefs` to be in your `PATH`.
+A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. You shouldn't see this error in releases beginning with MacFUSE 0.1.7. If you *do* see this error with a newer release, that means the program you are trying to run is "picking up" an older user library that still wants `mount_fusefs` to be in your `PATH`.
 
-= FUSE Volume 0 =
+*Q: All my filesystems are showing up in the Finder as "FUSE Volume n" for some number n. What should I do?*
 
-Q: All my filesystems are showing up in the Finder as "FUSE Volume n" for some number n. What should I do?
-
-A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_diskarb`.
+A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_diskarb`. 'volname' sets a name for the volume, and `ping_diskarb` causes it to appear on the Desktop and in the Finder. This way, you can also eject the volume through the Finder.
 
 = Finder "Beachballing" When SSH Connection Drops/Resets/Changes =
 
-Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs.
+*Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs. Can I do something about this?*
 
-A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected.
-
+A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected. You can also try to kill the file system process (`sshfs`, in this case) -- you might have to `kill -9`.
