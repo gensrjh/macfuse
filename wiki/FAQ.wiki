@@ -8,6 +8,12 @@
 A: MacFUSE itself isn't a distributed remote file system! If you change things "externally" to MacFUSE (like, a file on the remote server in the case of sshfs), in general, things need to be done proactively to tell MacFUSE that something has changed, otherwise you'll get such "incorrect" behavior. For one, if you want this mode of operation (where you can change things remotely at any time) to work better, you should disable caching in sshfs (look at the various `-o cache` options in sshfs, in particular, `-o cache=no`).
 
 Then, additionally, you need to tell MacFUSE not to cache things on its end too. Beginning with MacFUSE Core 0.2.0, you can use the `-o nolocalcaches` option, which turns off readaheads in the kernel, the unified buffer cache, and the pathname resolution cache in the kernel. At the cost of a little overhead, this will give you the behavior where most requests will have to go to the server and will therefore have more up-to-date information.
+
+An example command line for this mode of operation could look like the following:
+
+{{{
+$ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -oping_diskarb,volname=ssh
+}}}
  
 = Install/Uninstall =
 
