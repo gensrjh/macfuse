@@ -1,4 +1,4 @@
-#summary Frequently asked questions (and answers)
+#summary Frequently Asked Questions (and Answers)
 #labels Featured
 
 = Picking Up "Remote" Changes =
