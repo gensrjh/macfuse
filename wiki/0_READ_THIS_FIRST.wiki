@@ -1,4 +1,5 @@
 #summary Breaking News, Last Minute Issues, Other Important Stuff
+#labels Featured
 
 = Please Read This Before Using MacFUSE =
 
