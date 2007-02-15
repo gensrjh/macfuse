@@ -3,9 +3,13 @@
 
 = Please Read This Before Using MacFUSE =
 
+== MacFUSE Core 0.2.1 ==
+
+  * This fixes an issue with 0.2.0, which was a major and strongly recommended update (please see the [CHANGELOG] for details). Unless you have some very good reason not to, please update to this version as soon as possible.
+
 == MacFUSE Core 0.2.0 ==
 
-  * This is a major and strongly recommended update (please see the [CHANGELOG] for details). Unless you have some very good reason not to, please update to this version as soon as possible.
+  * In MacFUSE 0.2.0, the 'volname' option erroneously got "merged" with the 'extended_security' option (if you set one, you incorrectly get the other). Since 'extended_security' is more experimental in nature currently, it shouldn't be enabled every time you use 'volname'. Please upgrade to 0.2.1.
 
 == MacFUSE Core 0.1.9 ==
 
