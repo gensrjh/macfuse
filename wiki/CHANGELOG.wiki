@@ -3,6 +3,10 @@
 
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
+== MacFUSE 0.2.1 (February 15, 2007) ==
+
+  * In MacFUSE 0.2.0, the 'volname' option erroneously got "merged" with the 'extended_security' option (if you set one, you incorrectly get the other). Since 'extended_security' is more experimental in nature currently, it shouldn't be enabled every time you use 'volname'. This is a minor release to fix this issue.
+
 == MacFUSE 0.2.0 (February 11, 2007) ==
 
   * New option: 'novncache'.
