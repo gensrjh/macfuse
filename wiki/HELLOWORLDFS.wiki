@@ -24,7 +24,7 @@ hello_getattr(const char *path, struct stat *stbuf)
 
     if (strcmp(path, "/") == 0) { /* The root directory of our file system. */
         stbuf->st_mode = S_IFDIR | 0755;
-        stbuf->st_nlink = 2;
+        stbuf->st_nlink = 3;
     } else if (strcmp(path, file_path) == 0) { /* The only file we have. */
         stbuf->st_mode = S_IFREG | 0444;
         stbuf->st_nlink = 1;
@@ -100,7 +100,6 @@ main(int argc, char **argv)
 }
 
 }}}
-
 
 
 
