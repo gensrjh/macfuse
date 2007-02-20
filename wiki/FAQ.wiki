@@ -13,7 +13,7 @@ If you're thinking that mounting ntfs-3g with asynchronous writes enabled would 
 
 NOTE: MacFUSE enforces sync-on-close to maintain correct semantics in a not-so-common case (too involved to explain here, but the case is when you create a file with `O_RDWR` but no write permissions--you are supposed to be able to write to the file given the descriptor you got from open/creat).
 
-If you don't care about correct semantics in the aforementioned somewhat contrived case, you can modify `fuse_vnop_close()` in `macfuse/fusefs/fuse_vnops.c` to not sync upon close. You'll see that asynchronous writes don't help as much as one might think.
+If you don't care about correct semantics in the aforementioned somewhat contrived case, you can modify `fuse_vnop_close()` in `macfuse/fusefs/fuse_vnops.c` to not sync upon close (I'll add this as an option in MacFUSE 0.2.2). You'll see that asynchronous writes don't help as much as one might think.
 
 = Picking Up "Remote" Changes =
 
