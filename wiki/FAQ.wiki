@@ -7,7 +7,7 @@
 
 A: The ntfs-3g program opens and does I/O to the block device (`/dev/diskN`) of the NTFS volume in question. Mac OS X does not have a buffer cache for block devices when they are accessed in this way. That's the most overwhelming factor, because both metadata operations and file data I/O boil down to read/writes by ntfs-3g to the block device.
 
-Moreover, suppose we somehow automagically provided unified buffer caching for block devices (essentially making a disk look like a giant file). Even then, OS X and its buffer cache is really happy only when you do I/O that is in units of page size (4KB) and aligned on a page boundary. To get the most out of the I/O subsystem in OS X, ntfs-3g (or any other program for that matter) would really want to do I/O in multiples of 4KB.
+Suppose we somehow automagically provided unified buffer caching for block devices by essentially making a disk look like a giant file. Even then, OS X and its buffer cache is really happy only when you do I/O that is in units of page size (4KB) and aligned on a page boundary. To get the most out of the I/O subsystem in OS X, ntfs-3g (or any other program for that matter) would really want to do I/O in multiples of 4KB.
 
 If you're thinking that mounting ntfs-3g with asynchronous writes enabled would give things a huge performance boost, well, the reality is not so simple. The lack of block device buffer caching is still the overwhelming factor. In MacFUSE 0.2.0 and newer, you _can_ use the `nosyncwrites` option to enable sync-on-close behavior.
 
