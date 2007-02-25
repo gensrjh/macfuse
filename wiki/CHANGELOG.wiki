@@ -11,7 +11,7 @@
 
   * Added a workaround allowing better Finder support for copying files and folders to an ACL-enabled MacFUSE volume. Note that even with this workaround, there are some remaining Finder issues on ACL-enabled volumes.
 
-  * New option: 'noapplespecial'. When enabled, Apple Double files (._) and .DS_Store files will become inaccessible/invisible/un-creatable within a MacFUSE mount. You won't even see them in a directory listing. You will also not be able to create a file or directory that begins with "._" (except for the 2-character literal name "._" itself). I personally am not too excited about this option, but here it is in case somebody wants to experiment. I haven't tested this, especially in how it might affect the Finder and other applications. Use at your own peril.
+  * New option: 'noapplespecial'. When enabled, Apple Double files ("._") and .DS_Store files will become inaccessible/invisible/un-creatable within a MacFUSE mount. You won't even see them in a directory listing. You will also not be able to create a file or directory that begins with "._" (except for the 2-character literal name "._" itself). I personally am not too excited about this option, but here it is in case somebody wants to experiment. I haven't tested this, especially in how it might affect the Finder and other applications. Use at your own peril.
 
   * New option: 'nosynconclose'. Requires 'nosyncwrites'. Unless you understand exactly what it does, please don't use it. If you have to ask what it does, please don't use it.
 
