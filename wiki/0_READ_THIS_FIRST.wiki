@@ -3,9 +3,13 @@
 
 = Please Read This Before Using MacFUSE =
 
+== MacFUSE Core 0.2.2 ==
+
+  * A required update because it fixes a bug that can, under certain circumstances, zero-out the tail end of a read buffer when you read from a file. Unless you have some very good reason not to, please update to this version as soon as possible.
+
 == MacFUSE Core 0.2.1 ==
 
-  * This fixes an issue with 0.2.0, which was a major and strongly recommended update (please see the [CHANGELOG] for details). Unless you have some very good reason not to, please update to this version as soon as possible.
+  * This fixes an issue with 0.2.0, which was a major and strongly recommended update (please see the [CHANGELOG] for details).
 
 == MacFUSE Core 0.2.0 ==
 
