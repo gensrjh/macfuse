@@ -4,9 +4,6 @@
 
 This page contains random anecdotes, musings, tidbits, tips, tricks, trivia, and other miscellaneous information about MacFUSE. If we think of something that might be useful or interesting to MacFUSE users, and we are too lazy to find an appropriate document or wiki article to house that information, we'll just put it here.
 
-== Asynchronous Writes ==
-Although there are numerous optimization opportunities in MacFUSE right now, here's one flag that you can experiment with to see if it makes writing data any faster for you. The flag is `-onosyncwrites`. By default, MacFUSE always writes synchronously, which is rather expensive, but safer for many scenarios in which MacFUSE is meant to operate. Think "faster, but dangerous". Of course, it's dangerous only if things go wrong (network connection went down or device unplugged or you ran out of space), but you have been warned. In any case, please upgrade to MacFUSE Core 0.2.0 or later to try this feature.
-
 == Integration with "Connect to Server..." ==
 The Finder's `Go -> Connect to Server...` menu item lets you mount "remote" resources specified through URI schemes such as afp, ftp, http, nfs, and smb. Given the availability of sshfs, people seem to be looking for a way to "add" ssh/sftp to the list. Well, it's sort of not possible because these URI schemes are handled by plugins that are handled by an Apple-private framework (URLMount.framework). The plugins, which are written using a private interface, reside in `/System/Library/Filesystems/URLMount`.
 
