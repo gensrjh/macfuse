@@ -163,8 +163,8 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.12.7.tar.gz
-$ cd glib-2.12.7
+$ tar -xzvf glib-2.12.9.tar.gz
+$ cd glib-2.12.9
 $ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" LDFLAGS="-arch i386 -arch ppc -L/usr/local/lib" ./configure --prefix=/usr/local --disable-dependency-tracking
 }}}
 
@@ -187,7 +187,7 @@ glib-2.0              GLib - C Utility Library
 gobject-2.0           GObject - GLib Type, Object, Parameter and Signal Library
 gthread-2.0           GThread - Thread support for GLib
 gmodule-no-export-2.0 GModule - Dynamic module loader for GLib
-fuse                  fuse - Filesystem in Userspace
+fuse                  fuse - File System in User Space (MacFUSE)
 }}}
 
 Now you should also be able to compile many generally available FUSE file systems. Let us look at `sshfs`.
