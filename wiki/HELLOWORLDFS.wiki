@@ -1,6 +1,6 @@
 #summary Very simple example file system for MacFUSE.
 
-=== This file contains the source listing for a very simple FUSE file system. For use with a forthcoming article. =
+=== This file contains the source listing for a very simple FUSE file system. For use with the MacDevCenter article at http://www.macdevcenter.com/pub/a/mac/2007/03/06/macfuse-new-frontiers-in-file-systems.html. =
 
 === Source listing begins next. To use, copy text from here and paste into your source file. =
 
