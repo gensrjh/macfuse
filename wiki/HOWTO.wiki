@@ -151,7 +151,10 @@ You can compile gettext (Universally) as follows:
 {{{
 $ tar -xzvf gettext-0.16.1.tar.gz
 $ cd gettext-0.16.1
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk"  LDFLAGS="-arch i386 -arch ppc -fno-common" ./configure --prefix=/usr/local --disable-dependency-tracking --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
+$ CFLAGS="-O0 -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
+  LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -fno-common" \
+  ./configure --prefix=/usr/local --disable-dependency-tracking \
+  --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
 $ make
 $ sudo make install
 }}}
@@ -165,12 +168,35 @@ You can compile `glib` (Universally) as follows:
 {{{
 $ tar -xzvf glib-2.12.9.tar.gz
 $ cd glib-2.12.9
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" LDFLAGS="-arch i386 -arch ppc -L/usr/local/lib" ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-O0 -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" \
+  LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -L/usr/local/lib" \
+  ./configure --prefix=/usr/local --disable-dependency-tracking
 }}}
 
 If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
 
-Continuing on any Macintosh (x86 or PowerPC -- not tested on ARM yet :-)):
+Continuing on any Macintosh (x86 or PowerPC -- not tested on ARM yet :-)), open glibconfig.h and locate the line that begins with `#define G_BYTE_ORDER`... replace it with this code block:
+
+{{{
+#if (4 != sizeof(long))
+#error no support for 64-bit compiles
+#endif
+#ifdef __LITTLE_ENDIAN__
+#define G_BYTE_ORDER G_LITTLE_ENDIAN
+#elif defined(__BIG_ENDIAN__)
+#define G_BYTE_ORDER G_BIG_ENDIAN
+#else
+#error neither __LITTLE_ENDIAN__ nor __BIG_ENDIAN__ #defined
+#endif
+}}}
+
+Now open the file `libtool` and locate the lines (I see two of them) that begin with `sys_lib_search_path_spec=`... replace the entire line (in both cases) with:
+
+{{{
+sys_lib_search_path_spec=" /Developer/SDKs/MacOSX10.4u.sdk/usr/lib/ /usr/local/lib"
+}}}
+
+Now, back in the terminal:
 {{{
 $ make
 $ sudo make install
