@@ -75,7 +75,7 @@ A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_disk
 
 *Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs. Can I do something about this?*
 
-A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected. You can also try to kill the file system process (`sshfs`, in this case) -- you might have to `kill -9`.
+A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected. You can also try to kill the file system process (`sshfs`, in this case) -- you might have to `kill -9`. Beginning with MacFUSE Core 0.2.5, there is a default daemon timeout of 10 seconds, along with a graphical alert panel that lets the user decide whether to continue waiting or to eject the volume.
 
 = NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
 
