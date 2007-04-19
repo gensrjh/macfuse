@@ -51,8 +51,9 @@ $ umount /some/mount/point
   * Fixes for some "hangs" that users could experience under certain circumstances (such as saving a document in Microsoft Word).
   * `TCP_NODELAY` supported (and enabled by default) through the `sshnodelay.so` dynamic library that's preloaded into sshfs. This library is looked for in the same location as `sshfs-static`, in `/usr/local/lib/`, and in the current directory (in that order). If `sshnodelay.so` is not found, `TCP_NODELAY` is not enabled.
   * Fix for issue with pathname caching at the sshfs user daemon level. This could cause strange behavior after certain sequences of file system operations.
-  * `ping_diskarb` is now enabled by default. If you don't want this option for some reason, you can turn it off through the `noping_diskarb` option.
-  * If the `kill_on_unmount` option is specified, the kernel will explicitly try to kill the sshfs daemon after the volume has been unmounted. This is to avoid the issue of the daemon "hanging around" even after a successful unmount.
+  * `ping_diskarb` is enabled by default in MacFUSE 0.2.5. If you don't want this option for some reason, you can turn it off through the `noping_diskarb` option.
+  * The sshfs option `workaround=rename` is now enabled by default.
+  * If the `kill_on_unmount` option (new in MacFUSE 0.2.5) is specified, the kernel will explicitly try to kill the sshfs daemon after the volume has been unmounted. This is to avoid the issue of the daemon "hanging around" even after a successful unmount.
   * Upon launching the application from its containing disk image, the user is given the option of copying the application to the Applications folder.
 
 === sshfs.app 0.1.0 (January 2007) ===
