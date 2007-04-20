@@ -166,11 +166,12 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.12.9.tar.gz
-$ cd glib-2.12.9
-$ CFLAGS="-O0 -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" \
+$ tar -xzvf glib-2.13.0.tar.gz
+$ cd glib-2.13.0
+$ CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc \
+  -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" \
   LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -L/usr/local/lib" \
-  ./configure --prefix=/usr/local --disable-dependency-tracking
+  ./configure --prefix=/usr/local --disable-dependency-tracking --enable-static
 }}}
 
 If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
