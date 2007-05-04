@@ -124,12 +124,12 @@ You can download the library source (the original "fuse" package) from:
 
 http://fuse.sourceforge.net
 
-Suppose you downloaded `fuse-2.6.3.tar.gz` (`2.6.3` is used here just as an example--you should download the most recent version for which the MacFUSE source repository has a patch). You'll need to patch this source using an appropriate patch file available in the `libfuse/` subdirectory in the MacFUSE subversion repository. Be sure to use the `CFLAGS` and `LDFLAGS` specified below! For your convenience, the file `README.MacFUSE` in the library source tree contains the command-line you should use.
+Suppose you downloaded `fuse-2.6.5.tar.gz` (`2.6.5` is used here just as an example--you should download the most recent version for which the MacFUSE source repository has a patch). You'll need to patch this source using an appropriate patch file available in the `libfuse/` subdirectory in the MacFUSE subversion repository. Be sure to use the `CFLAGS` and `LDFLAGS` specified below! For your convenience, the file `README.MacFUSE` in the library source tree contains the command-line you should use.
 
 {{{
-$ tar -xzvf fuse-2.6.3.tar.gz
-$ cd fuse-2.6.3
-$ patch -p1 < /path/to/fuse-2.6.3-macosx.patch
+$ tar -xzvf fuse-2.6.5.tar.gz
+$ cd fuse-2.6.5
+$ patch -p1 < /path/to/fuse-2.6.5-macosx.patch
 ...
 $ CFLAGS="-D__FreeBSD__=10 -D_POSIX_C_SOURCE=200112L -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
@@ -166,8 +166,8 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.13.0.tar.gz
-$ cd glib-2.13.0
+$ tar -xzvf glib-2.13.1.tar.gz
+$ cd glib-2.13.1
 $ CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc \
   -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" \
   LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -L/usr/local/lib" \
