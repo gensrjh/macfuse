@@ -13,7 +13,7 @@
 
   * The `noauthopaque` and `noauthopaqueaccess` options are now deprecated. MacFUSE will now use an adaptive approach to determining whether a given file system daemon implements the `access()` method, and based on the outcome, MacFUSE will use the appropriate permissions handling.
 
-  * Fix for dealing with an issue regarding "remote" deletion of a file (unbeknownst to MacFUSE).
+  * Fix for dealing with an issue regarding "remote" (unbeknownst to MacFUSE) deletion of a file.
 
   * Miscellaneous tweakings.
 
