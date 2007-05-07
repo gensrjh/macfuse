@@ -1,10 +1,5 @@
 #summary Breaking News, Last Minute Issues, Other Important Stuff
-#labels Featured
 
 = Please Read This Before Using MacFUSE =
 
 MacFUSE requires Mac OS X 10.4 ("Tiger") or above.
-
-== MacFUSE Core 0.2.2 ==
-
-  * A required update because it fixes a bug that can, under certain circumstances, zero-out the tail end of a read buffer when you read from a file. Unless you have some very good reason not to, please update to this version as soon as possible.
