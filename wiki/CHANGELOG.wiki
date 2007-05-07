@@ -3,7 +3,7 @@
 
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
-== MacFUSE 0.3.0 (May ?, 2007) ==
+== MacFUSE 0.3.0 (May 7, 2007) ==
 
   * User-space FUSE library updated to version 2.6.5 of FUSE.
 
@@ -14,6 +14,8 @@
   * The `noauthopaque` and `noauthopaqueaccess` options are now deprecated. MacFUSE will now use an adaptive approach to determining whether a given file system daemon implements the `access()` method, and based on the outcome, MacFUSE will use the appropriate permissions handling.
 
   * Fix for dealing with an issue regarding "remote" (unbeknownst to MacFUSE) deletion of a file.
+
+  * Fix for one condition that can lead to the "vnode reclaimed with valid fufh" kernel panic.
 
   * Miscellaneous tweakings.
 
