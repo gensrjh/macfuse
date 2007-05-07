@@ -45,8 +45,9 @@ $ umount /some/mount/point
 
 == Changelog ==
 
-=== sshfs.app 0.3.0 (May ?, 2007) ===
+=== sshfs.app 0.3.0 (May 7, 2007) ===
 
+  * No changes to the user interface, which remains, and will remain, an *unsupported demo GUI wrapper*.
   * Fix for an sshfs crash that could occur when doing heavy I/O to a single file (such as while creating a large tarball or running `mkfile`).
   * Fix for an sshfs crash that could occur when doing heavy directory I/O in a heavily populated directory hierarchy (such as running multiple `find` commands on an sshfs volume, possibly in conjunction with some file reads).
   * Increased the timeout for the "daemon not responding" alert panel to 20 seconds from 10 seconds. On a slow link, 10 seconds wasn't enough with some heavily populated directory hierarchies. Of course, even 20 seconds may not be enough, but you can always use the `daemon_timeout` mount-time option.
