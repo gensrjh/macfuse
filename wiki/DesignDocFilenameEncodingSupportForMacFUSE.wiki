@@ -1,4 +1,4 @@
-#summary Proposal to add support for arbitary filename encoding support
+#summary Proposal to add support for arbitary filename encodings
 
 = Objective =
 
