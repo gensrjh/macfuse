@@ -23,4 +23,4 @@ File system developers, take note of the following:
   * As a sanity-check, the icon file must be no larger than 1MB. Of course, the icon file must also be readable by the user mounting the file system.
   * While developing, if you experiment with different icon files, know that the Finder's in-memory cache causes it to "remember" icon file contents a bit too much. Even if you pass another icon file through the `volname` option, the Finder will keep using the old one. Relaunching the Finder (through `killall Finder`, for example) should "fix" this.
 
-A substantial amount of new code was added to the user-space library to handle all of this. Please test enough. If you don't use the `volname` option, the newly added code will all be bypassed.
+A substantial amount of new code was added to the user-space library to handle all of this. Please test enough. If you don't use the `volicon` option, the newly added code will all be bypassed.
