@@ -9,9 +9,9 @@ Besides the extra work being, well, "extra", this approach is also somewhat infl
 
 MacFUSE 0.4.0 adds a new mount-time option (sigh... another option) called `volname`. You use it as follows:
 
-{{
+{{{
 $ sshfs user@host:/dir /some/mount/point -ovolname=/path/to/somefile.icns
-}}
+}}}
 
 That's it. MacFUSE (the user-space library, specifically) will take care of serving the `/.VolumeIcon.icns` file. MacFUSE will also make a "best effort" attempt at creating the dot-underscore file at mount time, and another best effort attempt at delting the dot-underscore file at mount time.
 
