@@ -13,7 +13,7 @@
 
   * The timeout alert panel now also covers the pre-init case, that is, the case of the in-kernel wait for the asynchronous user-kernel FUSE_INIT handshake timing out. This requires a thread callout in the kernel.
 
-  * Fix for a rare (but possible) unmount-time hang. Also fixes a rare (but possible) NULL-pointer dereference in the kernel.
+  * Fix for a rare (but possible) unmount-time hang. The same fix also fixes a rare (but possible) NULL-pointer dereference in the kernel.
 
 == MacFUSE 0.3.0 (May 7, 2007) ==
 
