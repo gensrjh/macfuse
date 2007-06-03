@@ -7,13 +7,13 @@ Due to popular demand, I added support for custom volume icons beginning with Ma
 
 Besides the extra work being, well, "extra", this approach is also somewhat inflexible because the user can't easily change the icon arbitrarily.
 
-MacFUSE 0.4.0 adds a new mount-time option (sigh... another option) called `volname`. You use it as follows:
+MacFUSE 0.4.0 adds a new mount-time option (sigh... another option) called `volicon`. You use it as follows:
 
 {{{
-$ sshfs user@host:/dir /some/mount/point -ovolname=/path/to/somefile.icns
+$ sshfs user@host:/dir /some/mount/point -ovolicon=/path/to/somefile.icns
 }}}
 
-That's it. Just add `-ovolname=/path/to/somefile.icns` and the volume will show up with the icon contained in `somefile.icns`. MacFUSE (the user-space library, specifically) will take care of serving the `/.VolumeIcon.icns` file. MacFUSE will also make a "best-effort" attempt at creating the dot-underscore file at mount time, and another best-effort attempt at delting the dot-underscore file at mount time.
+That's it. Just add `-ovolicon=/path/to/somefile.icns` and the volume will show up with the icon contained in `somefile.icns`. MacFUSE (the user-space library, specifically) will take care of serving the `/.VolumeIcon.icns` file. MacFUSE will also make a "best-effort" attempt at creating the dot-underscore file at mount time, and another best-effort attempt at delting the dot-underscore file at mount time.
 
 File system developers, take note of the following:
 
