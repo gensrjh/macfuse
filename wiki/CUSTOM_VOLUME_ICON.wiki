@@ -1,6 +1,6 @@
 #summary Using Custom Volume Icons with MacFUSE File Systems
 
-Due to popular demand, I added support for custom volume icons beginning with MacFUSE 0.4.0. Before this, you /could/ have a custom volume icon for your MacFUSE file system, but it was painful and required the file system to do extra work, specifically:
+Due to popular demand, I added support for custom volume icons beginning with MacFUSE 0.4.0. Before this, you _could_ have a custom volume icon for your MacFUSE file system, but it was painful and required the file system to do extra work, specifically:
 
   * Implement a `/.VolumeIcon.icns` file within the file system. This file's contents need to be that of the icon file.
   * At mount time, suppose the volume is mounted on `/Volume/Foo`, someone (some user interface code, or perhaps the file system itself) needs to create a "dot-underscore" file (`/Volume/._Foo`) containing metadata that designates the volume as having a custom icon.
