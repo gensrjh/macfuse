@@ -15,7 +15,7 @@
 
   * Fix for a rare (but possible) unmount-time hang. The same fix also fixes a rare (but possible) NULL-pointer dereference in the kernel.
 
-  * The locations of where things are installed have changed. The kernel extension (fusefs.kext) is no longer installed under /Library/Extensions/. Instead, the file system bundle (/System/Library/Filesystems/fusefs.fs/) now contains everything "under one roof". Moreover, fusefs.fs now contains a Support/ subdirectory that in turn contains fusefs.kext, load_fusefs, and mount_fusefs.
+  * The locations of where things are installed have changed. The kernel extension (`fusefs.kext`) is no longer installed under `/Library/Extensions/`. Instead, the file system bundle (`/System/Library/Filesystems/fusefs.fs/`) now contains everything "under one roof". Moreover, `fusefs.fs` now contains a `Support/` subdirectory that in turn contains `fusefs.kext`, `load_fusefs`, and `mount_fusefs`.
 
 == MacFUSE 0.3.0 (May 7, 2007) ==
 
