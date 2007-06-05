@@ -11,7 +11,7 @@
 
   * The `allow_root` option, whose handling was disabled until now, can now be used. Only a user who is a member of the MacFUSE Admin Group can use this option. The superuser can designate any single group id as the MacFUSE Admin Group--through the `sysctl` command (the specific sysctl variable to set is `macfuse.tunables.admin_group`). Note that by default, this variable contains the group ID of `admin` group on Mac OS X. The use of `allow_root` is *strongly discouraged* as it can make the system considerably more vulnerable to security threats.
 
-  * The timeout alert panel now also covers the pre-init case, that is, the case of the in-kernel wait for the asynchronous user-kernel FUSE_INIT handshake timing out. This requires a thread callout in the kernel.
+  * The timeout alert panel now also covers the pre-init case, that is, the case of the in-kernel wait for the asynchronous user-kernel `FUSE_INIT` handshake timing out (Whoa! That was a mouthful!). This requires a thread callout in the kernel.
 
   * Fix for a rare (but possible) unmount-time hang. The same fix also fixes a rare (but possible) NULL-pointer dereference in the kernel.
 
