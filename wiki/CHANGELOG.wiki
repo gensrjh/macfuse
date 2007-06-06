@@ -3,9 +3,11 @@
 
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
-== MacFUSE 0.4.0 (June ?, 2007) ==
+== MacFUSE 0.4.0 (June 5, 2007) ==
 
   * Support for custom volume icons in the user-space library (see [CUSTOM_VOLUME_ICON] for details). You can specify a volume icon through the new `volicon` option.
+
+  * The installation or upgrading of MacFUSE will no longer prompt for a system restart. Note that a restart was never _required_--it was only _recommended_ (you could, if you wanted to, close the Installer window instead of clicking on the `Restart` button). The MacFUSE kernel extension can be unloaded/loaded dynamically, so a restart doesn't have to be a requirement. However, if a MacFUSE volume is mounted when you upgrade MacFUSE, a subsequent mount will not work with the older kernel extension that's in kernel memory and can't be unloaded because it's busy. The new behavior is for `load_fusefs` to try to dynamically unload the old kernel extension if possible. If such unloading succeeds (or if it wasn't needed because nothing old was loaded), then everything is good. If the unloading fails, you will now see a warning dialog that tells you to either eject all currently mounted MacFUSE volumes or to restart the system.
 
   * New option `defer_auth` that causes MacFUSE to use a permissions handling model in which neither MacFUSE nor the local kernel will attempt to handle permissions. Regardless of ownership and as-seen permissions, operations will initially go through to the file system daemon, and it's up to the daemon to do what it pleases. For example, in the case of sshfs, no matter what uid, gid, or permissions you see, what happens eventually upon a file operation will depend on what the SFTP server does.
 
