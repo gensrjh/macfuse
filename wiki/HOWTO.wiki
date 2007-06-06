@@ -43,38 +43,6 @@ The core and the most critical component of MacFUSE is the kernel extension (`fu
 
 *NB* By default, all compilations are Universal.
 
-===Compile fusefs.kext===
-
-{{{
-$ cd fusefs # Go to the kernel extension source directory
-$ xcodebuild -target fusefs -configuration Release
-}}}
-
-This will build the kext as `build/Release/fusefs.kext`. The kext should go in `/Library/Extensions/` and must have the appropriate permissions.
-
-{{{
-$ sudo mkdir -p /Library/Extensions/
-$ sudo chown root:admin /Library
-$ sudo chown root:wheel /Library/Extensions
-$ sudo chmod +t /Library
-$ sudo cp -pR build/Release/fusefs.kext /Library/Extensions/
-$ sudo chown -R root:wheel /Library/Extensions/fusefs.kext
-}}}
-
-===Compile load_fusefs===
-
-{{{
-$ xcodebuild -target load_fusefs -configuration Release
-}}}
-
-`load_fusefs` is a small helper program that the MacFUSE user library calls to load `fusefs.kext` if the latter isn't already loaded. Note that `load_fusefs` needs to be installed *setuid root*. It is installed as a resource within the `fusefs.kext` bundle.
-
-{{{
-$ sudo cp build/Release/load_fusefs /Library/Extensions/fusefs.kext/Contents/Resources/
-$ sudo chown root:wheel /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
-$ sudo chmod u+s /Library/Extensions/fusefs.kext/Contents/Resources/load_fusefs
-}}}
-
 ===Copy the fusefs.fs bundle to its destination===
 
 {{{
@@ -83,17 +51,46 @@ $ sudo cp -pR build/Release/fusefs.fs /System/Library/Filesystems/
 $ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs
 }}}
 
+===Compile fusefs.kext===
+
+{{{
+$ cd fusefs # Go to the kernel extension source directory
+$ xcodebuild -target fusefs -configuration Release
+}}}
+
+This will build the kext as `build/Release/fusefs.kext`. The kext should go in `/System/Library/Filesystems/fusefs.fs/Support/` and must have the appropriate permissions.
+
+{{{
+$ sudo mkdir -p /System/Library/Filesystems/fusefs.fs/Support
+$ sudo cp -pR build/Release/fusefs.kext /System/Library/Filesystems/fusefs.fs/Support
+$ sudo chown -R root:wheel /System/Library/Filesystems/fusefs.fs/Support/fusefs.kext
+}}}
+
+===Compile load_fusefs===
+
+{{{
+$ xcodebuild -target load_fusefs -configuration Release
+}}}
+
+`load_fusefs` is a small helper program that the MacFUSE user library calls to load `fusefs.kext` if the latter isn't already loaded. Note that `load_fusefs` needs to be installed *setuid root*.
+
+{{{
+$ sudo cp build/Release/load_fusefs /System/Library/Filesystems/fusefs.fs/Support
+$ sudo chown root:wheel /System/Library/Filesystems/fusefs.fs/Support/load_fusefs
+$ sudo chmod u+s /System/Library/Filesystems/fusefs.fs/Support/load_fusefs
+}}}
+
 ===Compile mount_fusefs===
 
 {{{
 $ xcodebuild -target mount_fusefs -configuration Release
 }}}
 
-`mount_fusefs` is called by the MacFUSE user library to perform the `mount()` system call. It is installed within the `fusefs.fs` bundle (setuid root is *not* required).
+`mount_fusefs` is called by the MacFUSE user library to perform the `mount()` system call. Note that this doesn't need to be installed setuid root.
 
 {{{
-$ sudo cp build/Release/mount_fusefs /System/Library/Filesystems/fusefs.fs/
-$ sudo chown root:wheel /System/Library/Filesystems/fusefs.fs/mount_fusefs
+$ sudo cp build/Release/mount_fusefs /System/Library/Filesystems/fusefs.fs/Support/
+$ sudo chown root:wheel /System/Library/Filesystems/fusefs.fs/Support/mount_fusefs
 }}}
 
 *NB*: The `sshfs` binary package available from this project's website contains an `sshfs-static` binary that is statically linked against `glib` (but dynamically linked against `libfuse`). If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use `sshfs-static` without having to compile anything.
@@ -131,7 +128,7 @@ $ tar -xzvf fuse-2.6.5.tar.gz
 $ cd fuse-2.6.5
 $ patch -p1 < /path/to/fuse-2.6.5-macosx.patch
 ...
-$ CFLAGS="-D__FreeBSD__=10 -D_POSIX_C_SOURCE=200112L -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
+$ CFLAGS="-D__FreeBSD__=10 -D_POSIX_C_SOURCE=200112L -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc -framework CoreFoundation" ./configure --prefix=/usr/local --disable-dependency-tracking
 $ make
 $ sudo make install
 }}}
