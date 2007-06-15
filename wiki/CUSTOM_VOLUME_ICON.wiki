@@ -13,7 +13,7 @@ MacFUSE 0.4.0 adds a new mount-time option (sigh... another option) called `voli
 $ sshfs user@host:/dir /some/mount/point -ovolicon=/path/to/somefile.icns
 }}}
 
-That's it. Just add `-ovolicon=/path/to/somefile.icns` and the volume will show up with the icon contained in `somefile.icns`. MacFUSE (the user-space library, specifically) will take care of serving the `/.VolumeIcon.icns` file. MacFUSE will also make a "best-effort" attempt at creating the dot-underscore file at mount time, and another best-effort attempt at delting the dot-underscore file at mount time.
+That's it. Just add `-ovolicon=/path/to/somefile.icns` and the volume will show up with the icon contained in `somefile.icns`. MacFUSE (the user-space library, specifically) will take care of serving the `/.VolumeIcon.icns` file. MacFUSE will also make a "best-effort" attempt at creating the dot-underscore file at mount time, and another best-effort attempt at delting the dot-underscore file at unmount time.
 
 File system developers, take note of the following:
 
