@@ -41,19 +41,19 @@ http://code.google.com/p/macfuse/
 
 *Q: How can I uninstall MacFUSE Core?*
 
-A: If you installed "MacFUSE Core.pkg" version 0.1.9 or greater then you can use the uninstall script. From a terminal window run the following command *unless* you are running MacFUSE version 0.4.0 or newer:
-
-{{{
-sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
-}}}
-
-Beginning with MacFUSE 0.4.0, the location of the install script changed:
+A: Assuming you installed a version of "MacFUSE Core.pkg", beginning with version 0.4.0, you can run (from a Terminal window) the provided uninstall script to uninstall MacFUSE as follows:
 
 {{{
 sudo /System/Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 }}}
 
-If you have the 0.1.0b006 or 0.1.7 release installed then it might be easiest to upgrade to the newest release and then run the uninstall script.
+If you have a version of MacFUSE between 0.1.9 and 0.3.0 (both inclusive), the location of the uninstall script is different. You need to run:
+
+{{
+sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
+}}}
+
+If you have the ancient 0.1.0b006 or 0.1.7 release installed then it might be easiest to upgrade to the newest release and then run the uninstall script.
 
 = Mounting / Unmounting / Ejecting =
 
