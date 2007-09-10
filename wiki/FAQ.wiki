@@ -1,5 +1,5 @@
-#summary Frequently Asked Questions (and Answers)
 #labels Featured
+##summary Frequently Asked Questions (and Answers)
 
 = ntfs-3g is Slow =
 
@@ -49,7 +49,7 @@ sudo /System/Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 
 If you have a version of MacFUSE between 0.1.9 and 0.3.0 (both inclusive), the location of the uninstall script is different. You need to run:
 
-{{
+{{{
 sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
 }}}
 
