@@ -42,9 +42,7 @@ The following are some of the key components of the repository:
 
 The `10.5` and `10.4` subdirectories contain MacFUSE Core sources for Mac OS X "Leopard" and "Tiger", respectively.
 
-==0. Upgrade to Xcode 2.4==
-
-The current MacFUSE source tree has only been compiled with Xcode 2.4.x. In fact, it may not even compile with older Xcode versions. To avoid mysterious compilation and runtime failures, please upgrade to Xcode 2.4, which is a free download from Apple.
+*NB*: The current MacFUSE source tree has only been compiled with Xcode 2.4.x. In fact, it may not even compile with older Xcode versions. To avoid mysterious compilation and runtime failures, if you haven't, please upgrade to Xcode 2.4.x, which is a free download from Apple. Newer versions of Xcode should work too.
 
 ==1. Compile MacFUSE Core ==
 
