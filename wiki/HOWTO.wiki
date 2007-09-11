@@ -51,7 +51,7 @@ The current MacFUSE source tree has only been compiled with Xcode 2.4.x. In fact
 Compiling MacFUSE Core, the software atop which all MacFUSE file systems run, is no longer a complex process. Once you have the source tree checked out, you just need to run a single command from the appropriate directory, for example:
 
 {{{
-$ cd macfuse/core/10.5/
+$ cd macfuse/core/10.5/fusefs/
 $ sudo xcodebuild -target All -configuration Release # must be run as sudo
 ...
 }}}
