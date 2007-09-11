@@ -52,7 +52,7 @@ Compiling MacFUSE Core, the software atop which all MacFUSE file systems run, is
 
 {{{
 $ cd macfuse/core/10.5/fusefs/
-$ sudo xcodebuild -target All -configuration Release # must be run as root
+$ sudo xcodebuild -target All -configuration Release # must be run as root to chown/chmod output appropriately
 ...
 }}}
 
