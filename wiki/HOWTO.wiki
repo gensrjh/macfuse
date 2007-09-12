@@ -104,10 +104,7 @@ You can compile gettext (Universally) as follows:
 {{{
 $ tar -xzvf gettext-0.16.1.tar.gz
 $ cd gettext-0.16.1
-$ CFLAGS="-O0 -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" \
-  LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -fno-common" \
-  ./configure --prefix=/usr/local --disable-dependency-tracking \
-  --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
+$ CFLAGS="-O0 -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -fno-common" ./configure --prefix=/usr/local --disable-dependency-tracking --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
 $ make
 $ sudo make install
 }}}
@@ -119,12 +116,9 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.13.1.tar.gz
-$ cd glib-2.13.1
-$ CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc \
-  -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" \
-  LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -L/usr/local/lib" \
-  ./configure --prefix=/usr/local --disable-dependency-tracking --enable-static
+$ tar -xzvf glib-2.14.tar.gz
+$ cd glib-2.14
+$ CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -L/usr/local/lib" ./configure --prefix=/usr/local --disable-dependency-tracking --enable-static
 }}}
 
 If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
