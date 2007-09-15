@@ -47,7 +47,7 @@ $ sudo installer -pkg "MacFUSE Core.pkg" -target /
 
 = Setting Up Other MacFUSE-Related Software =
 
-If you wish to write a new MacFUSE-based file system on Mac OS X, you should be good to go. If you wish to compile `sshfs` or other FUSE-based file systems from the Linux world, you'll find that several of them depend upon `glib`. Therefore, it might be useful to just install a few other packages that are typically available on Linux but not on Mac OS X by default.
+If you wish to write a new MacFUSE-based file system on Mac OS X, you should be good to go. If you wish to compile `sshfs` or other FUSE-based file systems originally from the Linux world, you'll find that several of them depend upon `glib`. Therefore, it might be useful to just install a few other packages that are typically available on Linux but not on Mac OS X by default.
 
 *NB*: The `sshfs` binary package available from this project's website contains an `sshfs-static` binary that is statically linked against `glib` (but dynamically linked against `libfuse`). If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use `sshfs-static` without having to compile anything.
 
@@ -61,10 +61,14 @@ To compile and install `pkg-config` as a set of Universal binaries, do the follo
 
 {{{
 $ tar -xzvf pkg-config-<version>.gz
+...
 $ cd pkg-config-<version>/
-$ CFLAGS="-O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
+$ $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+...
 $ make
+...
 $ sudo make install
+...
 }}}
 
 This installs `pkg-config` under the `/usr/local/` hierarchy.
@@ -81,10 +85,14 @@ You can compile gettext (Universally) as follows:
 
 {{{
 $ tar -xzvf gettext-0.16.1.tar.gz
+...
 $ cd gettext-0.16.1
-$ CFLAGS="-O0 -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -fno-common" ./configure --prefix=/usr/local --disable-dependency-tracking --with-libiconv-prefix=/Developer/SDKs/MacOSX10.4u.sdk/usr
+$ $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+...
 $ make
+...
 $ sudo make install
+...
 }}}
 
 You can download `glib` from:
@@ -95,8 +103,10 @@ You can compile `glib` (Universally) as follows:
 
 {{{
 $ tar -xzvf glib-2.14.tar.gz
+...
 $ cd glib-2.14
-$ CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include" LDFLAGS="-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch ppc -L/usr/local/lib" ./configure --prefix=/usr/local --disable-dependency-tracking --enable-static
+$ $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+...
 }}}
 
 If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
@@ -173,6 +183,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
