@@ -113,22 +113,7 @@ $ $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
 
 If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
 
-Then, open `glibconfig.h` and locate the line that begins with `#define G_BYTE_ORDER`... replace it with this code block:
-
-{{{
-#if (4 != sizeof(long))
-#error no support for 64-bit compiles
-#endif
-#ifdef __LITTLE_ENDIAN__
-#define G_BYTE_ORDER G_LITTLE_ENDIAN
-#elif defined(__BIG_ENDIAN__)
-#define G_BYTE_ORDER G_BIG_ENDIAN
-#else
-#error neither __LITTLE_ENDIAN__ nor __BIG_ENDIAN__ #defined
-#endif
-}}}
-
-Now open the file `libtool` and locate the lines (there should be two) that begin with `sys_lib_search_path_spec=`... replace the entire line (in both cases) with one of the two (depending on whether you are on "Tiger" or "Leopard":
+Then open the file `libtool` and locate the lines (there should be two) that begin with `sys_lib_search_path_spec=`... replace the entire line (in both cases) with the following (choose between the 10.4 one and the 10.5 one depending on whether you are on "Tiger" or "Leopard", respectively):
 
 {{{
 sys_lib_search_path_spec=" /Developer/SDKs/MacOSX10.4u.sdk/usr/lib/ /usr/local/lib/"
@@ -175,6 +160,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
