@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This document briefly describes the steps you need to take to get a MacFUSE development environment set up starting from scratch (that is, compiling everything yourself).
+This document briefly describes the steps you need to take to get a MacFUSE development environment set up starting from scratch.
 
 *NB* If you don't wish to compile everything yourself (you shouldn't have to, unless you want to do development of MacFUSE itself), you have the option of using a precompiled version available under the Downloads tab of this project's Google Code page (http://code.google.com/p/macfuse/downloads/list). Please read the [QUICKER_START_GUIDE] document to get started with MacFUSE the fastest way.
 
@@ -20,7 +20,7 @@ If you have developer access to the repository, you can do the following:
 
 `svn checkout https://macfuse.googlecode.com/svn/trunk macfuse --username <user>`
 
-*NB*: The current MacFUSE source tree has only been compiled with Xcode 2.4.x. In fact, it may not even compile with older Xcode versions. To avoid mysterious compilation and runtime failures, if you haven't, please upgrade to Xcode 2.4.x, which is a free download from Apple. Newer versions of Xcode should work too.
+*NB*: The current MacFUSE source tree has only been compiled with Xcode 2.4.x. To avoid mysterious compilation and runtime failures, please upgrade to Xcode 2.4.x (a free download from Apple). Newer versions of Xcode should work too.
 
 ==1. Compile MacFUSE Core ==
 
@@ -173,6 +173,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
