@@ -131,11 +131,11 @@ Then, open `glibconfig.h` and locate the line that begins with `#define G_BYTE_O
 Now open the file `libtool` and locate the lines (there should be two) that begin with `sys_lib_search_path_spec=`... replace the entire line (in both cases) with one of the two (depending on whether you are on "Tiger" or "Leopard":
 
 {{{
-sys_lib_search_path_spec="/Developer/SDKs/MacOSX10.4u.sdk/usr/lib/ /usr/local/lib"
+sys_lib_search_path_spec=" /Developer/SDKs/MacOSX10.4u.sdk/usr/lib/ /usr/local/lib"
 }}}
 
 {{{
-sys_lib_search_path_spec="/Developer/SDKs/MacOSX10.5.sdk/usr/lib/ /usr/local/lib"
+sys_lib_search_path_spec=" /Developer/SDKs/MacOSX10.5.sdk/usr/lib/ /usr/local/lib"
 }}}
 
 Now, back in the terminal:
@@ -175,6 +175,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
