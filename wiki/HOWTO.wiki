@@ -51,6 +51,8 @@ If you wish to write a new MacFUSE-based file system on Mac OS X, you should be 
 
 *NB*: The `sshfs` binary package available from this project's website contains an `sshfs-static` binary that is statically linked against `glib` (but dynamically linked against `libfuse`). If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use `sshfs-static` without having to compile anything.
 
+*NB*: The version numbers in examples below aren't necessarily the ones you should be using--in general, the latest version should be good.
+
 ==1. Install pkg-config==
 
 `pkg-config` is an open source helper tool used when compiling applications and libraries. You don't *need* pkg-config to run MacFUSE, but if you're going to be compiling existing FUSE file systems (those that were written for Linux), having `pkg-config` will be helpful in many cases. To download its source and learn more about it, go here:
@@ -60,9 +62,9 @@ http://pkgconfig.freedesktop.org/wiki/
 To compile and install `pkg-config` as a set of Universal binaries, do the following:
 
 {{{
-$ tar -xzvf pkg-config-<version>.gz
+$ tar -xzvf pkg-config-0.22.tar.gz
 ...
-$ cd pkg-config-<version>/
+$ cd pkg-config-0.22
 $ $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
@@ -183,6 +185,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
