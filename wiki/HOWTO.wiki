@@ -20,28 +20,6 @@ If you have developer access to the repository, you can do the following:
 
 `svn checkout https://macfuse.googlecode.com/svn/trunk macfuse --username <user>`
 
-The following are some of the key components of the repository:
-
-{{{
-    core/
-           |_ 10.4/
-           |          |_ fusefs/
-           |          |_ libfuse/
-           |          |_ packaging/
-           |
-           |
-           |_ 10.5/
-           |           |_ fusefs/
-           |           |_libfuse/
-           |           |_ packaging/
-           |
-    filesystems/
-            |_ sshfs/
-                   |_ sshfs-fuse-<version>-macosx.patch  # Mac OS X patches for sshfs
-}}}  
-
-The `10.5` and `10.4` subdirectories contain MacFUSE Core sources for Mac OS X "Leopard" and "Tiger", respectively.
-
 *NB*: The current MacFUSE source tree has only been compiled with Xcode 2.4.x. In fact, it may not even compile with older Xcode versions. To avoid mysterious compilation and runtime failures, if you haven't, please upgrade to Xcode 2.4.x, which is a free download from Apple. Newer versions of Xcode should work too.
 
 ==1. Compile MacFUSE Core ==
@@ -49,8 +27,8 @@ The `10.5` and `10.4` subdirectories contain MacFUSE Core sources for Mac OS X "
 Compiling MacFUSE Core, the software atop which all MacFUSE file systems run, is no longer a complex process. Once you have the source tree checked out, you just need to run a single command from the appropriate directory, for example:
 
 {{{
-$ cd macfuse/core/10.5/fusefs/
-$ sudo xcodebuild -target All -configuration Release # must be run as root to chown/chmod output appropriately
+$ cd macfuse/core/
+$ sudo ./build_macfuse.sh # must be run as root to chmod/chown output correctly
 ...
 }}}
 
@@ -195,6 +173,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
