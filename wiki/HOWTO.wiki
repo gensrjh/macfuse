@@ -10,7 +10,7 @@ This document briefly describes the steps you need to take to get a MacFUSE deve
 
 The MacFUSE subversion repository is located at:
 
-http://code.google.com/p/macfuse/
+http://code.google.com/p/macfuse/source
 
 You can anonymously check out the latest project source code as follows:
 
@@ -173,6 +173,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
