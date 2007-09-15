@@ -181,21 +181,18 @@ $ tar -xzvf sshfs-fuse-1.8.tar.gz
 $ cd sshfs-fuse-1.8
 $ patch -p1 < /path/to/sshfs-fuse-1.8-macosx.patch
 ...
-$ CFLAGS="-D__FreeBSD__=10 -DSSH_NODELAY_WORKAROUND -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
+$ /bin/sh ./darwin_configure.sh
+...
+$ make
+...
 $ sudo make install
 }}}
 
 This will install the `sshfs` command-line program under `/usr/local/bin/`.
-
-This was assuming that you are compiling on Mac OS X 10.4. To make a Universal build on 10.5, the command line is slightly different:
-
-{{{
-CFLAGS="-D__FreeBSD__=10 -DSSH_NODELAY_WORKAROUND -D_POSIX_C_SOURCE=200112L -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.5.sdk" LDFLAGS="-arch i386 -arch ppc -framework CoreServices" ./configure --prefix=/usr/local --disable-dependency-tracking
-$ sudo make install
-}}}
 
 = Compiling FUSE File Systems =
 
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
