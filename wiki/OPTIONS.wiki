@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary A discussion of commonly useful mount-time options available in MacFUSE.
 #labels Featured
 
 = MacFUSE Mount-Time Options: A Brief Guide =
@@ -153,6 +153,7 @@ You can use the `volicon` option to specify an icon file that would be used as t
 
 You can use the `volname` option to specify a name for the MacFUSE volume being mounted. This is the name that would show up on the Desktop. In the absence of this option, MacFUSE will automatically generate a name that would incorporate the MacFUSE device index and the user-space file system being used. For example, an SSHFS mount might have an automatically assigned name "MacFUSE Volume 0 (sshfs)".
 
+ 
  
  
  
