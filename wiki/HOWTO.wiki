@@ -65,7 +65,7 @@ To compile and install `pkg-config` as a set of Universal binaries, do the follo
 $ tar -xzvf pkg-config-0.22.tar.gz
 ...
 $ cd pkg-config-0.22
-$ /bin/sh $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
 ...
@@ -89,7 +89,7 @@ You can compile gettext (Universally) as follows:
 $ tar -xzvf gettext-0.16.1.tar.gz
 ...
 $ cd gettext-0.16.1
-$ /bin/sh $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
 ...
@@ -107,7 +107,7 @@ You can compile `glib` (Universally) as follows:
 $ tar -xzvf glib-2.14.0.tar.gz
 ...
 $ cd glib-2.14.0
-$ /bin/sh $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 }}}
 
@@ -144,7 +144,7 @@ $ tar -xzvf sshfs-fuse-1.8.tar.gz # unpack sshfs source
 $ cd sshfs-fuse-1.8
 $ patch -p1 < /path/to/sshfs-fuse-1.8-macosx.patch # apply patch with a matching version
 ...
-$ /bin/sh $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
+$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
 ...
@@ -160,24 +160,6 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  
