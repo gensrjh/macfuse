@@ -144,7 +144,7 @@ $ tar -xzvf sshfs-fuse-1.8.tar.gz # unpack sshfs source
 $ cd sshfs-fuse-1.8
 $ patch -p1 < /path/to/sshfs-fuse-1.8-macosx.patch # apply patch with a matching version
 ...
-$ /bin/sh ./configure_for_macfuse.sh # run MacFUSE configure script
+$ /bin/sh $PATH_TO_MACFUSE_SOURCE/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
 ...
@@ -160,6 +160,7 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
+ 
  
  
  
