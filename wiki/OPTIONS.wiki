@@ -104,6 +104,10 @@ On Mac OS X 10.4.x, a user-space file system may not exit upon unmount. This is 
 
 The MacFUSE user-space library supports /stackable/ modules--entire file systems or file system shims that can be stacked atop other file systems or shims. For example, filename character set conversion can be handled through such a module. Custom volume icon support in MacFUSE is handled through the `volicon` module. In fact, the `volicon=PATH` option is a shortcut for `modules=volicon,iconpath=PATH` option combination. Note that each module can have one or more of its own arguments (`volicon` has one option: `iconpath`).
 
+  * `negative_vncache`
+
+This option enables negative vnode name caching in the kernel. That is, when a file system object name does not exist, MacFUSE will remember this upon the first lookup of that name. Thereafter, MacFUSE will not call the user-space file system upon subsequent lookups for that name--until an object of that name does get created. The negative cache is LRU managed by the kernel. This is an optimization. If you have a case where file system objects can appear "outside of MacFUSE's knowledge" (say, on a remote server in the case of a MacFUSE-based network file system), then you should NOT enable this option.
+
   * `noappledouble`
 
 This option makes MacFUSE deny all types of access to Apple Double (`._`) files and `.DS_Store` files. Any existing files will become apparently non-existent. New files that match the criteria will be disallowed from being created.
@@ -153,6 +157,7 @@ You can use the `volicon` option to specify an icon file that would be used as t
 
 You can use the `volname` option to specify a name for the MacFUSE volume being mounted. This is the name that would show up on the Desktop. In the absence of this option, MacFUSE will automatically generate a name that would incorporate the MacFUSE device index and the user-space file system being used. For example, an SSHFS mount might have an automatically assigned name "MacFUSE Volume 0 (sshfs)".
 
+ 
  
  
  
