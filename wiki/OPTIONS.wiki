@@ -88,6 +88,10 @@ Note that a file system daemon can choose to specify its own fsname and can over
 
 You can use this option to specify the file system subtype identifier for MacFUSE volume being mounted. The Finder uses this subtype to retrieve the string description (if any) for the file system. The description is what you see next to the `Format:` label in window that you get when you perform a "Get Info" Finder operation on the volume. This only works for subtype-string pairs that are already present in the MacFUSE file system bundle (`fusefs.fs`) that's installed as part of MacFUSE. You can add your own additional mappings to the bundle, or send me an email if you think your file system is useful enough to have an "official" entry.
 
+`fstypename=NAME`, where `NAME` is a string
+
+You can use this option to specify the file system's /type/ name. `NAME` can be at most 7 character (and if specified, must be at least one character). This would cause the in-kernel file system type to be `fusefs_NAME`. That is, the `fusefs_` prefix will be implied and automatically added by the kernel. Thereafter, a user-space file system that uses this option must name its on-disk file system bundle `fusefs_NAME.fs`. The Finder and other programs/libraries that look into file system bundles will now look inside this bundle (instead of the usual `fusefs.fs`) for things such as subtypes and description strings. The `fssubtype=N` option will continue to exist and work. A file system that does not need or use `fssubtypename=NAME` will work as in the past. Please note that this option is doing something the side effects of which cannot be entirely predicted because arbitrary programs can depend on the /true/ file system type--therefore, the use of this option is subject to a general "this might break things you don't know about" warning.
+
   * `iosize=N`, where N is the I/O size in bytes
 
 You can use this option to specify the I/O size MacFUSE should use while accessing the hypothetical storage device corresponding to a MacFUSE volume. The minimum possible I/O size is 512 bytes, whereas the largest is 1MB. The size must also be a power of 2.
