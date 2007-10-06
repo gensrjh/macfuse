@@ -1,7 +1,7 @@
 #labels Featured
 ##summary Frequently Asked Questions (and Answers)
 
-= What? =
+= What is it? =
 
 *Q: What is MacFUSE? Is it the same as FUSE on Linux?*
 
