@@ -60,7 +60,7 @@ An example command line for this mode of operation could look like the following
 $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 }}}
 
-If you are developing a MacFUSE file system and you want handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
+If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
  
 = Mounting / Unmounting / Ejecting =
 
