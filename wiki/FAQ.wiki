@@ -7,6 +7,7 @@
 
 On a high level, MacFUSE has two major components: an in-kernel loadable file system and a user-space library (`libfuse`). The in-kernel file system is specific to Mac OS X and is not based on Linux FUSE. The user-space library is a port of the Linux FUSE library, but has been heavily modified and extended to support Mac OS X specific features and nuances. From a user-space file system developer's standpoint, the API provided by the MacFUSE version of `libfuse` is almost identical to that on Linux.
  
+
 *Q: What is "MacFUSE Core"?*
 
 A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
