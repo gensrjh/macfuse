@@ -1,6 +1,40 @@
 #labels Featured
 ##summary Frequently Asked Questions (and Answers)
 
+= Install/Uninstall =
+
+*Q: What is "MacFUSE Core"?*
+
+A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
+
+*Q: What is the preferred way to install MacFUSE Core?*
+
+A: The preferred way is to install the `MacFUSE Core.pkg` from the latest `MacFUSE Core.dmg` available from the Downloads tab of:
+
+http://code.google.com/p/macfuse/
+
+*Q: How can I uninstall MacFUSE Core?*
+
+A: It depends on the MacFUSE version and the operating system version. Beginning with MacFUSE Core 0.4.0, you can use the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
+
+For example, to uninstall MacFUSE on Mac OS X 10.4.x, you would run the following command in the Terminal:
+
+{{{
+sudo /System/Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
+}}}
+
+To uninstall MacFUSE on Mac OS X 10.5.x, you would run:
+
+{{{
+sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
+}}}
+
+If you have a version of MacFUSE between 0.1.9 and 0.3.0 (both inclusive), the location of the uninstall script is different. You need to run:
+
+{{{
+sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
+}}}
+
 = ntfs-3g is Slow =
 
 *Q: Why is ntfs-3g's write performance so poor with MacFUSE on OS X?
@@ -27,34 +61,6 @@ $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 
 If you are developing a MacFUSE file system and you want handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
  
-= Install/Uninstall =
-
-*Q: What is "MacFUSE Core"?*
-
-A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to be able to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
-
-*Q: What is the preferred way to install MacFUSE Core?*
-
-A: The preferred way is to install the `MacFUSE Core.pkg` from the latest `MacFUSE Core.dmg` available from the Downloads tab of:
-
-http://code.google.com/p/macfuse/
-
-*Q: How can I uninstall MacFUSE Core?*
-
-A: Assuming you installed a version of "MacFUSE Core.pkg", beginning with version 0.4.0, you can run (from a Terminal window) the provided uninstall script to uninstall MacFUSE as follows:
-
-{{{
-sudo /System/Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
-}}}
-
-If you have a version of MacFUSE between 0.1.9 and 0.3.0 (both inclusive), the location of the uninstall script is different. You need to run:
-
-{{{
-sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
-}}}
-
-If you have the ancient 0.1.0b006 or 0.1.7 release installed then it might be easiest to upgrade to the newest release and then run the uninstall script.
-
 = Mounting / Unmounting / Ejecting =
 
 *Q: I can't eject a MacFUSE volume using the eject icon in the Finder. What to do?*
