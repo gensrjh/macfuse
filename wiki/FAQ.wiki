@@ -9,7 +9,7 @@ A: The ntfs-3g program opens and does I/O to the block device (`/dev/diskN`) of 
 
 Suppose we somehow automagically provided unified buffer caching for block devices by essentially making a disk look like a giant file. Even then, OS X and its buffer cache is really happy only when you do I/O that is in units of page size (4KB) and aligned on a page boundary. To get the most out of the I/O subsystem in OS X, ntfs-3g (or any other program for that matter) would really want to do I/O in multiples of 4KB.
 
-For comparison, you should try writing to an NTFS /disk image/--you will see that it's considerably faster because you do have some caching in that case. 
+For comparison, you should try writing to an NTFS _disk image_--you will see that it's considerably faster because you do have some caching in that case. 
 
 = Picking Up "Remote" Changes =
 
