@@ -1,5 +1,5 @@
+#summary Frequently Asked Questions (and Answers)
 #labels Featured
-##summary Frequently Asked Questions (and Answers)
 
 = What is it? =
 
