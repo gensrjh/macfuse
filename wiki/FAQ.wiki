@@ -29,11 +29,7 @@ To uninstall MacFUSE on Mac OS X 10.5.x, you would run:
 sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 }}}
 
-If you have a version of MacFUSE between 0.1.9 and 0.3.0 (both inclusive), the location of the uninstall script is different. You need to run:
-
-{{{
-sudo /System/Library/Filesystems/fusefs.fs/uninstall-macfuse-core.sh
-}}}
+If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
 = ntfs-3g is Slow =
 
