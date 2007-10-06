@@ -30,6 +30,7 @@ If you are developing a MacFUSE file system and you want handle such scenarios b
 = Install/Uninstall =
 
 *Q: What is "MacFUSE Core"?*
+
 A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to be able to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
 
 *Q: What is the preferred way to install MacFUSE Core?*
