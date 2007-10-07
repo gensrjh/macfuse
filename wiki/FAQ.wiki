@@ -36,7 +36,7 @@ sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 
 If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
-= ntfs-3g is Slow =
+= ntfs-3g =
 
 *Q: Why is ntfs-3g's write performance so poor with MacFUSE on OS X?
 
@@ -44,9 +44,13 @@ A: The ntfs-3g program opens and does I/O to the block device (`/dev/diskN`) of 
 
 Suppose we somehow automagically provided unified buffer caching for block devices by essentially making a disk look like a giant file. Even then, OS X and its buffer cache is really happy only when you do I/O that is in units of page size (4KB) and aligned on a page boundary. To get the most out of the I/O subsystem in OS X, ntfs-3g (or any other program for that matter) would really want to do I/O in multiples of 4KB.
 
-For comparison, you should try writing to an NTFS _disk image_--you will see that it's considerably faster because you do have some caching in that case. 
+For comparison, you should try writing to an NTFS _disk image_--you will see that it's considerably faster because you do have some caching in that case.
 
-= Picking Up "Remote" Changes =
+* Q: After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
+
+A: It's likely that you installed a broken ntfs-3g package you found on the Internet. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
+
+= sshfs =
 
 *Q: I'm using sshfs and changed a file "externally" (not through sshfs/MacFUSE) on the server, but in the sshfs volume, I'm not seeing the changes. In fact, when I copy the file through sshfs, I get the old content, etc.
 
@@ -95,30 +99,6 @@ Note that beginning with MacFUSE Core 0.2.5, the `ping_diskarb` option is enable
 A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected. You can also try to kill the file system process (`sshfs`, in this case) -- you might have to `kill -9`. Beginning with MacFUSE Core 0.2.5, there is a default daemon timeout of 10 seconds, along with a graphical alert panel that lets the user decide whether to continue waiting or to eject the volume.
 
 = NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
-
-* Q: After installing MacFUSE, my NTFS volume doesn't show up in the Startup Disk preference pane. What's going on?*
-
-A: This issue is fixed beginning with MacFUSE Core 0.1.9. If you want to fix an older release for some reason, find the following line in `/System/Library/Filesystems/fusefs.fs/Contents/Info.plist`:
-
-{{{
-    ...
-    <key>NTFS</key>
-    ...
-}}}
-
-Change the "NTFS" to "NTFS-3g", so that it reads:
-
-{{{
-    ...
-    <key>NTFS-3g</key>
-    ...
-}}}
-
-You'll need administrator privileges to edit this file. Quit and relaunch System Preferences.
-
-A related question could be that the volume shows up in Disk Utility as of type "NTFS 3g" or similar. It's the same issue, and can be remedied by the abovementioned change.
-
-Note that besides MacFUSE's fusefs.fs bundle, another non-Apple .fs bundle could be "taking over" the NTFS personality too -- so make sure.
 
 = Compiling a FUSE File System =
 
