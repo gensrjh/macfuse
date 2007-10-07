@@ -1,7 +1,7 @@
 #summary Frequently Asked Questions (and Answers)
 #labels Featured
 
-= What is it? =
+= Introductory Questions =
 
 *Q: What is MacFUSE? Is it the same as FUSE on Linux?*
 
@@ -10,7 +10,8 @@ MacFUSE is software that allows you to write arbitrary file systems as user-spac
 *Q: What is "MacFUSE Core"?*
 
 A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
-= Install/Uninstall =
+
+= Install/Uninstall Questions =
 
 *Q: What is the preferred way to install MacFUSE Core?*
 
@@ -36,7 +37,9 @@ sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 
 If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
-= ntfs-3g =
+= File System Specific Questions =
+
+== ntfs-3g ==
 
 *Q: Why is ntfs-3g's write performance so poor with MacFUSE on OS X?
 
@@ -50,7 +53,7 @@ For comparison, you should try writing to an NTFS _disk image_--you will see tha
 
 A: It's likely that you installed a broken ntfs-3g package you found on the Internet. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
 
-= sshfs =
+== sshfs ==
 
 *Q: I'm using sshfs and changed a file "externally" (not through sshfs/MacFUSE) on the server, but in the sshfs volume, I'm not seeing the changes. In fact, when I copy the file through sshfs, I get the old content, etc.
 
@@ -66,7 +69,7 @@ $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 
 If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
  
-= Various Usage Questions =
+= Other Usage Questions =
 
 *Q: How should I unmount my fuse-based filesystem? I can't find the `fusermount` program anywhere.*
 
@@ -76,7 +79,7 @@ A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-
 
 A: Use the `volname` command-line option. See [OPTIONS] for details.
 
-= Compiling a FUSE File System =
+= Developer Questions =
 
 *Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?*
 
