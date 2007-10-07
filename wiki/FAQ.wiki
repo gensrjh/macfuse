@@ -73,6 +73,18 @@ If you are developing a MacFUSE file system and you want to handle such scenario
  
 = Other Usage Questions =
 
+*Q: I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
+
+A: For several reasons, by default, MacFUSE allows access to a volume _only_ to the user who mounted the volume. All other users, _including_ the superuser is denied access. You can change this behavior if you need to. Refer to the `allow_other` and `allow_root` mount-time options in the [OPTIONS] document.
+
+*Q: Can I enable Spotlight on a MacFUSE file system?*
+
+A: Yes, but by default, Spotlight processes running as root would not be able to access the volume, so you have to use certain mount-time options. See the answer to the previous question.
+
+*Q: I tried to run `gdb` on an executable residing on a MacFUSE file system but I got an "operation not permitted" error. What's going on?*
+
+A: `gdb` is a setgid executable on Mac OS X (see `/usr/libexec/*gdb*`). Therefore, under MacFUSE's default mode of operation, it won't have access to MacFUSE volumes. See the previous questions.
+
 *Q: How should I unmount my MacFUSE files ystem? I can't find the `fusermount` program anywhere.*
 
 A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
