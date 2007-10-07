@@ -77,7 +77,7 @@ If you are developing a MacFUSE file system and you want to handle such scenario
 
 A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
 
-*Q: All my filesystems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
+*Q: All my file systems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
 
 A: Use the `volname` command-line option. See [OPTIONS] for details.
 
