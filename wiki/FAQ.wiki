@@ -66,39 +66,15 @@ $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 
 If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
  
-= Mounting / Unmounting / Ejecting =
+= Various Usage Questions =
 
-*Q: I can't eject a MacFUSE volume using the eject icon in the Finder. What to do?*
+*Q: How should I unmount my fuse-based filesystem? I can't find the `fusermount` program anywhere.*
 
-A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. MacFUSE's interaction with the Finder improved greatly in MacFUSE Core 0.1.9. Before MacFUSE Core 0.2.5, to get better Finder interaction, you had to use the `-oping_diskarb` command-line option while mounting a file system from the command line. If using a GUI wrapper, the GUI had do this for you (or perform some other action that keeps the Finder in the loop). Beginning with MacFUSE Core 0.2.5, the `ping_diskarb` option is enabled automatically (you can still specify it for backward compatibility). There is also a new option `noping_diskarb` that you can use to turn off the effect of `ping_diskarb`.
+A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
 
-If the Finder is "beachballing" because the user-space file system has lost network connectivity, etc., then you can `kill -TERM` (or `kill -KILL`, if the need be) the file system process, which will cause the volume to be ejected.
+*Q: All my filesystems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
 
-*Q: How should I unmount my fuse-based filesystem? I can't find `fusermount` anywhere.*
-
-A: Just use the standard `umount` command in Mac OS X. You don't need `fusermount` with MacFUSE.
-
-*Q: When trying to use a fuse-based filesystem, I get:*
-
-{{{
-fuse: failed to exec mount program: No such file or directory
-}}}
-
-A: Are you using an older release of MacFUSE? If so, please upgrade to the latest. You shouldn't see this error in releases beginning with MacFUSE 0.1.7. If you *do* see this error with a newer release, that means the program you are trying to run is "picking up" an older user library that still wants `mount_fusefs` to be in your `PATH`.
-
-*Q: All my filesystems are showing up in the Finder as "FUSE Volume n" for some number n. What should I do?*
-
-A: Use the command-line option `-ovolname=<<some name>>` as well as `-oping_diskarb`. 'volname' sets a name for the volume, and `ping_diskarb` causes it to appear on the Desktop and in the Finder. This way, you can also eject the volume through the Finder.
-
-Note that beginning with MacFUSE Core 0.2.5, the `ping_diskarb` option is enabled automatically (you can still specify it for backward compatibility). There is also a new option `noping_diskarb` that you can use to turn off the effect of `ping_diskarb`.
-
-= Finder "Beachballing" When SSH Connection Drops/Resets/Changes =
-
-*Q: When I have an SSHFS volume mounted and something happens to the connection (or my computer wakes up from sleep), the Finder beachballs. Can I do something about this?*
-
-A: Try using the `-o reconnect` option to `sshfs`. MacFUSE Core 0.1.9 introduced better Finder interaction, along with the `-o daemon_timeout` option that lets you specify a hard upper limit after which a "hung" volume will be automatically ejected. You can also try to kill the file system process (`sshfs`, in this case) -- you might have to `kill -9`. Beginning with MacFUSE Core 0.2.5, there is a default daemon timeout of 10 seconds, along with a graphical alert panel that lets the user decide whether to continue waiting or to eject the volume.
-
-= NTFS Volume Stops Showing Up in Startup Disk Preference Pane =
+A: Use the `volname` command-line option. See [OPTIONS] for details.
 
 = Compiling a FUSE File System =
 
