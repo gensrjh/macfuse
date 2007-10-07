@@ -1,6 +1,8 @@
 #summary Frequently Asked Questions (and Answers)
 #labels Featured
 
+If the question you have isn't answered here, try posting it to the [http://groups.google.com/group/macfuse-devel macfuse-devel] group.
+
 = Introductory Questions =
 
 *Q: What is MacFUSE? Is it the same as FUSE on Linux?*
