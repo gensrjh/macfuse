@@ -53,7 +53,7 @@ For comparison, you should try writing to an NTFS _disk image_--you will see tha
 
 * Q: After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
 
-A: It's likely that you installed a broken ntfs-3g package you found on the Internet. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
+A: It's likely that you installed a broken ntfs-3g package you found on the Internet. The package might be interfering with the disk image/disc mounting process. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
 
 == sshfs ==
 
@@ -73,7 +73,7 @@ If you are developing a MacFUSE file system and you want to handle such scenario
  
 = Other Usage Questions =
 
-*Q: How should I unmount my fuse-based filesystem? I can't find the `fusermount` program anywhere.*
+*Q: How should I unmount my MacFUSE files ystem? I can't find the `fusermount` program anywhere.*
 
 A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
 
