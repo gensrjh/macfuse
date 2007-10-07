@@ -1,6 +1,6 @@
 #summary Very simple example file system for MacFUSE.
 
-=== This file contains the source listing for a very simple FUSE file system. =
+=== This file contains the source listing for a very simple MacFUSE file system. =
 
 === Source listing begins next. To use, copy text from here and paste into your source file. =
 
@@ -103,8 +103,6 @@ main(int argc, char **argv)
 }
 
 }}}
-
-
 
 
 
