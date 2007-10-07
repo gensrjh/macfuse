@@ -85,7 +85,7 @@ A: Yes, but by default, Spotlight processes running as root would not be able to
 
 A: `gdb` is a setgid executable on Mac OS X (see `/usr/libexec/*gdb*`). Therefore, under MacFUSE's default mode of operation, it won't have access to MacFUSE volumes. See the previous questions.
 
-*Q: How should I unmount my MacFUSE files ystem? I can't find the `fusermount` program anywhere.*
+*Q: How should I unmount my MacFUSE file system? I can't find the `fusermount` program anywhere.*
 
 A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
 
