@@ -5,7 +5,7 @@
 
 == MacFUSE 1.0.0 (October ?, 2007) ==
 
-=== Leopard Support
+=== Leopard Support ===
 
   * Largely identical codebases for Mac OS X "Tiger" and "Leopard", but with platform-specific optimizations and improvements.
   * Leopard binaries, both for kernel and user code, link against 10.5 SDKs.
@@ -15,17 +15,17 @@
   * Leopard-specific volume and other attributes recognized.
   * Much improved Finder interaction.
 
-=== New/Improved Mount-Time Options
+=== New/Improved Mount-Time Options ===
 
   * Please see http://code.google.com/p/macfuse/wiki/OPTIONS for details.
 
-=== Build and Packaging Improvements
+=== Build and Packaging Improvements ===
 
   * Much simplified compilation and package building: a single command can build all components into a ready-to-install package. Unified and simplified configuration scripts now available for both core MacFUSE components as well as file systems such as sshfs.
   * Improved packaging. Note that the MacFUSE disk image name now includes the OS version.
   * Cleaner project structure as visible in Xcode. Leopard version done in Xcode 3.x.
 
-=== Improvements and Feature Additions (Kernel)
+=== Improvements and Feature Additions (Kernel) ===
 
   * Improved operation when in direct I/O mode: better pagein/pageout failure handling; cached file size purged appropriately upon writes; execution denial when direct I/O enabled.
   * Improved permissions handling that can adaptively take input from the kernel, the kernel part of MacFUSE, and user-space file systems.
@@ -51,7 +51,7 @@
   * Support for "canfail" (non-panic'ing) versions of memory allocation and IPC parameter packing calls.
   * Experimental support for the `FUSE_INTERRUPT` message.
 
-=== Improvements and Feature Additions (User Space)
+=== Improvements and Feature Additions (User Space) ===
 
   * Custom volume icon support is now provided through a _stack module_ in the user-space library.
   * User-space library now based on FUSE library version 2.7.0, with several improvements and new features such as _module stacking_.
@@ -61,12 +61,12 @@
   * The pass-through file system (xmp) has been overhauled for MacFUSE to be a reference file system. In particular, it has more extensive support for resource forks and extended attributes in general.
   * `mount_fusefs` now dynamically looks up file system personalities in the on-disk `Info.plist` file; has fuzzy match support for heuristic matching of a file system type to the exec path of a file system daemon.
 
-=== Performance and Resource Consumption
+=== Performance and Resource Consumption ===
 
   * Greatly reduced kernel memory consumption. Proactive memory freeing triggered when giant buffers are detected.
   * Logic overhauling and redundancy analysis used to reduce the number of certain calls (such as `vnop_access`) in highly trafficked paths.
 
-=== Bugfixes (Kernel)
+=== Bugfixes (Kernel) ===
 
   * Fixed `mmap` descriptor-type mismatch issue.
   * Fixed an erroneous delete/rename-time kauth check.
@@ -83,27 +83,27 @@
   * Fixed deadlock because of a bug in the deadfs shim.
   * Fixed a bug in the handling of per-vnode noncached I/O.
 
-=== Bugfixes (User Space)
+=== Bugfixes (User Space) ===
 
   * Fixed an issue with the user-space daemon not exiting upon certain failed mount attempts.
   * Fixed thread cancelation issues in the user-space library.
   * Fixed an issue with the unmount code in the user-space library depending on the mount path alone.
   * Fixed issue with Python bindings not loading with the bleeding edge version of MacFUSE.
 
-=== Introspection and Debugging Support
+=== Introspection and Debugging Support ===
 
   * Added debugging control for printing all vnodes for a given mount.
   * Added debugging control for "hard killing" a MacFUSE volume.
   * More detailed log messages (with vnode names in some cases).
   * Several counters, resource usage statistics, and tunable variables accessible through the sysctl interface. (Try `sysctl macfuse`)
 
-=== New/Updated Documentation
+=== New/Updated Documentation ===
 
   * Mount-Time Options (http://code.google.com/p/macfuse/wiki/OPTIONS)
   * FAQ (http://code.google.com/p/macfuse/wiki/FAQ)
   * HOWTO (http://code.google.com/p/macfuse/wiki/HOWTO)
 
-=== Specific File Systems
+=== Specific File Systems ===
 
   * Several improvements and bugfixes for sshfs.
   * procfs overhauled; now Leopard-only.
