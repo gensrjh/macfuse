@@ -18,7 +18,7 @@
 
 === New/Improved Mount-Time Options ===
 
-  * Please see http://code.google.com/p/macfuse/wiki/OPTIONS for details.
+  * This release has several new mount-time options. Please see http://code.google.com/p/macfuse/wiki/OPTIONS for details.
 
 === Build and Packaging Improvements ===
 
