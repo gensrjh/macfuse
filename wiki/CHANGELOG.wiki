@@ -11,9 +11,10 @@
   * Leopard binaries, both for kernel and user code, link against 10.5 SDKs.
   * Operating environment compatibility now checked and ensured at various levels: in the user-space library, in the mount utility, and in the load utility. Compatibility failure is reported through system-wide notifications and through GUI dialogs, which can optionally be suppressed.
   * `open` now supports `O_SYMLINK`.
-  * Reference file system now supports lchmod.
+  * Reference file system now supports `lchmod`.
   * Leopard-specific volume and other attributes recognized.
   * Much improved Finder interaction.
+  * Custom volume icon support based entirely on extended attributes.
 
 === New/Improved Mount-Time Options ===
 
