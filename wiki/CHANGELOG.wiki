@@ -15,6 +15,7 @@
   * Leopard-specific volume capabilities, volume attributes, and file attributes recognized.
   * Much improved Finder interaction: better mount-time behavior, better support for Finder metadata, better handling of file system failure.
   * Custom volume icon support based entirely on extended attributes.
+  * Installed under `/Library/Filesystems/` on Leopard.
 
 === New/Improved Mount-Time Options ===
 
