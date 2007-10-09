@@ -20,12 +20,6 @@
 
   * This release has several new mount-time options. Please see http://code.google.com/p/macfuse/wiki/OPTIONS for details.
 
-=== Build and Packaging Improvements ===
-
-  * Much simplified compilation and package building: a single command can build all components into a ready-to-install package. Unified and simplified configuration scripts now available for both core MacFUSE components as well as file systems such as sshfs.
-  * Improved packaging. Note that the MacFUSE disk image name now includes the OS version.
-  * Cleaner project structure as visible in Xcode. Leopard version done in Xcode 3.x.
-
 === Improvements and Feature Additions (Kernel) ===
 
   * Improved operation when in direct I/O mode: better pagein/pageout failure handling; cached file size purged appropriately upon writes; execution denial when direct I/O enabled.
@@ -103,6 +97,12 @@
   * Mount-Time Options (http://code.google.com/p/macfuse/wiki/OPTIONS)
   * FAQ (http://code.google.com/p/macfuse/wiki/FAQ)
   * HOWTO (http://code.google.com/p/macfuse/wiki/HOWTO)
+
+=== Build and Packaging Improvements ===
+
+  * Much simplified compilation and package building: a single command can build all components into a ready-to-install package. Unified and simplified configuration scripts now available for both core MacFUSE components as well as file systems such as sshfs.
+  * Improved packaging. Note that the MacFUSE disk image name now includes the OS version.
+  * Cleaner project structure as visible in Xcode. Leopard version done in Xcode 3.x.
 
 === Specific File Systems ===
 
