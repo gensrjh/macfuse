@@ -87,7 +87,7 @@ http://groups.google.com/group/macfuse-devel/t/5dbb1af9eb4b3e06
  
 = Other Usage Questions =
 
-*Q: Why do MacFUSE volumes show up as "server" (or "network volume") icons?*
+*Q: Why do MacFUSE volumes show up with "server" (or "network volume") icons?*
 
 A: To be precise, MacFUSE volumes show up as _non-local_ volumes, which the Finder unfortunately treats the same as "servers". It's a good question as to why MacFUSE tags its volumes as non-local. Some people think that in the case of disk-based file systems such as ntfs-3g, MacFUSE must tag the volume as local. Not so fast. For a volume to be local on Mac OS X, you need a "real" disk device--a `/dev/disk*` style node. Such a real disk device node in MacFUSE's case is problematic: at mount time, for a local volume, the kernel would _itself_ open the device node and pass it to MacFUSE. In doing so, the kernel would make sure that the device is not currently in use (for one, to disallow multiple mounts of the same device). This happens before control passes to MacFUSE and mounting can proceed. This would have been fine if the entire file system lived in the kernel, but in MacFUSE's case, the user-space file system program would _also_ want to (exclusively) open the disk device.
 
