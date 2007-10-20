@@ -20,7 +20,7 @@ If you have developer access to the repository, you can do the following:
 
 `svn checkout https://macfuse.googlecode.com/svn/trunk macfuse --username <user>`
 
-*NB*: The current MacFUSE source tree has only been compiled with Xcode 2.4.x. To avoid mysterious compilation and runtime failures, please upgrade to Xcode 2.4.x (a free download from Apple). Newer versions of Xcode should work too.
+*NB*: The current MacFUSE source tree has only been compiled with Xcode 3.x (Leopard) and Xcode 2.4.x/2.5.x (Tiger). To avoid mysterious compilation and runtime failures, please upgrade to an appropriate Xcode version, which should be a free download from Apple.
 
 ==1. Compile MacFUSE Core ==
 
@@ -104,16 +104,16 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.14.0.tar.gz
+$ tar -xzvf glib-2.14.2.tar.gz
 ...
-$ cd glib-2.14.0
+$ cd glib-2.14.2
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 }}}
 
-If you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
+Only if you are on a *PowerPC* Macintosh, comment out one line in `config.h`: `// #define G_ATOMIC_POWERPC 1`
 
-Then open the file `libtool` and locate the lines (there should be two) that begin with `sys_lib_search_path_spec=`... replace the entire line (in both cases) with the following (choose between the 10.4 one and the 10.5 one depending on whether you are on "Tiger" or "Leopard", respectively):
+Additionally (again, only on *PowerPC*), open the file `libtool` and locate the lines (there should be two) that begin with `sys_lib_search_path_spec=`... replace the entire line (in both cases) with the following (choose between the 10.4 one and the 10.5 one depending on whether you are on "Tiger" or "Leopard", respectively):
 
 {{{
 sys_lib_search_path_spec=" /Developer/SDKs/MacOSX10.4u.sdk/usr/lib/ /usr/local/lib/"
