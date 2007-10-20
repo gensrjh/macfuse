@@ -87,6 +87,16 @@ http://groups.google.com/group/macfuse-devel/t/5dbb1af9eb4b3e06
  
 = Other Usage Questions =
 
+*Q: Why do MacFUSE volumes show up as "server" (or "network volume") icons?*
+
+A: To be precise, MacFUSE volumes show up as _non-local_ volumes, which the Finder unfortunately treats the same as "servers". It's a good question as to why MacFUSE tags its volumes as non-local. Some people think that in the case of disk-based file systems such as ntfs-3g, MacFUSE must tag the volume as local. Not so fast. For a volume to be local on Mac OS X, you need a "real" disk device--a `/dev/disk*` style node. Such a real disk device node in MacFUSE's case is problematic: at mount time, for a local volume, the kernel would _itself_ open the device node and pass it to MacFUSE. In doing so, the kernel would make sure that the device is not currently in use (for one, to disallow multiple mounts of the same device). This happens before control passes to MacFUSE and mounting can proceed. This would have been fine if the entire file system lived in the kernel, but in MacFUSE's case, the user-space file system program would _also_ want to (exclusively) open the disk device.
+
+Moreover, Disk Arbitration also gets involved in mounting and unmounting "local" volumes--this may be undesirable in some cases.
+
+Technical reasons aside, there are arguments to justify that all MacFUSE volumes are, in fact, "remote". (The semantics of "local" and "remote" are debatable, but that's another discussion.) As far as the MacFUSE vfs is concerned, any and all volumes are remote in that their backing store lives across the kernel-user boundary, in a program that encapsulates backing store knowledge. MacFUSE doesn't care about where the real backing store is--across the network, in the user program's memory, or on a "local" disk device.
+
+One way to think of MacFUSE user-space file systems is indeed as "servers"--in the microkernel sense.
+
 *Q: I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
 
 A: For several reasons, by default, MacFUSE allows access to a volume _only_ to the user who mounted the volume. All other users, _including_ the superuser is denied access. You can change this behavior if you need to. Refer to the `allow_other` and `allow_root` mount-time options in the [OPTIONS] document.
