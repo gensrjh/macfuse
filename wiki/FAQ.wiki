@@ -7,7 +7,7 @@ If the question you have isn't answered here, try posting it to the [http://grou
 
 *Q: What is MacFUSE? Is it the same as FUSE on Linux?*
 
-MacFUSE is software that allows you to write arbitrary file systems as user-space programs. A crude way to look at this would be to think of MacFUSE as something that makes Mac OS X work like a _microkernel_ for the purpose of writing/running file systems. MacFUSE has two major components: an in-kernel loadable file system and a user-space library (`libfuse`). The in-kernel file system is specific to Mac OS X and is not based on Linux FUSE. (Some of its code is based on the FreeBSD version of FUSE.) The user-space library is a port of the Linux FUSE library, but has been heavily modified and extended to support Mac OS X specific features and nuances. From a user-space file system developer's standpoint, the API provided by the MacFUSE version of `libfuse` is almost identical to that on Linux.
+MacFUSE is software that allows you to write arbitrary file systems as user-space programs. You can think of it as a library for easily developing file systems. Another crude way to look at this would be to think of MacFUSE as something that makes Mac OS X work like a _microkernel_ for the purpose of writing/running file systems. MacFUSE has two major components: an in-kernel loadable file system and a user-space library (`libfuse`). The in-kernel file system is specific to Mac OS X and is not based on Linux FUSE. (Some of its code is based on the FreeBSD version of FUSE.) The user-space library is a port of the Linux FUSE library, but has been heavily modified and extended to support Mac OS X specific features and nuances. From a user-space file system developer's standpoint, the API provided by the MacFUSE version of `libfuse` is almost identical to that on Linux.
 
 *Q: What is "MacFUSE Core"?*
 
@@ -96,6 +96,10 @@ Moreover, Disk Arbitration also gets involved in mounting and unmounting "local"
 Technical reasons aside, there are arguments to justify that all MacFUSE volumes are, in fact, "remote". (The semantics of "local" and "remote" are debatable, but that's another discussion.) As far as the MacFUSE vfs is concerned, any and all volumes are remote in that their backing store lives across the kernel-user boundary, in a program that encapsulates backing store knowledge. MacFUSE doesn't care about where the real backing store is--across the network, in the user program's memory, or on a "local" disk device.
 
 One way to think of MacFUSE user-space file systems is indeed as "servers"--in the microkernel sense.
+
+*Q: I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
+
+A: MacFUSE is like a programming library. Individual MacFUSE file systems (like ntfs-3g, procfs, sshfs, etc.) are programs written using that library. The quality and behavior of individual programs--of any kind--can vary wildly, and may or may not be an issue with the underlying library. If you have poor experience with an individual MacFUSE file system, please determine (or help determine) if it's an issue specific to that file system or if it's a general issue with MacFUSE. File systems are complex beasts. MacFUSE does simplify their implementation enormously, but nontrivial user-space file systems can still be complex, and their performance/behavior can depend upon numerous factors. When in doubt, feel free to post your questions on the macfuse-devel mailing list.
 
 *Q: I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
 
