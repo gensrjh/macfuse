@@ -97,27 +97,46 @@ Technical reasons aside, there are arguments to justify that all MacFUSE volumes
 
 One way to think of MacFUSE user-space file systems is indeed as "servers"--in the microkernel sense.
 
-*Q 4.2. I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
+*Q 4.2. I mounted a MacFUSE volume but I don't see a volume icon on the Desktop. Why?*
+
+A: Check if the Finder preference for showing mounted servers on the Desktop is enabled. (Also see *Q 4.1* to understand why we are talking about "servers" here.) On Mac OS X "Leopard", this preference is _not_ enabled by default. You can either check if `Finder->Preferences->General->Connected servers` is checked, or you can use the `defaults` command from a shell:
+
+{{{
+$ defaults read com.apple.Finder ShowMountedServersOnDesktop
+0
+}}}
+
+If the preference is unchecked, you can check it or use `defaults` to set its value to 1:
+
+{{{
+$ defaults read com.apple.Finder ShowMountedServersOnDesktop 1
+}}}
+
+*Q 4.3. On Mac OS X "Leopard", I mounted a MacFUSE volume but I don't see a volume icon in the Finder's sidebar. I've looked at all relevant Finder preferences, but still nothing. What's happening?*
+
+A: Ah the Finder and its infinite wisdom. On "Leopard, the Finder by default won't show a MacFUSE volume under the "DEVICES" section of the sidebar because the volume isn't "local". The Finder won't show the volume under "SHARED" (even though it's "nonlocal") because it apparently thinks that nonlocal volumes must be of types such as AFP, NFS, SMB, and such. Also see *Q 4.1* and *Q 4.2*. Things were better on "Tiger" in this regard.
+
+*Q 4.4. I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
 
 A: MacFUSE is like a programming library. Individual MacFUSE file systems (like ntfs-3g, procfs, sshfs, etc.) are programs written using that library. The quality and behavior of individual programs--of any kind--can vary wildly, and may or may not be an issue with the underlying library. If you have poor experience with an individual MacFUSE file system, please determine (or help determine) if it's an issue specific to that file system or if it's a general issue with MacFUSE. File systems are complex beasts. MacFUSE does simplify their implementation enormously, but nontrivial user-space file systems can still be complex, and their performance/behavior can depend upon numerous factors besides MacFUSE itself. When in doubt, feel free to post your questions on the [http://groups.google.com/group/macfuse-devel macfuse-devel] group.
 
-*Q 4.3. I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
+*Q 4.5. I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
 
 A: For several reasons, by default, MacFUSE allows access to a volume _only_ to the user who mounted the volume. All other users, _including_ the superuser is denied access. You can change this behavior if you need to. Refer to the `allow_other` and `allow_root` mount-time options in the [OPTIONS] document.
 
-*Q 4.4. Can I enable Spotlight on a MacFUSE file system?*
+*Q 4.6. Can I enable Spotlight on a MacFUSE file system?*
 
 A: Yes, but by default, Spotlight processes running as root would not be able to access the volume, so you have to use certain mount-time options. See the answer to the previous question.
 
-*Q 4.5. I tried to run `gdb` on an executable residing on a MacFUSE file system but I got an "operation not permitted" error. What's going on?*
+*Q 4.7. I tried to run `gdb` on an executable residing on a MacFUSE file system but I got an "operation not permitted" error. What's going on?*
 
 A: `gdb` is a setgid executable on Mac OS X (see `/usr/libexec/*gdb*`). Therefore, under MacFUSE's default mode of operation, it won't have access to MacFUSE volumes. See the previous questions.
 
-*Q 4.6. How should I unmount my MacFUSE file system? I can't find the `fusermount` program anywhere.*
+*Q 4.8. How should I unmount my MacFUSE file system? I can't find the `fusermount` program anywhere.*
 
 A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
 
-*Q 4.7. All my file systems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
+*Q 4.9. All my file systems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
 
 A: Use the `volname` command-line option. See [OPTIONS] for details.
 
