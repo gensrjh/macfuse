@@ -89,13 +89,17 @@ http://groups.google.com/group/macfuse-devel/t/5dbb1af9eb4b3e06
 
 *Q 4.1. Why do MacFUSE volumes show up with "server" (or "network volume") icons?*
 
-A: To be precise, MacFUSE volumes show up as _non-local_ volumes, which the Finder unfortunately treats the same as "servers". It's a good question as to why MacFUSE tags its volumes as non-local. Some people think that in the case of disk-based file systems such as ntfs-3g, MacFUSE must tag the volume as local. Not so fast. For a volume to be local on Mac OS X, you need a "real" disk device--a `/dev/disk*` style node. Such a real disk device node in MacFUSE's case is problematic: at mount time, for a local volume, the kernel would _itself_ open the device node and pass it to MacFUSE. In doing so, the kernel would make sure that the device is not currently in use (for one, to disallow multiple mounts of the same device). This happens before control passes to MacFUSE and mounting can proceed. This would have been fine if the entire file system lived in the kernel, but in MacFUSE's case, the user-space file system program would _also_ want to (exclusively) open the disk device.
+A: To be precise, by default MacFUSE volumes show up as _nonlocal_ volumes, which the Finder unfortunately treats the same as "servers". It's a good question as to why MacFUSE normally tags its volumes as nonlocal. Some people think that in the case of disk-based file systems such as ntfs-3g, MacFUSE _must_ tag the volume as local. Well, let us see.
+
+For a vfs to be local on Mac OS X, you need a "real" disk device--a `/dev/disk*` style node. Such a real disk device node in MacFUSE's case is problematic: at mount time, for a local volume, the kernel would _itself_ open the device node and pass it to MacFUSE. In doing so, the kernel would make sure that the device is not currently in use (for one, to disallow multiple mounts of the same device). This happens before control passes to MacFUSE and mounting can proceed. This would have been fine if the entire file system lived in the kernel, but in MacFUSE's case, the user-space file system program would _also_ want to (exclusively) open the disk device.
 
 Moreover, Disk Arbitration also gets involved in mounting and unmounting "local" volumes--this may be undesirable in some cases.
 
 Technical reasons aside, there are arguments to justify that all MacFUSE volumes are, in fact, "remote". (The semantics of "local" and "remote" are debatable, but that's another discussion.) As far as the MacFUSE vfs is concerned, any and all volumes are remote in that their backing store lives across the kernel-user boundary, in a program that encapsulates backing store knowledge. MacFUSE doesn't care about where the real backing store is--across the network, in the user program's memory, or on a "local" disk device.
 
 One way to think of MacFUSE user-space file systems is indeed as "servers"--in the microkernel sense.
+
+All this said, it _is_ possible to tag a specific mount point as "local" at mount time. If you wish to do so, you can use the `-o local` MacFUSE mount-time option.
 
 *Q 4.2. I mounted a MacFUSE volume but I don't see a volume icon on the Desktop. Why?*
 
@@ -112,9 +116,11 @@ If the preference is unchecked, you can check it within the GUI or use `defaults
 $ defaults read com.apple.Finder ShowMountedServersOnDesktop 1
 }}}
 
+Alternatively, you can use the `-o local` MacFUSE mount-time option to tag the volume being mounted as "local", in which case it would show up on the Desktop unless you have disabled "external disks" from showing up on the Desktop.
+
 *Q 4.3. On Mac OS X "Leopard", I mounted a MacFUSE volume but I don't see a volume icon in the Finder's sidebar. I've looked at all relevant Finder preferences, but still nothing. What's happening?*
 
-A: Ah the Finder and its infinite wisdom. On "Leopard, the Finder by default won't show a MacFUSE volume under the "DEVICES" section of the sidebar because the volume isn't "local". The Finder won't show the volume under "SHARED" (even though it's "nonlocal") because it apparently thinks that nonlocal volumes must be of types such as AFP, NFS, SMB, and such. Also see *Q 4.1* and *Q 4.2*. Things were better on "Tiger" in this regard.
+A: Ah the Finder and its infinite wisdom. On "Leopard, the Finder by default won't show a MacFUSE volume under the "DEVICES" section of the sidebar because the volume isn't "local". The Finder won't show the volume under "SHARED" (even though it's "nonlocal") because it apparently thinks that nonlocal volumes must be of types such as AFP, NFS, SMB, and such. If you really want the volume to show up in the sidebar, you can use the `-o local` MacFUSE mount-time option. Also see *Q 4.1* and *Q 4.2*.
 
 *Q 4.4. I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
 
