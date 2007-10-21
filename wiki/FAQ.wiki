@@ -106,7 +106,7 @@ $ defaults read com.apple.Finder ShowMountedServersOnDesktop
 0
 }}}
 
-If the preference is unchecked, you can check it or use `defaults` to set its value to 1:
+If the preference is unchecked, you can check it within the GUI or use `defaults` to set its value to 1:
 
 {{{
 $ defaults read com.apple.Finder ShowMountedServersOnDesktop 1
