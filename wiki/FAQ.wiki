@@ -3,25 +3,25 @@
 
 If the question you have isn't answered here, try posting it to the [http://groups.google.com/group/macfuse-devel macfuse-devel] group.
 
-= Introductory Questions =
+= 1. Introductory Questions =
 
-*Q: What is MacFUSE? Is it the same as FUSE on Linux?*
+*Q 1.1. What is MacFUSE? Is it the same as FUSE on Linux?*
 
 MacFUSE is software that allows you to write arbitrary file systems as user-space programs. You can think of it as a library for easily developing file systems. Another crude way to look at this would be to think of MacFUSE as something that makes Mac OS X work like a _microkernel_ for the purpose of writing/running file systems. MacFUSE has two major components: an in-kernel loadable file system and a user-space library (`libfuse`). The in-kernel file system is specific to Mac OS X and is not based on Linux FUSE. (Some of its code is based on the FreeBSD version of FUSE.) The user-space library is a port of the Linux FUSE library, but has been heavily modified and extended to support Mac OS X specific features and nuances. From a user-space file system developer's standpoint, the API provided by the MacFUSE version of `libfuse` is almost identical to that on Linux.
 
-*Q: What is "MacFUSE Core"?*
+*Q 1.2. What is "MacFUSE Core"?*
 
 A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
 
-= Install/Uninstall Questions =
+= 2. Install/Uninstall Questions =
 
-*Q: What is the preferred way to install MacFUSE Core?*
+*Q 2.1. What is the preferred way to install MacFUSE Core?*
 
 A: The preferred way is to install the `MacFUSE Core.pkg` from the latest `MacFUSE Core.dmg` available from the Downloads tab of:
 
 http://code.google.com/p/macfuse/
 
-*Q: How can I uninstall MacFUSE Core?*
+*Q 2.2. How can I uninstall MacFUSE Core?*
 
 A: It depends on the MacFUSE version and the operating system version. Beginning with MacFUSE Core 0.4.0, you can use the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
 
@@ -39,11 +39,11 @@ sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 
 If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
-= File System Specific Questions =
+= 3. File System Specific Questions =
 
 == ntfs-3g ==
 
-*Q: Why is ntfs-3g's write performance so poor with MacFUSE on OS X?
+*Q 3.1. Why is ntfs-3g's write performance so poor with MacFUSE on OS X?
 
 A: The ntfs-3g program opens and does I/O to the block device (`/dev/diskN`) of the NTFS volume in question. *Mac OS X* does not have a VM buffer cache for block devices when they are accessed in this way. That's the most overwhelming factor, because both metadata operations and file data I/O boil down to read/writes by ntfs-3g to the block device.
 
@@ -51,13 +51,13 @@ Suppose we somehow automagically provided unified buffer caching for block devic
 
 For comparison, you should try writing to an NTFS _disk image_--you will see that it's considerably faster because you do have some caching in that case.
 
-* Q: After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
+* Q 3.2. After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
 
 A: It's likely that you installed a broken ntfs-3g package you found on the Internet. The package might be interfering with the disk image/disc mounting process. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
 
 == sshfs ==
 
-*Q: I'm using sshfs and changed a file "externally" (not through sshfs/MacFUSE) on the server, but in the sshfs volume, I'm not seeing the changes. In fact, when I copy the file through sshfs, I get the old content, etc.
+*Q 3.3. I'm using sshfs and changed a file "externally" (not through sshfs/MacFUSE) on the server, but in the sshfs volume, I'm not seeing the changes. In fact, when I copy the file through sshfs, I get the old content, etc.
 
 A: MacFUSE itself isn't a distributed remote file system! It's a mechanism for building arbitrary file systems. If you change things "externally" to MacFUSE (like, a file on the remote server in the case of sshfs), in general, things need to be done proactively to tell MacFUSE that something has changed, otherwise you'll get such "incorrect" behavior. In particular, sshfs isn't meant to _replace_ things such as NFS, AFP, and SMB--it's meant to be a substitute when you don't have any remote file sharing access to a computer, but you do have sftp access. When you use sshfs, from the server's standpoint, you are just accessing it using sftp. It's not as if the server is going to notify an sshfs client of modifications by other clients.
 
@@ -73,7 +73,7 @@ $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 
 If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
 
-*Q: I found a bug in sshfs.app (the GUI) and/or I have a feature request for sshfs.app (the GUI). I want you to do something about it. What would it take?
+*Q 3.4. I found a bug in sshfs.app (the GUI) and/or I have a feature request for sshfs.app (the GUI). I want you to do something about it. What would it take?
 
 A: Issues specific to `sshfs.app` (the GUI wrapper) should *not* be reported under the "Issues" tab of the MacFUSE project page. If people continue to report issues with sshfs.app (even after the download being marked as "unsupported" and me having said that umpteen times in my responses), I guess it'd be more appropriate to simply remove the download link. People need to understand that `sshfs.app` is how it is (minimal, skeletal) because it was written only for a single demo.
 
@@ -85,9 +85,9 @@ There's a thread about this here:
 
 http://groups.google.com/group/macfuse-devel/t/5dbb1af9eb4b3e06
  
-= Other Usage Questions =
+= 4. Other Usage Questions =
 
-*Q: Why do MacFUSE volumes show up with "server" (or "network volume") icons?*
+*Q 4.1. Why do MacFUSE volumes show up with "server" (or "network volume") icons?*
 
 A: To be precise, MacFUSE volumes show up as _non-local_ volumes, which the Finder unfortunately treats the same as "servers". It's a good question as to why MacFUSE tags its volumes as non-local. Some people think that in the case of disk-based file systems such as ntfs-3g, MacFUSE must tag the volume as local. Not so fast. For a volume to be local on Mac OS X, you need a "real" disk device--a `/dev/disk*` style node. Such a real disk device node in MacFUSE's case is problematic: at mount time, for a local volume, the kernel would _itself_ open the device node and pass it to MacFUSE. In doing so, the kernel would make sure that the device is not currently in use (for one, to disallow multiple mounts of the same device). This happens before control passes to MacFUSE and mounting can proceed. This would have been fine if the entire file system lived in the kernel, but in MacFUSE's case, the user-space file system program would _also_ want to (exclusively) open the disk device.
 
@@ -97,33 +97,33 @@ Technical reasons aside, there are arguments to justify that all MacFUSE volumes
 
 One way to think of MacFUSE user-space file systems is indeed as "servers"--in the microkernel sense.
 
-*Q: I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
+*Q 4.2. I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
 
 A: MacFUSE is like a programming library. Individual MacFUSE file systems (like ntfs-3g, procfs, sshfs, etc.) are programs written using that library. The quality and behavior of individual programs--of any kind--can vary wildly, and may or may not be an issue with the underlying library. If you have poor experience with an individual MacFUSE file system, please determine (or help determine) if it's an issue specific to that file system or if it's a general issue with MacFUSE. File systems are complex beasts. MacFUSE does simplify their implementation enormously, but nontrivial user-space file systems can still be complex, and their performance/behavior can depend upon numerous factors besides MacFUSE itself. When in doubt, feel free to post your questions on the [http://groups.google.com/group/macfuse-devel macfuse-devel] group.
 
-*Q: I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
+*Q 4.3. I'm trying to access a MacFUSE volume but I keep getting access/permission denied errors. I'm doing this as root--what's going on? Isn't everything allowed as root?*
 
 A: For several reasons, by default, MacFUSE allows access to a volume _only_ to the user who mounted the volume. All other users, _including_ the superuser is denied access. You can change this behavior if you need to. Refer to the `allow_other` and `allow_root` mount-time options in the [OPTIONS] document.
 
-*Q: Can I enable Spotlight on a MacFUSE file system?*
+*Q 4.4. Can I enable Spotlight on a MacFUSE file system?*
 
 A: Yes, but by default, Spotlight processes running as root would not be able to access the volume, so you have to use certain mount-time options. See the answer to the previous question.
 
-*Q: I tried to run `gdb` on an executable residing on a MacFUSE file system but I got an "operation not permitted" error. What's going on?*
+*Q 4.5. I tried to run `gdb` on an executable residing on a MacFUSE file system but I got an "operation not permitted" error. What's going on?*
 
 A: `gdb` is a setgid executable on Mac OS X (see `/usr/libexec/*gdb*`). Therefore, under MacFUSE's default mode of operation, it won't have access to MacFUSE volumes. See the previous questions.
 
-*Q: How should I unmount my MacFUSE file system? I can't find the `fusermount` program anywhere.*
+*Q 4.6. How should I unmount my MacFUSE file system? I can't find the `fusermount` program anywhere.*
 
 A: Just use the standard `umount` command in Mac OS X. You don't need the Linux-specific `fusermount` with MacFUSE.
 
-*Q: All my file systems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
+*Q 4.7. All my file systems are showing up in the Finder as "MacFUSE Volume n (X)" for some number n and some file system type X. What should I do?*
 
 A: Use the `volname` command-line option. See [OPTIONS] for details.
 
-= Developer Questions =
+= 5. Developer Questions =
 
-*Q: I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?*
+*Q 5.1. I'm having problem XYZ compiling a FUSE file system in the MacFUSE environment. What to do?*
 
 A: Besides any other file-system-specific compile- or configure-time options, you need to have `-D__FreeBSD__=10` in your `CFLAGS`. Try something like:
 
