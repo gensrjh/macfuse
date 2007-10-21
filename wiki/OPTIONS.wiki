@@ -84,11 +84,11 @@ sshfs#singh@127.0.0.1:/tmp/dir on /private/tmp/ssh (fusefs, nodev, nosuid, synch
 
 Note that a file system daemon can choose to specify its own fsname and can override (by strategically inserting its argument) a user-provided fsname.
 
-`fssubtype=N`, where `N` is an integer
+  * `fssubtype=N`, where `N` is an integer
 
 You can use this option to specify the file system subtype identifier for MacFUSE volume being mounted. The Finder uses this subtype to retrieve the string description (if any) for the file system. The description is what you see next to the `Format:` label in window that you get when you perform a "Get Info" Finder operation on the volume. This only works for subtype-string pairs that are already present in the MacFUSE file system bundle (`fusefs.fs`) that's installed as part of MacFUSE. You can add your own additional mappings to the bundle, or send me an email if you think your file system is useful enough to have an "official" entry.
 
-`fstypename=NAME`, where `NAME` is a string
+  * `fstypename=NAME`, where `NAME` is a string
 
 You can use this option to specify the file system's /type/ name. `NAME` can be at most 7 character (and if specified, must be at least one character). This would cause the in-kernel file system type to be `fusefs_NAME`. That is, the `fusefs_` prefix will be implied and automatically added by the kernel. Thereafter, a user-space file system that uses this option must name its on-disk file system bundle `fusefs_NAME.fs`. The Finder and other programs/libraries that look into file system bundles will now look inside this bundle (instead of the usual `fusefs.fs`) for things such as subtypes and description strings. The `fssubtype=N` option will continue to exist and work. A file system that does not need or use `fssubtypename=NAME` will work as in the past. Please note that this option is doing something the side effects of which cannot be entirely predicted because arbitrary programs can depend on the /true/ file system type--therefore, the use of this option is subject to a general "this might break things you don't know about" warning.
 
