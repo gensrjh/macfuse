@@ -104,6 +104,10 @@ This option can be used to "jail" symbolic links within the MacFUSE volume itsel
 
 On Mac OS X 10.4.x, a user-space file system may not exit upon unmount. This is because it may be blocked in one or more operations whose cancellation is not supported by the operating system. The `kill_on_unmount` option can be used as a workaround to make the kernel send a `SIGKILL` to the file system daemon /after/ the `unmount` call has been processed. Although I have not tested exhaustively, this should not be necessary on Mac OS X 10.5.x.
 
+  * `local`
+
+This option marks the volume being mounted as "local". By default, MacFUSE volumes are marked as "nonlocal", which technically isn't necessarily the same as a "server" or "network" volume, but is treated as such by the Finder in some cases. For example, the Finder may not show "connected servers" on the Desktop or in the sidebar in some cases.
+
   * `modules=M1[:M2...]`, where Mi is the name of a module to pushed onto the file system stack
 
 The MacFUSE user-space library supports /stackable/ modules--entire file systems or file system shims that can be stacked atop other file systems or shims. For example, filename character set conversion can be handled through such a module. Custom volume icon support in MacFUSE is handled through the `volicon` module. In fact, the `volicon=PATH` option is a shortcut for `modules=volicon,iconpath=PATH` option combination. Note that each module can have one or more of its own arguments (`volicon` has one option: `iconpath`).
