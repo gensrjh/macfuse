@@ -73,7 +73,7 @@ $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 
 If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
 
-*Q 3.4. I found a bug in sshfs.app (the GUI) and/or I have a feature request for sshfs.app (the GUI). I want you to do something about it. What would it take?
+*Q 3.4. I found a bug in sshfs.app (the GUI) and/or I have a feature request for sshfs.app (the GUI). I want you to do something about it. What would it take?*
 
 A: Issues specific to `sshfs.app` (the GUI wrapper) should *not* be reported under the "Issues" tab of the MacFUSE project page. If people continue to report issues with sshfs.app (even after the download being marked as "unsupported" and me having said that umpteen times in my responses), I guess it'd be more appropriate to simply remove the download link. People need to understand that `sshfs.app` is how it is (minimal, skeletal) because it was written only for a single demo.
 
@@ -85,7 +85,7 @@ There's a thread about this here:
 
 http://groups.google.com/group/macfuse-devel/t/5dbb1af9eb4b3e06
  
-*Q 3.5. sshfs isn't reporting the correct "disk space" for the remote "volume"? It seems to have 1000GB or some such number hardcoded.
+*Q 3.5. sshfs isn't reporting the correct "disk space" for the remote "volume"? It seems to have 1000GB or some such number hardcoded.*
 
 A: Yes, indeed. Remember that there really isn't an sshfs "volume" per se: sshfs just uses SFTP to provide an apparently local view of a remote _directory_. SFTP doesn't give you disk usage or availability for such a remote _directory_, so sshfs doesn't really have a choice but to cook up some value.
 
