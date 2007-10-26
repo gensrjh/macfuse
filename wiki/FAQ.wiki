@@ -85,6 +85,10 @@ There's a thread about this here:
 
 http://groups.google.com/group/macfuse-devel/t/5dbb1af9eb4b3e06
  
+*Q 3.5. sshfs isn't reporting the correct "disk space" for the remote "volume"? It seems to have 1000GB or some such number hardcoded.
+
+A: Yes, indeed. Remember that there really isn't an sshfs "volume" per se: sshfs just uses SFTP to provide an apparently local view of a remote _directory_. SFTP doesn't give you disk usage or availability for such a remote _directory_, so sshfs doesn't really have a choice but to cook up some value.
+
 = 4. Other Usage Questions =
 
 *Q 4.1. Why do MacFUSE volumes show up with "server" (or "network volume") icons?*
