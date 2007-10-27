@@ -45,7 +45,6 @@
   * New mechanism for per-file buffer cache purging; can be used by user-space file systems.
   * Support for custom killing of IPC tickets (`FT_KILL`).
   * Support for "canfail" (non-panic'ing) versions of memory allocation and IPC parameter packing calls.
-  * Experimental support for the `FUSE_INTERRUPT` message.
 
 === Improvements and Feature Additions (User Space) ===
 
