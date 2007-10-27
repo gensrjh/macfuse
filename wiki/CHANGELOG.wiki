@@ -3,7 +3,7 @@
 
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
-== MacFUSE 1.0.0 (October ?, 2007) ==
+== MacFUSE 1.0.0 (October 26, 2007) ==
 
 === Leopard Support ===
 
