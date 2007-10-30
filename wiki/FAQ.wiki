@@ -104,7 +104,7 @@ Technical reasons aside, there are arguments to justify that all MacFUSE volumes
 
 One way to think of MacFUSE user-space file systems is indeed as "servers"--in the microkernel sense.
 
-All this said, it _is_ possible to tag a specific mount point as "local" at mount time. If you wish to do so, you can use the `-o local` MacFUSE mount-time option.
+All this said, it _is_ possible to tag a specific mount point as "local" at mount time. If you wish to do so, you can use the `-o local` MacFUSE mount-time option. This has caveats though: the Finder (and the operating system in general) may try to do things differently with local volumes. Some of these different things may not be what you want--for example, you may not want a `.Trashes` directory created on your volume. (It may not even be possible to create that directory in the case of certain file systems.)
 
 *Q 4.2. I mounted a MacFUSE volume but I don't see a volume icon on the Desktop. Why?*
 
