@@ -106,7 +106,7 @@ On Mac OS X 10.4.x, a user-space file system may not exit upon unmount. This is 
 
   * `local`
 
-This option marks the volume being mounted as "local". By default, MacFUSE volumes are marked as "nonlocal", which technically isn't necessarily the same as a "server" or "network" volume, but is treated as such by the Finder in some cases. For example, the Finder may not show "connected servers" on the Desktop or in the sidebar in some cases.
+This option marks the volume being mounted as "local". By default, MacFUSE volumes are marked as "nonlocal", which technically isn't necessarily the same as a "server" or "network" volume, but is treated as such by the Finder in some cases. For example, the Finder may not show "connected servers" on the Desktop or in the sidebar in some cases. If you use this option, you can get around this "limitation". However, *wait*! Don't be too tempted and think `local` is a magic pill that will solve all your problems. In fact, it may mess things up more than you realize. The operating system can be more aggressive in dealing with "local" volumes (a `.Trashes.` directory will be created, for one). You could run into mysterious problems with Disk Arbitration and other system components. I don't know (and possibly can't know--Mac OS X isn't all open source!) the side effects of using this option. Therefore, treat this as experimental and use with caution. Moreover, please do not file bug reports that involve this option--reproduce your issue *without* this option and then file a bug report.
 
   * `modules=M1[:M2...]`, where Mi is the name of a module to pushed onto the file system stack
 
