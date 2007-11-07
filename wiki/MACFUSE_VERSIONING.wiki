@@ -1,4 +1,4 @@
-#summary A note on MacFUSE Core version numbers.
+#summary A note on MacFUSE Core version numbers
 
 = MacFUSE Core Version Number Format =
 
