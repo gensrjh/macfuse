@@ -118,7 +118,7 @@ $ defaults read com.apple.Finder ShowMountedServersOnDesktop
 If the preference is unchecked, you can check it within the GUI or use `defaults` to set its value to 1:
 
 {{{
-$ defaults read com.apple.Finder ShowMountedServersOnDesktop 1
+$ defaults write com.apple.Finder ShowMountedServersOnDesktop 1
 }}}
 
 Alternatively, you can use the `-o local` MacFUSE mount-time option to tag the volume being mounted as "local", in which case it would show up on the Desktop unless you have disabled "external disks" from showing up on the Desktop.
