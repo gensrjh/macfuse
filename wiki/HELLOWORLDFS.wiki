@@ -1,4 +1,4 @@
-#summary Very simple example file system for MacFUSE.
+#summary A very simple example file system for MacFUSE
 
 === This file contains the source listing for a very simple MacFUSE file system. =
 
@@ -103,8 +103,6 @@ main(int argc, char **argv)
 }
 
 }}}
-
-
 
 
 
