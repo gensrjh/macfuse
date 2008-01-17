@@ -1,4 +1,4 @@
-#summary Commonly useful mount-time options available in MacFUSE.
+#summary Commonly useful mount-time options available in MacFUSE
 #labels Featured
 
 = MacFUSE Mount-Time Options: A Brief Guide =
