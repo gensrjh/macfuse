@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Starting with version 1.3, MacFUSE Core comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
+Starting with version 1.3, MacFUSE Core comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
 
 = Requirements =
 
@@ -21,7 +21,7 @@ We'll create a simple file system that downloads a feed of top-rated [http://www
 
 At this point you should notice that the ytfs project has already been setup to build and run as an application and that there are some methods that have already been completed. This is simply to make the tutorial a bit simpler; we won't miss out on the fun part. The project is a standard Cocoa Application. We've also already opened `mainmenu.nib`, instantiated a YTController object, and made that the delegate for File's Owner.
 
-If you inspect the files then you'll see the YTFS class and the YTController class. The YTController class will control the lifecycle of both our app and the filesystem. If you look at `YTController.m`, you'll see the `- (NSDictionary *)fetchVideos` method.  This simply fetches the xml feed for eleven of the top rated videos. It then populates a dictionary with the keys being the name of the video with .webloc appended and the contents being the xml for that video.  The YTFS class will act as a delegate that serves up the file system contents. In there you will find some convenience methods for getting at the xml data for a video given a path string.
+If you inspect the files then you'll see the YTFS class and the YTController class. The YTController class will control the lifecycle of both our app and the file system. If you look at `YTController.m`, you'll see the `- (NSDictionary *)fetchVideos` method.  This simply fetches the xml feed for eleven of the top rated videos. It then populates a dictionary with the keys being the name of the video with .webloc appended and the contents being the xml for that video.  The YTFS class will act as a delegate that serves up the file system contents. In there you will find some convenience methods for getting at the xml data for a video given a path string.
 
 = Time To Code = 
 
@@ -38,7 +38,7 @@ For the first part, we'll make changes to the `YTController.m` file.
 
 === Create GMUserFileSystem and Mount ===
 
-Where it says *INSERT CODE HERE*, we'll create a GMUserFileSystem object that controls the lifecycle of a filesystem mount. For now we'll leave the delegate nil, which will essentially mount an empty file system, and we'll claim that our delegate will be thread-safe. We've already declared the `fs_` member variable in YTController.h for you.
+Where it says *INSERT CODE HERE*, we'll create a GMUserFileSystem object that controls the lifecycle of a file system mount. For now we'll leave the delegate nil, which will essentially mount an empty file system, and we'll claim that our delegate will be thread-safe. We've already declared the `fs_` member variable in YTController.h for you.
 
 {{{
 fs_ = [[GMUserFileSystem alloc] initWithDelegate:nil isThreadSafe:YES];
