@@ -1,4 +1,4 @@
-#summary HOWTO write Objective-C based filesystem using MacFUSE.framework.
+#summary Writing a File System in Objective-C Using MacFUSE.framework.
 
 = Introduction =
 
