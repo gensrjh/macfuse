@@ -39,6 +39,10 @@ sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 
 If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
+*Q 2.3. I'm using some software that needs an old/deprecated version of MacFUSE. I don't see that version available from your web site. What to do?
+
+A: As far as possible, you should not be using a deprecated version of MacFUSE. Deprecated versions are not supported. In most cases, new MacFUSE versions should be drop in replacements for old versions. Sure, there has been a case or two where MacFUSE intentionally retired some command line options beginning with some version. However, that is very uncommon, and should be even more uncommon as MacFUSE grows older.
+
 = 3. File System Specific Questions =
 
 == ntfs-3g ==
