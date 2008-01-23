@@ -1,13 +1,13 @@
 #labels Featured,Phase-Deploy
-*The Accessibility File System for MacFUSE*
+=The Accessibility File System for MacFUSE=
 
 To use the MacFUSE version of the Accessibility file system, you must have the MacFUSE Core package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
 
-*Introduction*
+==Introduction==
 
 AccessibilityFS is a demonstration MacFUSE filesystem that exposes all of the applications that you are running from an accessibility perspective. It shows off some of the weird and wonderful things you can do with a file system.
 
-*Using AccessibilityFS*
+==Using AccessibilityFS==
 
 Double click on the AccessibilityFS icon and it will mount the file system and show it to you in the Finder. You should be able to see all of the apps currently running as folders with their name and process id. By opening up these folders you can navigate through the user interface elements exposed by the individual applications.
 
@@ -15,7 +15,7 @@ This is interesting, but things get far more fun when you start playing with the
 
 Try running 'xattr -l' on the various items and you will see what attributes that they expose. You can modify these attributes using 'xattr -w' and have the various elements react. If you want to send an action to an element, try using 'echo "AXPress" > element'. The 'AccessibilityFS.Actions' attribute will list the actions that various elements will respond to.
 
-*Sample*
+==Sample==
 {{{
 Foo:/Volumes/Accessibility/TextEdit (1680) dmaclach$ xattr -l standard\ window\ \:\ Untitled/
 AccessibilityFS.AXRole: AXWindow
@@ -45,7 +45,7 @@ Foo:/Volumes/Accessibility/TextEdit (1680) dmaclach$ xattr -w "AccessibilityFS.A
 Foo:/Volumes/Accessibility/TextEdit (1680) dmaclach$ echo "AXPress" > close\ button
 }}}
 
-*History*
+==History==
 
 || 2008-01-14 || Initial public release || 0.5 || dmaclach ||
 || 2008-01-22 || Fixed up icon, and changed docs || 0.5.1 || dmaclach ||
