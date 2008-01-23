@@ -3,7 +3,7 @@
 
 To use the MacFUSE version of the Accessibility file system, you must have the MacFUSE Core package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
 
-[http://macfuse.googlecode.com/files/AccessibilityFS-0.5.1.zip AccessibilityFS can be downloaded here].
+[http://code.google.com/p/macfuse/downloads/list AccessibilityFS can be downloaded here].
 
 ==Introduction==
 
