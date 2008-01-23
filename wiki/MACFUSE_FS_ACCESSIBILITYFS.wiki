@@ -48,3 +48,4 @@ Foo:/Volumes/Accessibility/TextEdit (1680) dmaclach$ echo "AXPress" > close\ but
 *History*
 
 || 2008-01-14 || Initial public release || 0.5 || dmaclach ||
+|| 2008-01-22 || Fixed up icon, and changed docs || 0.5.1 || dmaclach ||
