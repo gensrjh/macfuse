@@ -3,6 +3,8 @@
 
 To use the MacFUSE version of the Accessibility file system, you must have the MacFUSE Core package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
 
+[http://macfuse.googlecode.com/files/AccessibilityFS-0.5.1.zip AccessibilityFS can be downloaded here].
+
 ==Introduction==
 
 AccessibilityFS is a demonstration MacFUSE filesystem that exposes all of the applications that you are running from an accessibility perspective. It shows off some of the weird and wonderful things you can do with a file system.
