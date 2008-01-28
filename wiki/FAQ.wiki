@@ -115,14 +115,14 @@ All this said, it _is_ possible to tag a specific mount point as "local" at moun
 A: Check if the Finder preference for showing mounted servers on the Desktop is enabled. (Also see *Q 4.1* to understand why we are talking about "servers" here.) On Mac OS X "Leopard", this preference is _not_ enabled by default. You can either check if `Finder->Preferences->General->Connected servers` is checked, or you can use the `defaults` command from a shell:
 
 {{{
-$ defaults read com.apple.Finder ShowMountedServersOnDesktop
+$ defaults read com.apple.finder ShowMountedServersOnDesktop
 0
 }}}
 
 If the preference is unchecked, you can check it within the GUI or use `defaults` to set its value to 1:
 
 {{{
-$ defaults write com.apple.Finder ShowMountedServersOnDesktop 1
+$ defaults write com.apple.finder ShowMountedServersOnDesktop 1
 }}}
 
 Alternatively, you can use the `-o local` MacFUSE mount-time option to tag the volume being mounted as "local", in which case it would show up on the Desktop unless you have disabled "external disks" from showing up on the Desktop.
