@@ -32,10 +32,10 @@ $ sudo ./build_macfuse.sh # need root access to chmod and chown output correctly
 ...
 }}}
 
-This will compile the kernel extension, the user-space library (`libfuse`), the mount utility (`mount_fusefs`), the load utility (`load_fusefs`), and will create the file system bundle (`fusefs.fs`). If everything goes fine, a ready-to-install Universal package can be found in `/tmp/macfuse-core-<OS version>-<MacFUSE version>`. For example, if you compile MacFUSE version 0.5 on Mac OS X 10.5, the package will be generated at:
+This will compile the kernel extension, the user-space library (`libfuse`), the mount utility (`mount_fusefs`), the load utility (`load_fusefs`), and will create the file system bundle (`fusefs.fs`). If everything goes fine, a ready-to-install Universal package can be found in `/tmp/macfuse-core-<OS version>-<MacFUSE version>`. For example, if you compile MacFUSE version 1.3.1 on Mac OS X 10.5, the package will be generated at:
 
 {{{
-/tmp/macfuse-core-10.5-0.5.0/MacFUSE Core.pkg
+/tmp/macfuse-core-10.5-1.3.1/MacFUSE Core.pkg
 }}}
 
 You can install this package by double clicking on it or through the command line:
@@ -62,9 +62,9 @@ http://pkgconfig.freedesktop.org/wiki/
 To compile and install `pkg-config` as a set of Universal binaries, do the following:
 
 {{{
-$ tar -xzvf pkg-config-0.22.tar.gz
+$ tar -xzvf pkg-config-0.23.tar.gz
 ...
-$ cd pkg-config-0.22
+$ cd pkg-config-0.23
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
@@ -86,9 +86,9 @@ ftp://ftp.gnu.org/pub/gnu/gettext/
 You can compile gettext (Universally) as follows:
 
 {{{
-$ tar -xzvf gettext-0.16.1.tar.gz
+$ tar -xzvf gettext-0.17.tar.gz
 ...
-$ cd gettext-0.16.1
+$ cd gettext-0.17
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 $ make
@@ -104,9 +104,9 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.14.2.tar.gz
+$ tar -xzvf glib-2.15.4.tar.gz
 ...
-$ cd glib-2.14.2
+$ cd glib-2.15.4
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 }}}
@@ -140,9 +140,9 @@ http://fuse.sourceforge.net/sshfs.html
 You'll need to patch the source using an appropriate Mac OS X patch file available in the `filesystems/sshfs/` subdirectory in the MacFUSE subversion repository.
    
 {{{
-$ tar -xzvf sshfs-fuse-1.8.tar.gz # unpack sshfs source
-$ cd sshfs-fuse-1.8
-$ patch -p1 < /path/to/sshfs-fuse-1.8-macosx.patch # apply patch with a matching version
+$ tar -xzvf sshfs-fuse-1.9.tar.gz # unpack sshfs source
+$ cd sshfs-fuse-1.9
+$ patch -p1 < /path/to/sshfs-fuse-1.9-macosx.patch # apply patch with a matching version
 ...
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
@@ -160,7 +160,3 @@ This will install the `sshfs` command-line program under `/usr/local/bin/`.
 Many existing FUSE file systems are readily usable on Mac OS X with MacFUSE. Some might have additional dependencies (typically open source libraries that might not be already installed on your Mac OS X machine), which you have to satisfy before compiling and using the file system in question.
 
 When running the configure script for a file system, you *need* to have `-D__FreeBSD__=10` in `CFLAGS`. This is critical!
- 
- 
- 
- 
