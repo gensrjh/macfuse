@@ -26,7 +26,7 @@
      * 10.5: Includes Bridge Support data.
      * Improved mount failure handling and notifications.
      * Improved documentation in header file; explicitly called out the keys that are supported in various delegate methods that use `NSDictionary`.
-     * Support for typeCode and creatorCode in `GMFinderInfo` class.
+     * Support for `typeCode` and `creatorCode` in `GMFinderInfo` class.
      * Explicit constants to use for as keys for notification dictionary, etc.
      * Added read support for the `st_flags` field of `struct stat`.
      * Fixed bug where the `st_ctimespec` field of `struct stat` was being set to `NSFileCreationDate`. The framework now sets `st_ctimespec` to equal `st_mtimespec`; the `NSFileCreationDate` is not currently supported.
