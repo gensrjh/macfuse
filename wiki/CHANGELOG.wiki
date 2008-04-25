@@ -11,15 +11,15 @@
 
   * Bugfix: Fixed an `exit(3)` call that should have been `_exit(3)`. Could cause tear-down issues for certain file systems.
 
-  * If a user file system becomes dead or unreachable (for example, if the daemon crashed), MacFUSE will report `-1` as the file system subtype (the `f_fssubtype` field of `struct statfs64` and the `f_reserved` field of `struct stat`.) The MacFUSE file system property list files now identify subtype `-1` as the "dead" file system.
+  * Feature: If a user file system becomes dead or unreachable (for example, if the daemon crashed), MacFUSE will report `-1` as the file system subtype (the `f_fssubtype` field of `struct statfs64` and the `f_reserved` field of `struct stat`.) The MacFUSE file system property list files now identify subtype `-1` as the "dead" file system.
 
-  * 10.5: Experimental support for `select(2)` on the user-kernel device. Must be explicitly enabled at kernel extension compile time through `M_MACFUSE_ENABLE_DSELECT`.
+  * Feature: 10.5: Experimental support for `select(2)` on the user-kernel device. Must be explicitly enabled at kernel extension compile time through `M_MACFUSE_ENABLE_DSELECT`.
 
-  * 10.5: Added support for file flags (see `chflags(2)`). Currently, a user file system can only provide these flags for reading. Support for setting these flags is there, but not enabled because doing so will extend ("break") the existing FUSE API and is a more disruptive change--it will require all existing file systems to be recompiled. This change will be clubbed together with other disruptive changes at some point in the near future.
+  * Feature: 10.5: Added support for file flags (see `chflags(2)`). Currently, a user file system can only provide these flags for reading. Support for setting these flags is there, but not enabled because doing so will extend ("break") the existing FUSE API and is a more disruptive change--it will require all existing file systems to be recompiled. This change will be clubbed together with other disruptive changes at some point in the near future.
 
-  * 10.5: User-space library now based on FUSE library version 2.7.3.
+  * Update: 10.5: User-space library now based on FUSE library version 2.7.3.
 
-  * 10.5: MacFUSE for Tiger (the ready-to-install package) can now also be compiled on Leopard.
+  * Packaging: 10.5: MacFUSE for Tiger (the ready-to-install package) can now also be compiled on Leopard.
 
   * MacFUSE.framework Changes
      * 10.5: Support for garbage collection.
