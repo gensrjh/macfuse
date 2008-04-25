@@ -33,7 +33,7 @@
      * Improved resolutions of times used by `AttributesOfItemAtPath:error` and `setAttributes:ofItemAtPath:error:`.
      * Added code for calling `createSymbolicLinkAtPath:` and `linkItemAtPath:`.
      * Added support for `mode_t` in `mkdir`. Tightened up `NSFilePosixPermissions` code in `mkdir`, `chmod`, and `create`.
-     * 10.4: Improved create support when using custom icons (synthesized AppleDouble files) on 10.4.
+     * 10.4: Improved create support when using custom icons (synthesized !AppleDouble files) on 10.4.
 
 == MacFUSE 1.3 (January 9, 2008) ==
 
