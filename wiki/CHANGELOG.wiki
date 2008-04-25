@@ -23,7 +23,7 @@
 
   * MacFUSE.framework Changes
      * 10.5: Support for garbage collection.
-     * 10.5: Includes BridgeSupport! data.
+     * 10.5: Includes !BridgeSupport data.
      * Improved mount failure handling and notifications.
      * Improved documentation in header file; explicitly called out the keys that are supported in various delegate methods that use `NSDictionary`.
      * Support for `typeCode` and `creatorCode` in `GMFinderInfo` class.
