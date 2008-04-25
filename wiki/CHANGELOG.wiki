@@ -11,7 +11,7 @@
 
   * Bugfix: Fixed an `exit(3)` call that should have been `_exit(3)`. Could cause tear-down issues for certain file systems.
 
-  * Feature: If a user file system becomes dead or unreachable (for example, if the daemon crashed), MacFUSE will report `-1` as the file system subtype (the `f_fssubtype` field of `struct statfs64` and the `f_reserved1` field of `struct stat`.) The MacFUSE file system property list files now identify subtype `-1` as the "dead" file system.
+  * Feature: If a user file system becomes dead or unreachable (for example, if the daemon crashed), MacFUSE will report `-1` as the file system subtype (the `f_fssubtype` field of `struct statfs64` and the `f_reserved1` field of `struct statfs`.) The MacFUSE file system property list files now identify subtype `-1` as the "dead" file system.
 
   * Feature: 10.5: Experimental support for `select(2)` on the user-kernel device. Must be explicitly enabled at kernel extension compile time through `M_MACFUSE_ENABLE_DSELECT`.
 
