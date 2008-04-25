@@ -23,16 +23,27 @@
 
   * MacFUSE.framework Changes
      * 10.5: Support for garbage collection.
+
      * 10.5: Includes Bridge Support data.
+
      * Improved mount failure handling and notifications.
+
      * Improved documentation in header file; explicitly called out the keys that are supported in various delegate methods that use `NSDictionary`.
+
      * Support for `typeCode` and `creatorCode` in `GMFinderInfo` class.
+
      * Explicit constants to use for as keys for notification dictionary, etc.
+
      * Added read support for the `st_flags` field of `struct stat`.
+
      * Fixed bug where the `st_ctimespec` field of `struct stat` was being set to `NSFileCreationDate`. The framework now sets `st_ctimespec` to equal `st_mtimespec`; the `NSFileCreationDate` is not currently supported.
+
      * Improved resolutions of times used by `AttributesOfItemAtPath:error` and `setAttributes:ofItemAtPath:error:`.
+
      * Added code for calling `createSymbolicLinkAtPath:` and `linkItemAtPath:`.
+
      * Added support for `mode_t` in `mkdir`. Tightened up `NSFilePosixPermissions` code in `mkdir`, `chmod`, and `create`.
+
      * 10.4: Improved create support when using custom icons (synthesized AppleDouble files) on 10.4.
 
 == MacFUSE 1.3 (January 9, 2008) ==
