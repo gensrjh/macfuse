@@ -1,5 +1,5 @@
 #summary The SSH File System for MacFUSE
-#labels sshfs,Featured
+#labels sshfs
 
 = The SSH File System for MacFUSE =
 
