@@ -35,8 +35,6 @@ The `reconnect` option is useful when the network connection goes down and you h
 
 `<volname>` should be a string you wish to use as the name of the newly mounted volume. If everything went fine, you should see the volume on your Desktop and in the Finder (unless you have disabled remote volumes from showing up in these places).
 
-Before MacFUSE 0.2.5, you would also want to use to `ping_diskarb` option, which sends a "ping" to Disk Arbitration, allowing the newly mounted volume to play better with the Finder. Beginning with MacFUSE 0.2.5, `ping_diskarb` is enabled by default. You can turn it off by using `noping_diskarb`.
-
 Once you are done using sshfs, you can unmount the volume either using the eject icon in the Finder or other common user-interface means of ejecting. Alternatively, you can do the following from the command line:
 
 {{{
