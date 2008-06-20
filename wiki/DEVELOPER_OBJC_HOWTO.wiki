@@ -12,7 +12,7 @@ In order to go through this HOWTO, you'll need to:
   # Check out the ytfs project that will serve as our starting point as follows (you can do all the work in your _/tmp_ directory if you'd like):
 {{{
 cd /tmp
-svn checkout http://macfuse.googlecode.com/svn/trunk/filesystems-objc/ytfs-tutorial ytfs
+svn checkout http://macfuse.googlecode.com/svn/tags/macfuse-1.5/filesystems-objc/ytfs-tutorial/ ytfs
 }}}
 
 = The Tutorial Project =
