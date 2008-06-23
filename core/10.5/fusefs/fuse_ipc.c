@@ -41,7 +41,7 @@ static fuse_handler_t  fuse_standard_handler;
 void
 fiov_init(struct fuse_iov *fiov, size_t size)
 {
-    size_t msize = FU_AT_LEAST(size);
+    uint32_t msize = FU_AT_LEAST(size);
 
     fiov->len = 0;
 
@@ -335,7 +335,7 @@ int
 fticket_aw_pull_uio(struct fuse_ticket *ftick, uio_t uio)
 {
     int err = 0;
-    size_t len = (size_t)uio_resid(uio);
+    size_t len = uio_resid(uio);
 
     if (len) {
         switch (ftick->tk_aw_type) {
@@ -346,7 +346,7 @@ fticket_aw_pull_uio(struct fuse_ticket *ftick, uio_t uio)
                 IOLog("MacFUSE: failed to pull uio (error=%d)\n", err);
                 break;
             }
-            err = uiomove(fticket_resp(ftick)->base, (int)len, uio);
+            err = uiomove(fticket_resp(ftick)->base, len, uio);
             if (err) {
                 IOLog("MacFUSE: FT_A_FIOV error is %d (%p, %ld, %p)\n",
                       err, fticket_resp(ftick)->base, len, uio);
@@ -355,7 +355,7 @@ fticket_aw_pull_uio(struct fuse_ticket *ftick, uio_t uio)
 
         case FT_A_BUF:
             ftick->tk_aw_bufsize = len;
-            err = uiomove(ftick->tk_aw_bufdata, (int)len, uio);
+            err = uiomove(ftick->tk_aw_bufdata, len, uio);
             if (err) {
                 IOLog("MacFUSE: FT_A_BUF error is %d (%p, %ld, %p)\n",
                       err, ftick->tk_aw_bufdata, len, uio);
@@ -379,7 +379,7 @@ fticket_pull(struct fuse_ticket *ftick, uio_t uio)
         return 0;
     }
 
-    err = fuse_body_audit(ftick, (size_t)uio_resid(uio));
+    err = fuse_body_audit(ftick, uio_resid(uio));
     if (!err) {
         err = fticket_aw_pull_uio(ftick, uio);
     }
@@ -403,7 +403,7 @@ fdata_alloc(struct proc *p)
     data->mp            = NULL;
     data->rootvp        = NULLVP;
     data->mount_state   = FM_NOTMOUNTED;
-    data->daemoncred    = kauth_cred_proc_ref(p);
+    data->daemoncred    = proc_ucred(p);
     data->daemonpid     = proc_pid(p);
     data->dataflags     = 0;
     data->mountaltflags = 0ULL;
@@ -422,6 +422,8 @@ fdata_alloc(struct proc *p)
     data->freeticket_counter = 0;
     data->deadticket_counter = 0;
     data->ticketer           = 0;
+
+    kauth_cred_ref(data->daemoncred);
 
 #if M_MACFUSE_EXCPLICIT_RENAME_LOCK
     data->rename_lock = lck_rw_alloc_init(fuse_lock_group, fuse_lock_attr);
@@ -444,8 +446,8 @@ fdata_destroy(struct fuse_data *data)
     lck_mtx_free(data->aw_mtx, fuse_lock_group);
     data->aw_mtx = NULL;
 
-    lck_mtx_free(data->ticket_mtx, fuse_lock_group);
-    data->ticket_mtx = NULL;
+    lck_mtx_free(data->ticket_mtx, fuse_lock_group); /* XXX: can do? */
+    data->ticket_mtx = NULL;                         /* XXX: can do? */
 
 #if M_MACFUSE_EXPLICIT_RENAME_LOCK
     lck_rw_free(data->rename_lock, fuse_lock_group);
@@ -726,10 +728,6 @@ fuse_body_audit(struct fuse_ticket *ftick, size_t blen)
         err = (blen == sizeof(struct fuse_attr_out)) ? 0 : EINVAL;
         break;
 
-    case FUSE_GETXTIMES:
-        err = (blen == sizeof(struct fuse_getxtimes_out)) ? 0 : EINVAL;
-        break;
-
     case FUSE_READLINK:
         err = (PAGE_SIZE >= blen) ? 0 : EINVAL;
         break;
@@ -873,14 +871,6 @@ fuse_body_audit(struct fuse_ticket *ftick, size_t blen)
         err = (blen == 0) ? 0 : EINVAL;
         break;
 
-    case FUSE_EXCHANGE:
-        err = (blen == 0) ? 0 : EINVAL;
-        break;
-
-    case FUSE_SETVOLNAME:
-        err = (blen == 0) ? 0 : EINVAL;
-        break;
-
     default:
         IOLog("MacFUSE: opcodes out of sync (%d)\n", opcode);
         panic("MacFUSE: opcodes out of sync (%d)", opcode);
@@ -897,7 +887,7 @@ fuse_setup_ihead(struct fuse_in_header *ihead,
                  size_t                 blen,
                  vfs_context_t          context)
 {
-    ihead->len = (uint32_t)(sizeof(*ihead) + blen);
+    ihead->len = sizeof(*ihead) + blen;
     ihead->unique = ftick->tk_unique;
     ihead->nodeid = nid;
     ihead->opcode = op;
@@ -907,7 +897,7 @@ fuse_setup_ihead(struct fuse_in_header *ihead,
         ihead->uid = vfs_context_ucred(context)->cr_uid;
         ihead->gid = vfs_context_ucred(context)->cr_gid;
     } else {
-        /* XXX: could use more thought */
+        /* XXX: more thought */
         ihead->pid = proc_pid((proc_t)current_proc());
         ihead->uid = kauth_cred_getuid(kauth_cred_get());
         ihead->gid = kauth_cred_getgid(kauth_cred_get());

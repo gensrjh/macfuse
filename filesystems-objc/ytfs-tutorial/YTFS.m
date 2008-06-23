@@ -20,7 +20,6 @@
 //
 #import "YTFS.h"
 #import "NSImage+IconData.h"
-#import <MacFUSE/GMUserFileSystem.h>
 
 @implementation YTFS
 

@@ -72,7 +72,7 @@ fuse_filehandle_get(vnode_t       vp,
     FUSE_OSAddAtomic(1, (SInt32 *)&fuse_fh_upcall_count);
     if ((err = fdisp_wait_answ(&fdi))) {
 #if M_MACFUSE_ENABLE_UNSUPPORTED
-        const char *vname = vnode_getname(vp);
+        char *vname = vnode_getname(vp);
 #endif /* M_MACFUSE_ENABLE_UNSUPPORTED */
         if (err == ENOENT) {
             /*
@@ -96,11 +96,10 @@ fuse_filehandle_get(vnode_t       vp,
 
     foo = fdi.answ;
 
-    fufh->fh_id = foo->fh;
     fufh->open_count = 1;
     fufh->open_flags = oflags;
     fufh->fuse_open_flags = foo->open_flags;
-    fufh->aux_count = 0;
+    fufh->fh_id = foo->fh;
     
     fuse_ticket_drop(fdi.tick);
 

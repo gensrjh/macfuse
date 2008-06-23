@@ -23,15 +23,15 @@
 #include <fuse_sysctl.h>
 #include <fuse_version.h>
 
-#define FUSE_COUNT_MEMORY     1
-// #define FUSE_DEBUG         1
-// #define FUSE_KDEBUG        1
-// #define FUSE_KTRACE_OP     1
-// #define FUSE_TRACE         1
-// #define FUSE_TRACE_LK      1
-// #define FUSE_TRACE_MSLEEP  1
-// #define FUSE_TRACE_OP      1
-// #define FUSE_TRACE_VNCACHE 1
+//#define FUSE_DEBUG         1
+//#define FUSE_KDEBUG        1
+//#define FUSE_KTRACE_OP     1
+//#define FUSE_TRACE         1
+//#define FUSE_TRACE_LK      1
+//#define FUSE_TRACE_MSLEEP  1
+//#define FUSE_TRACE_OP      1
+//#define FUSE_TRACE_VNCACHE 1
+#define FUSE_TRACK_STATS 1
 
 #define FUSEFS_SIGNATURE 0x55464553 // 'FUSE'
 
@@ -128,7 +128,7 @@ fuse_msleep(void *chan, lck_mtx_t *mtx, int pri, const char *wmesg,
 
 extern OSMallocTag fuse_malloc_tag;
 
-#ifdef FUSE_COUNT_MEMORY
+#ifdef FUSE_TRACK_STATS
 
 #define FUSE_OSAddAtomic(amount, value) OSAddAtomic((amount), (value))
 
@@ -136,39 +136,39 @@ extern int32_t fuse_memory_allocated;
 
 static __inline__
 void *
-FUSE_OSMalloc(size_t size, OSMallocTag tag)
+FUSE_OSMalloc(uint32_t size, OSMallocTag tag)
 {
-    void *addr = OSMalloc((uint32_t)size, tag);
+    void *addr = OSMalloc(size, tag);
 
     if (!addr) {
-        panic("MacFUSE: memory allocation failed (size=%lu)", size);
+        panic("MacFUSE: memory allocation failed (size=%d)", size);
     }
 
-    FUSE_OSAddAtomic((UInt32)size, (SInt32 *)&fuse_memory_allocated);
+    FUSE_OSAddAtomic(size, (SInt32 *)&fuse_memory_allocated);
     
     return addr;
 }
 
 static __inline__
 void
-FUSE_OSFree(void *addr, size_t size, OSMallocTag tag)
+FUSE_OSFree(void *addr, uint32_t size, OSMallocTag tag)
 {
-    OSFree(addr, (uint32_t)size, tag);
+    OSFree(addr, size, tag);
 
-    FUSE_OSAddAtomic(-(UInt32)(size), (SInt32 *)&fuse_memory_allocated);
+    FUSE_OSAddAtomic(-(size), (SInt32 *)&fuse_memory_allocated);
 }
 
 #else
 
 #define FUSE_OSAddAtomic(amount, value)    {}
-#define FUSE_OSMalloc(size, tag)           OSMalloc((uint32_t)(size), (tag))
+#define FUSE_OSMalloc(size, tag)           OSMalloc((size), (tag))
 #define FUSE_OSFree(addr, size, tag)       OSFree((addr), (size), (tag))
 
-#endif /* FUSE_COUNT_MEMORY */
+#endif /* FUSE_TRACK_STATS */
 
 static __inline__
 void *
-FUSE_OSRealloc_nocopy(void *oldptr, size_t oldsize, size_t newsize)
+FUSE_OSRealloc_nocopy(void *oldptr, int oldsize, int newsize)
 {   
     void *data;
     
@@ -185,7 +185,7 @@ FUSE_OSRealloc_nocopy(void *oldptr, size_t oldsize, size_t newsize)
 
 static __inline__
 void *
-FUSE_OSRealloc_nocopy_canfail(void *oldptr, size_t oldsize, size_t newsize)
+FUSE_OSRealloc_nocopy_canfail(void *oldptr, int oldsize, int newsize)
 {
     void *data;
 

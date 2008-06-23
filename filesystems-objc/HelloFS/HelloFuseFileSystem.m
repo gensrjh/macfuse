@@ -20,7 +20,6 @@
 //  Created by alcor on 12/15/06.
 //
 #import "HelloFuseFileSystem.h"
-#import <MacFUSE/GMUserFileSystem.h>
 
 static NSString *helloStr = @"Hello World!\n";
 static NSString *helloPath = @"/hello.txt";
@@ -37,24 +36,12 @@ static NSString *helloPath = @"/hello.txt";
   return nil;
 }
 
-#pragma optional Custom Icon
+#pragma optional icon method
 
-- (NSDictionary *)finderAttributesAtPath:(NSString *)path 
-                                   error:(NSError **)error {
-  if ([path isEqualToString:helloPath]) {
-    NSNumber* finderFlags = [NSNumber numberWithLong:kHasCustomIcon];
-    return [NSDictionary dictionaryWithObject:finderFlags
-                                       forKey:kGMUserFileSystemFinderFlagsKey];
-  }
-  return nil;
-}
-
-- (NSDictionary *)resourceAttributesAtPath:(NSString *)path
-                                     error:(NSError **)error {
+- (NSData *)iconDataAtPath:(NSString *)path {
   if ([path isEqualToString:helloPath]) {
     NSString *file = [[NSBundle mainBundle] pathForResource:@"hellodoc" ofType:@"icns"];
-    return [NSDictionary dictionaryWithObject:[NSData dataWithContentsOfFile:file]
-                                       forKey:kGMUserFileSystemCustomIconDataKey];
+    return [NSData dataWithContentsOfFile:file];
   }
   return nil;
 }

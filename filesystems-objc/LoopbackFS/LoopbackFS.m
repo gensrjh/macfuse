@@ -74,27 +74,23 @@
 
 #pragma mark Removing an Item
 
-- (BOOL)removeDirectoryAtPath:(NSString *)path error:(NSError **)error {
-  LOG_OP(@"[0x%x] removeDirectoryAtPath: %@", [NSThread currentThread], path);
-
-  // We need to special-case directories here and use the bsd API since 
-  // NSFileManager will happily do a recursive remove :-(
-  NSString* p = [rootPath_ stringByAppendingString:path];
-  int ret = rmdir([p UTF8String]);
-  if (ret < 0) {
-    *error = [NSError errorWithPOSIXCode:errno];
-    return NO;
-  }
-  return YES;
-}
-
 - (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error {
   LOG_OP(@"[0x%x] removeItemAtPath: %@", [NSThread currentThread], path);
 
-  // NOTE: If removeDirectoryAtPath is commented out, then this may be called
-  // with a directory, in which case NSFileManager will recursively remove all
-  // subdirectories. So be careful!
   NSString* p = [rootPath_ stringByAppendingString:path];
+  BOOL isDirectory = NO;
+  BOOL exists = 
+    [[NSFileManager defaultManager] fileExistsAtPath:p isDirectory:&isDirectory];
+  if (exists && isDirectory) {
+    // We need to special-case directories here since NSFileManager will happily
+    // do a recursive remove :-(
+    int ret = rmdir([p UTF8String]);
+    if (ret < 0) {
+      *error = [NSError errorWithPOSIXCode:errno];
+      return NO;
+    }
+    return YES;
+  }
   return [[NSFileManager defaultManager] removeItemAtPath:p error:error];
 }
 
@@ -252,22 +248,6 @@
   return YES;
 }
 
-- (BOOL)exchangeDataOfItemAtPath:(NSString *)path1
-                  withItemAtPath:(NSString *)path2
-                           error:(NSError **)error {
-  LOG_OP(@"[0x%x] exchangeDataOfItemAtPath:%@, withPath:%@", [NSThread currentThread],
-         path1, path2);
-  
-  NSString* p1 = [rootPath_ stringByAppendingString:path1];
-  NSString* p2 = [rootPath_ stringByAppendingString:path2];
-  int ret = exchangedata([p1 UTF8String], [p2 UTF8String], 0);
-  if ( ret < 0 ) {
-    *error = [NSError errorWithPOSIXCode:errno];
-    return NO;    
-  }
-  return YES;  
-}
-
 #pragma mark Directory Contents
 
 - (NSArray *)contentsOfDirectoryAtPath:(NSString *)path error:(NSError **)error {
@@ -284,9 +264,7 @@
   LOG_OP(@"[0x%x] attributesOfItemAtAPath: %@", [NSThread currentThread], path);
 
   NSString* p = [rootPath_ stringByAppendingString:path];
-  NSDictionary* attribs = 
-    [[NSFileManager defaultManager] attributesOfItemAtPath:p error:error];
-  return attribs;
+  return [[NSFileManager defaultManager] attributesOfItemAtPath:p error:error];
 }
 
 - (NSDictionary *)attributesOfFileSystemForPath:(NSString *)path
@@ -295,15 +273,7 @@
          [NSThread currentThread], path);
 
   NSString* p = [rootPath_ stringByAppendingString:path];
-  NSDictionary* d =
-    [[NSFileManager defaultManager] attributesOfFileSystemForPath:p error:error];
-  if (d) {
-    NSMutableDictionary* attribs = [NSMutableDictionary dictionaryWithDictionary:d];
-    [attribs setObject:[NSNumber numberWithBool:YES]
-                forKey:kGMUserFileSystemVolumeSupportsExtendedDatesKey];
-    return attribs;
-  }
-  return nil;
+  return [[NSFileManager defaultManager] attributesOfFileSystemForPath:p error:error];
 }
 
 - (BOOL)setAttributes:(NSDictionary *)attributes 
@@ -311,16 +281,8 @@
                 error:(NSError **)error {
   LOG_OP(@"[0x%x] setAttributes:%@ ofItemAtPath: %@", 
          [NSThread currentThread], attributes, path);
-  NSString* p = [rootPath_ stringByAppendingString:path];
   
-  NSNumber* flags = [attributes objectForKey:kGMUserFileSystemFileFlagsKey];
-  if (flags != nil) {
-    int rc = chflags([p UTF8String], [flags intValue]);
-    if (rc < 0) {
-      *error = [NSError errorWithPOSIXCode:errno];
-      return NO;
-    }
-  }
+  NSString* p = [rootPath_ stringByAppendingString:path];
   return [[NSFileManager defaultManager] setAttributes:attributes
                                           ofItemAtPath:p
                                                  error:error];
@@ -356,7 +318,6 @@
 
 - (NSData *)valueOfExtendedAttribute:(NSString *)name 
                         ofItemAtPath:(NSString *)path
-                            position:(off_t)position
                                error:(NSError **)error {
   LOG_OP(@"[0x%x] value of extended attribute: %@ forPath:%@", 
          [NSThread currentThread], name, path);
@@ -364,7 +325,7 @@
   NSString* p = [rootPath_ stringByAppendingString:path];
 
   ssize_t size = getxattr([p UTF8String], [name UTF8String], nil, 0,
-                         position, 0);
+                         0, 0);
   if ( size < 0 ) {
     *error = [NSError errorWithPOSIXCode:errno];
     return nil;
@@ -372,7 +333,7 @@
   NSMutableData* data = [NSMutableData dataWithLength:size];
   size = getxattr([p UTF8String], [name UTF8String], 
                   [data mutableBytes], [data length],
-                  position, 0);
+                  0, 0);
   if ( size < 0 ) {
     *error = [NSError errorWithPOSIXCode:errno];
     return nil;
@@ -383,21 +344,15 @@
 - (BOOL)setExtendedAttribute:(NSString *)name 
                 ofItemAtPath:(NSString *)path 
                        value:(NSData *)value
-                    position:(off_t)position
-                       options:(int)options
+                       flags:(int)flags
                        error:(NSError **)error {
   LOG_OP(@"[0x%x] set extended attribute: %@ forPath:%@", 
          [NSThread currentThread], name, path);
 
-  // Setting com.apple.FinderInfo happens in the kernel, so security related 
-  // bits are set in the options. We need to explicitly remove them or the call
-  // to setxattr will fail.
-  // TODO: Why is this necessary?
-  options &= ~(XATTR_NOSECURITY | XATTR_NODEFAULT);
   NSString* p = [rootPath_ stringByAppendingString:path];
   int ret = setxattr([p UTF8String], [name UTF8String], 
                      [value bytes], [value length], 
-                     position, options);
+                     0, 0);
   if ( ret < 0 ) {
     *error = [NSError errorWithPOSIXCode:errno];
     return NO;

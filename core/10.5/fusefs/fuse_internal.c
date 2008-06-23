@@ -35,7 +35,6 @@
 #include "fuse_file.h"
 #include "fuse_nodehash.h"
 #include "fuse_sysctl.h"
-#include "fuse_kludges.h"
 
 /* access */
 
@@ -151,7 +150,7 @@ fuse_internal_access(vnode_t                   vp,
 
     if (err == ENOENT) {
 
-        const char *vname = NULL;
+        char *vname = NULL;
 
 #if M_MACFUSE_ENABLE_UNSUPPORTED
         vname = vnode_getname(vp);
@@ -176,107 +175,6 @@ fuse_internal_access(vnode_t                   vp,
 
     return err;
 }
-
-#if M_MACFUSE_ENABLE_EXCHANGE
-
-/* exchange */
-
-__private_extern__
-int
-fuse_internal_exchange(vnode_t       fvp,
-                       const char   *fname,
-                       size_t        flen,
-                       vnode_t       tvp,
-                       const char   *tname,
-                       size_t        tlen,
-                       int           options,
-                       vfs_context_t context)
-{
-    struct fuse_dispatcher fdi;
-    struct fuse_exchange_in *fei;
-    struct fuse_vnode_data *ffud = VTOFUD(fvp);
-    struct fuse_vnode_data *tfud = VTOFUD(tvp);
-    vnode_t fdvp = ffud->parentvp;
-    vnode_t tdvp = tfud->parentvp;
-    int err = 0;
-
-    fdisp_init(&fdi, sizeof(*fei) + flen + tlen + 2);
-    fdisp_make_vp(&fdi, FUSE_EXCHANGE, fvp, context);
-
-    fei = fdi.indata;
-    fei->olddir = VTOI(fdvp);
-    fei->newdir = VTOI(tdvp);
-    fei->options = (uint64_t)options;
-
-    memcpy((char *)fdi.indata + sizeof(*fei), fname, flen);
-    ((char *)fdi.indata)[sizeof(*fei) + flen] = '\0';
-
-    memcpy((char *)fdi.indata + sizeof(*fei) + flen + 1, tname, tlen);
-    ((char *)fdi.indata)[sizeof(*fei) + flen + tlen + 1] = '\0';
-
-    ubc_msync(fvp, (off_t)0, (off_t)ffud->filesize, (off_t*)0,
-              UBC_PUSHALL | UBC_INVALIDATE | UBC_SYNC);
-    ubc_msync(tvp, (off_t)0, (off_t)tfud->filesize, (off_t*)0,
-              UBC_PUSHALL | UBC_INVALIDATE | UBC_SYNC);
-        
-    if (!(err = fdisp_wait_answ(&fdi))) {
-        fuse_ticket_drop(fdi.tick);
-    }
-
-    if (err == 0) {
-        if (fdvp) {
-            fuse_invalidate_attr(fdvp);
-        }
-        if (tdvp != fdvp) {
-            if (tdvp) {
-                fuse_invalidate_attr(tdvp);
-            }
-        }
-
-        fuse_invalidate_attr(fvp);
-        fuse_invalidate_attr(tvp);
-
-        cache_purge(fvp);
-        cache_purge(tvp);
-
-        /* Swap sizes */
-        off_t tmpfilesize = ffud->filesize;
-        ffud->filesize = tfud->filesize;
-        tfud->filesize = tmpfilesize;
-        ubc_setsize(fvp, (off_t)ffud->filesize);
-        ubc_setsize(tvp, (off_t)tfud->filesize);
-
-        fuse_kludge_exchange(fvp, tvp);
-
-        /*
-         * Another approach (will need additional kernel support to work):
-         *
-        vnode_t tmpvp = ffud->vp;
-        ffud->vp = tfud->vp;
-        tfud->vp = tmpvp;
-
-        vnode_t tmpparentvp = ffud->parentvp;
-        ffud->parentvp = tfud->parentvp;
-        tfud->parentvp = tmpparentvp;
-
-        off_t tmpfilesize = ffud->filesize;
-        ffud->filesize = tfud->filesize;
-        tfud->filesize = tmpfilesize;
-
-        struct fuse_vnode_data tmpfud;
-        memcpy(&tmpfud, ffud, sizeof(struct fuse_vnode_data));
-        memcpy(ffud, tfud, sizeof(struct fuse_vnode_data));
-        memcpy(tfud, &tmpfud, sizeof(struct fuse_vnode_data));
-        
-        HNodeExchangeFromFSNode(ffud, tfud);
-        *
-        */
-    }
-
-    return err;
-}
-
-#endif /* M_MACFUSE_ENABLE_EXCHANGE */
 
 /* fsync */
 
@@ -352,77 +250,6 @@ out:
     return err;
 }
 
-/* getattr sidekicks */
-__private_extern__
-int
-fuse_internal_loadxtimes(vnode_t vp, struct vnode_attr *out_vap,
-                         vfs_context_t context)
-{
-    struct vnode_attr *in_vap = VTOVA(vp);
-    struct fuse_data *data = fuse_get_mpdata(vnode_mount(vp));
-    struct fuse_dispatcher fdi;
-    struct fuse_getxtimes_out *fgxo = NULL;
-    int isvroot = vnode_isvroot(vp);
-    struct timespec t = { 0, 0 };
-    const struct timespec kZeroTime = { 0, 0 };
-    int err = 0;
-
-    if (!(data->dataflags & FSESS_XTIMES)) {
-        /* We don't return anything. */
-        goto out;
-    }
-
-    if (VTOFUD(vp)->c_flag & C_XTIMES_VALID) {
-        VATTR_RETURN(out_vap, va_backup_time, in_vap->va_backup_time);
-        VATTR_RETURN(out_vap, va_create_time, in_vap->va_create_time);
-        goto out;
-    }
-
-    if (!fuse_implemented(data, FSESS_NOIMPLBIT(GETXTIMES))) {
-        goto fake;
-    }
-
-    if (fuse_isdeadfs(vp) && isvroot) {
-        goto fake;
-    }
-
-    if (!(data->dataflags & FSESS_INITED) && isvroot) {
-        goto fake;
-    }
-
-    err = fdisp_simple_putget_vp(&fdi, FUSE_GETXTIMES, vp, context);
-    if (err) {
-        /* We don't ever treat this as a hard error. */
-        err = 0;
-        goto fake;
-    }
-
-    fgxo = (struct fuse_getxtimes_out *)fdi.answ;
-
-    t.tv_sec = (time_t)fgxo->bkuptime;
-    t.tv_nsec = fgxo->bkuptimensec;
-    VATTR_RETURN(in_vap, va_backup_time, t);
-    VATTR_RETURN(out_vap, va_backup_time, t);
-
-    t.tv_sec = (time_t)fgxo->crtime;
-    t.tv_nsec = fgxo->crtimensec;
-    VATTR_RETURN(in_vap, va_create_time, t);
-    VATTR_RETURN(out_vap, va_create_time, t);
-
-    fuse_ticket_drop(fdi.tick);
-
-    VTOFUD(vp)->c_flag |= C_XTIMES_VALID;
-
-    goto out;
-
-fake:
-    VATTR_RETURN(out_vap, va_backup_time, kZeroTime);
-    VATTR_RETURN(out_vap, va_create_time, kZeroTime);
-
-out:
-    return err;
-}
-
 /* ioctl */
 __private_extern__
 int
@@ -430,7 +257,6 @@ fuse_internal_ioctl_avfi(vnode_t vp, __unused vfs_context_t context,
                          struct fuse_avfi_ioctl *avfi)
 {
     int ret = 0;
-    uint32_t hint = 0;
 
     if (!avfi) {
         return EINVAL;
@@ -446,44 +272,22 @@ fuse_internal_ioctl_avfi(vnode_t vp, __unused vfs_context_t context,
 
     /* The result of this /does/ alter our return value. */
     if (avfi->cmd & FUSE_AVFI_UBC) {
-        int ubc_flags = avfi->ubc_flags & (UBC_PUSHDIRTY  | UBC_PUSHALL |
-                                           UBC_INVALIDATE | UBC_SYNC);
-        if (ubc_msync(vp, (off_t)0, ubc_getsize(vp), (off_t*)0,
-                      ubc_flags) == 0) {
+        int ubc_flags = avfi->flags & (UBC_PUSHDIRTY  | UBC_PUSHALL |
+                                       UBC_INVALIDATE | UBC_SYNC);
+        if (ubc_sync_range(vp, (off_t)0, ubc_getsize(vp), ubc_flags) == 0) {
             /* failed */
             ret = EINVAL; /* don't really have a good error to return */
         }
     }
 
-    if (avfi->cmd & FUSE_AVFI_UBC_SETSIZE) {
-        if (VTOFUD(vp)->filesize != avfi->size) {
-            hint |= NOTE_WRITE;
-            if (avfi->size > VTOFUD(vp)->filesize) {
-                hint |= NOTE_EXTEND;
-            }
-            VTOFUD(vp)->filesize = avfi->size;
-            ubc_setsize(vp, avfi->size);
-        }
-        (void)fuse_invalidate_attr(vp);
-    }
-
     /* The result of this doesn't alter our return value. */
     if (avfi->cmd & FUSE_AVFI_PURGEATTRCACHE) {
-        hint |= NOTE_ATTRIB;
         (void)fuse_invalidate_attr(vp);
     }
 
     /* The result of this doesn't alter our return value. */
     if (avfi->cmd & FUSE_AVFI_PURGEVNCACHE) {
         (void)fuse_vncache_purge(vp);
-    }
-
-    if (avfi->cmd & FUSE_AVFI_KNOTE) {
-        hint |= avfi->note;
-    }
-
-    if (hint) {
-        FUSE_KNOTE(vp, hint);
     }
 
     return ret;
@@ -497,8 +301,7 @@ fuse_internal_readdir(vnode_t                 vp,
                       uio_t                   uio,
                       vfs_context_t           context,
                       struct fuse_filehandle *fufh,
-                      struct fuse_iov        *cookediov,
-                      int                    *numdirent)
+                      struct fuse_iov        *cookediov)
 {
     int err = 0;
     struct fuse_dispatcher fdi;
@@ -512,7 +315,7 @@ fuse_internal_readdir(vnode_t                 vp,
     fdisp_init(&fdi, 0);
 
     /* Note that we DO NOT have a UIO_SYSSPACE here (so no need for p2p I/O). */
-	
+
     while (uio_resid(uio) > 0) {
 
         fdi.iosize = sizeof(*fri);
@@ -522,7 +325,7 @@ fuse_internal_readdir(vnode_t                 vp,
         fri->fh = fufh->fh_id;
         fri->offset = uio_offset(uio);
         data = fuse_get_mpdata(vnode_mount(vp));
-        fri->size = (typeof(fri->size))min((size_t)uio_resid(uio), data->iosize);
+        fri->size = min(uio_resid(uio), data->iosize);
 
         if ((err = fdisp_wait_answ(&fdi))) {
             goto out;
@@ -533,8 +336,7 @@ fuse_internal_readdir(vnode_t                 vp,
                                                      fri->size,
                                                      fdi.answ,
                                                      fdi.iosize,
-                                                     cookediov,
-                                                     numdirent))) {
+                                                     cookediov))) {
             break;
         }
     }
@@ -554,13 +356,11 @@ fuse_internal_readdir_processdata(vnode_t          vp,
                          __unused size_t           reqsize,
                                   void            *buf,
                                   size_t           bufsize,
-                                  struct fuse_iov *cookediov,
-                                  int             *numdirent)
+                                  struct fuse_iov *cookediov)
 {
     int err = 0;
     int cou = 0;
-    int n   = 0;
-    size_t bytesavail;
+    int bytesavail;
     size_t freclen;
 
     struct dirent      *de;
@@ -611,7 +411,7 @@ fuse_internal_readdir_processdata(vnode_t          vp,
 
         bytesavail = GENERIC_DIRSIZ((struct pseudo_dirent *)&fudge->namelen); 
 
-        if (bytesavail > (size_t)uio_resid(uio)) {
+        if (bytesavail > uio_resid(uio)) {
             err = -1;
             break;
         }
@@ -620,11 +420,7 @@ fuse_internal_readdir_processdata(vnode_t          vp,
         fiov_adjust(cookediov, bytesavail);
 
         de = (struct dirent *)cookediov->base;
-#if __DARWIN_64_BIT_INO_T
-        de->d_fileno = fudge->ino;
-#else
-        de->d_fileno = (ino_t)fudge->ino; /* XXX: truncation */
-#endif /* __DARWIN_64_BIT_INO_T */
+        de->d_fileno = fudge->ino; /* XXX: truncation */
         de->d_reclen = bytesavail;
         de->d_type   = fudge->type; 
         de->d_namlen = fudge->namelen;
@@ -640,20 +436,14 @@ fuse_internal_readdir_processdata(vnode_t          vp,
                (char *)buf + FUSE_NAME_OFFSET, fudge->namelen);
         ((char *)cookediov->base)[bytesavail] = '\0';
 
-        err = uiomove(cookediov->base, (int)cookediov->len, uio);
+        err = uiomove(cookediov->base, cookediov->len, uio);
         if (err) {
             break;
         }
 
-        n++;
-
         buf = (char *)buf + freclen;
         bufsize -= freclen;
         uio_setoffset(uio, fudge->off);
-    }
-
-    if (!err && numdirent) {
-        *numdirent = n;
     }
 
     return err;
@@ -804,13 +594,12 @@ __private_extern__
 int
 fuse_internal_strategy(vnode_t vp, buf_t bp)
 {
-    size_t biosize;
-    size_t chunksize;
-    size_t respsize;
-
+    int biosize;
+    int chunksize;
     int mapped = FALSE;
     int mode;
     int op;
+    int respsize;
     int vtype = vnode_vtype(vp);
 
     int err = 0;
@@ -882,7 +671,7 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
 
         if (!err) {
             fufh = &(fvdat->fufh[fufh_type]);
-            FUFH_AUX_INC(fufh);
+
             /* We've created a NEW fufh of type fufh_type. open_count is 1. */
         }
 
@@ -953,10 +742,9 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
             return 0;
         }
 
-        /* Note that we just made sure that offset < fvdat->filesize. */
         if ((offset + buf_count(bp)) > fvdat->filesize) {
             /* Trimming read */
-            buf_setcount(bp, (uint32_t)(fvdat->filesize - offset));
+            buf_setcount(bp, fvdat->filesize - offset);
         }
 
         if (buf_map(bp, &bufdat)) {
@@ -968,7 +756,7 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
 
         while (buf_resid(bp) > 0) {
 
-            chunksize = min((size_t)buf_resid(bp), data->iosize);
+            chunksize = min(buf_resid(bp), data->iosize);
 
             fdi.iosize = sizeof(*fri);
 
@@ -990,7 +778,7 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
              */
 
             fri->offset = offset;
-            fri->size = (typeof(fri->size))chunksize;
+            fri->size = chunksize;
             fdi.tick->tk_aw_type = FT_A_BUF;
             fdi.tick->tk_aw_bufdata = bufdat;
         
@@ -1006,7 +794,7 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
                 goto out;
             }
 
-            buf_setresid(bp, (uint32_t)(buf_resid(bp) - respsize));
+            buf_setresid(bp, buf_resid(bp) - respsize);
             bufdat += respsize;
             offset += respsize;
 
@@ -1031,6 +819,17 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
         int merr = 0;
         off_t diff;
 
+        /*
+         * XXX: historical
+         *
+         * Panic? Try doing something like:
+         *
+         *   err = EIO;
+         *   goto out;
+         *
+         * Investigate later.
+         */
+
         if (buf_map(bp, &bufdat)) {
             IOLog("MacFUSE: failed to map buffer in strategy\n");
             return EFAULT;
@@ -1053,12 +852,12 @@ fuse_internal_strategy(vnode_t vp, buf_t bp)
             op = FUSE_WRITE;
 
             fdisp_make_vp(&fdi, op, vp, (vfs_context_t)0);
-            chunksize = min((size_t)left, data->iosize);
+            chunksize = min(left, data->iosize);
 
             fwi = fdi.indata;
             fwi->fh = fufh->fh_id;
             fwi->offset = offset;
-            fwi->size = (typeof(fwi->size))chunksize;
+            fwi->size = chunksize;
 
             fdi.tick->tk_ms_type = FT_M_BUF;
             fdi.tick->tk_ms_bufdata = bufdat;
@@ -1391,18 +1190,6 @@ fuse_internal_init_synchronous(struct fuse_ticket *ftick)
         data->max_write = 4096;
     }
 
-    if (fiio->flags & FUSE_CASE_INSENSITIVE) {
-        data->dataflags |= FSESS_CASE_INSENSITIVE;
-    }
-
-    if (fiio->flags & FUSE_VOL_RENAME) {
-        data->dataflags |= FSESS_VOL_RENAME;
-    }
-
-    if (fiio->flags & FUSE_XTIMES) {
-        data->dataflags |= FSESS_XTIMES;
-    }
-
 out:
     fuse_ticket_drop(ftick);
 
@@ -1456,7 +1243,7 @@ fuse_internal_send_init(struct fuse_data *data, vfs_context_t context)
 static int
 fuse_internal_print_vnodes_callback(vnode_t vp, __unused void *cargs)
 {
-    const char *vname = NULL;
+    char *vname = NULL;
     struct fuse_vnode_data *fvdat = VTOFUD(vp);
 
 #if M_MACFUSE_ENABLE_UNSUPPORTED
@@ -1500,7 +1287,7 @@ __private_extern__
 void
 fuse_preflight_log(vnode_t vp, fufh_type_t fufh_type, int err, char *message)
 {
-    const char *vname = NULL;
+    char *vname = NULL;
 
 #if M_MACFUSE_ENABLE_UNSUPPORTED
     vname = vnode_getname(vp);

@@ -34,7 +34,7 @@ struct fuse_iov {
     void   *base;
     size_t  len;
     size_t  allocated_size;
-    ssize_t credit;
+    int     credit;
 };
 
 #define FUSE_DATA_LOCK_SHARED(d)      fuse_lck_rw_lock_shared((d)->rwlock)
@@ -55,7 +55,7 @@ do {                                                   \
     (spc2) = (char *)(fiov)->base + (sizeof(*(spc1))); \
 } while (0)
 
-#define FU_AT_LEAST(siz) max((size_t)(siz), (size_t)160)
+#define FU_AT_LEAST(siz) max((siz), 160)
 
 struct fuse_ticket;
 struct fuse_data;
@@ -74,13 +74,13 @@ struct fuse_ticket {
 
     struct fuse_iov              tk_ms_fiov;
     void                        *tk_ms_bufdata;
-    size_t                       tk_ms_bufsize;
+    unsigned long                tk_ms_bufsize;
     enum { FT_M_FIOV, FT_M_BUF } tk_ms_type;
     STAILQ_ENTRY(fuse_ticket)    tk_ms_link;
 
     struct fuse_iov              tk_aw_fiov;
     void                        *tk_aw_bufdata;
-    size_t                       tk_aw_bufsize;
+    unsigned long                tk_aw_bufsize;
     enum { FT_A_FIOV, FT_A_BUF } tk_aw_type;
 
     struct fuse_out_header       tk_aw_ohead;
@@ -206,7 +206,7 @@ enum {
 };
 
 /* Not-Implemented Bits */
-#define FSESS_NOIMPLBIT(MSG)      (1ULL << FUSE_##MSG)
+#define FSESS_NOIMPLBIT(MSG)      (1LL << FUSE_##MSG)
 
 #define FSESS_DEAD                0x00000001 // session is to be closed
 #define FSESS_OPENED              0x00000002 // session device has been opened
@@ -233,9 +233,8 @@ enum {
 #define FSESS_NO_SYNCWRITES       0x00200000
 #define FSESS_NO_UBC              0x00400000
 #define FSESS_NO_VNCACHE          0x00800000
-#define FSESS_CASE_INSENSITIVE    0x01000000
-#define FSESS_VOL_RENAME          0x02000000
-#define FSESS_XTIMES              0x04000000
+#define FSESS_VOL_RENAME          0x01000000
+#define FSESS_CASE_INSENSITIVE    0x02000000
 
 static __inline__
 struct fuse_data *
