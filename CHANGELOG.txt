@@ -1,5 +1,20 @@
 = Changes and Feature Additions in MacFUSE Core Binary Releases =
 
+== MacFUSE 1.7 (June 30, 2008) ==
+
+  * Bugfix: Fixed a kernel issue that could cause resource forks larger than 128KB to be truncated when accessed through the Finder.
+
+  * Bugfix: Fixed a kernel issue where the file system could fail to "catch up" on a file's size when the size changed unbeknownst to MacFUSE (say, on a remote server.)
+
+  * Fix: Changed a kernel policy that could prevent generation of certain fsevents. Although generally harmless in Leopard 10.5.2 and below, this could confuse higher layers of system software in 10.5.3. (The issue manifested as problematic file saves.)
+
+  * Fix: 10.4: Fixed a compilation artifact issue where the MacFUSE 1.5 kernel extension could fail to load on PowerPC 10.4.x systems with an "unknown cmd field" error from `kextload`.
+
+  * Fix: Packaging: The `IFPkgFlagInstalledSize` field is handled better in the package.
+
+  * MacFUSE.framework Changes
+     * Support for a `position` parameter in extended attributes delegate methods. The old methods are deprecated, although they will still be called (for now) if the file system does not implement the newer methods.
+
 == MacFUSE 1.5 (April 25, 2008) ==
 
   * Bugfix: Fixed bug where the Finder would sometimes report zero KB free in a newly mounted MacFUSE volume.
@@ -12,7 +27,7 @@
 
   * Feature: 10.5: Experimental support for `select(2)` on the user-kernel device. Must be explicitly enabled at kernel extension compile time through `M_MACFUSE_ENABLE_DSELECT`.
 
-  * Feature: 10.5: Added support for file flags (see `chflags(2)`). Currently, a user file system can only provide these flags for reading. Support for setting these flags will come in the next release.
+  * Feature: 10.5: Added support for file flags (see `chflags(2)`). Currently, a user file system can only provide these flags for reading. Support for setting these flags is there, but not enabled because doing so will extend ("break") the existing FUSE API and is a more disruptive change--it will require all existing file systems to be recompiled. This change will be clubbed together with other disruptive changes at some point in the near future.
 
   * Update: 10.5: User-space library now based on FUSE library version 2.7.3.
 

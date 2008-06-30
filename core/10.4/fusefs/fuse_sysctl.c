@@ -32,7 +32,6 @@ uint32_t fuse_lookup_cache_hits      = 0;                                  // r
 uint32_t fuse_lookup_cache_misses    = 0;                                  // r
 uint32_t fuse_lookup_cache_overrides = 0;                                  // r
 uint32_t fuse_max_freetickets        = FUSE_DEFAULT_MAX_FREE_TICKETS;      // rw
-uint32_t fuse_max_tickets            = 0;                                  // rw
 int32_t  fuse_mount_count            = 0;                                  // r
 int32_t  fuse_memory_allocated       = 0;                                  // r
 int32_t  fuse_realloc_count          = 0;                                  // r
@@ -227,8 +226,6 @@ SYSCTL_INT(_macfuse_tunables, OID_AUTO, iov_permanent_bufsize, CTLFLAG_RW,
            &fuse_iov_permanent_bufsize, 0, "");
 SYSCTL_INT(_macfuse_tunables, OID_AUTO, max_freetickets, CTLFLAG_RW,
            &fuse_max_freetickets, 0, "");
-SYSCTL_INT(_macfuse_tunables, OID_AUTO, max_tickets, CTLFLAG_RW,
-           &fuse_max_tickets, 0, "");
 SYSCTL_PROC(_macfuse_tunables,          // our parent
             OID_AUTO,                   // automatically assign object ID
             userkernel_bufsize,         // our name
@@ -276,7 +273,6 @@ static struct sysctl_oid *fuse_sysctl_list[] =
     &sysctl__macfuse_tunables_iov_credit,
     &sysctl__macfuse_tunables_iov_permanent_bufsize,
     &sysctl__macfuse_tunables_max_freetickets,
-    &sysctl__macfuse_tunables_max_tickets,
     &sysctl__macfuse_tunables_userkernel_bufsize,
     &sysctl__macfuse_version_api_major,
     &sysctl__macfuse_version_api_minor,

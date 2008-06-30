@@ -7,7 +7,6 @@
 #include "fuse_device.h"
 #include "fuse_ipc.h"
 #include "fuse_internal.h"
-#include "fuse_kludges.h"
 #include "fuse_locking.h"
 #include "fuse_nodehash.h"
 #include "fuse_sysctl.h"
@@ -102,19 +101,11 @@ fuse_device_close_final(fuse_device_t fdev)
 
 /* /dev/fuseN implementation */
 
-d_open_t   fuse_device_open;
-d_close_t  fuse_device_close;
-d_read_t   fuse_device_read;
-d_write_t  fuse_device_write;
-d_ioctl_t  fuse_device_ioctl;
-
-#if M_MACFUSE_ENABLE_DSELECT
-
-d_select_t fuse_device_select;
-
-#else
-#define fuse_device_select (d_select_t*)enodev
-#endif /* M_MACFUSE_ENABLE_DSELECT */
+d_open_t  fuse_device_open;
+d_close_t fuse_device_close;
+d_read_t  fuse_device_read;
+d_write_t fuse_device_write;
+d_ioctl_t fuse_device_ioctl;
 
 static struct cdevsw fuse_device_cdevsw = {
     /* open     */ fuse_device_open,
@@ -125,7 +116,7 @@ static struct cdevsw fuse_device_cdevsw = {
     /* stop     */ (d_stop_t *)enodev,
     /* reset    */ (d_reset_t *)enodev,
     /* ttys     */ 0,
-    /* select   */ fuse_device_select,
+    /* select   */ (d_select_t *)enodev,
     /* mmap     */ (d_mmap_t *)enodev,
     /* strategy */ (d_strategy_t *)enodev_strat,
     /* getc     */ (d_getc_t *)enodev,
@@ -239,10 +230,6 @@ fuse_device_close(dev_t dev, __unused int flags, __unused int devtype,
     data->dataflags &= ~FSESS_OPENED;
 
     fuse_lck_mtx_lock(data->aw_mtx);
-
-#if M_MACFUSE_ENABLE_DSELECT
-    selwakeup((struct selinfo*)&data->d_rsel);
-#endif /* M_MACFUSE_ENABLE_DSELECT */
 
     if (data->mount_state == FM_MOUNTED) {
 
@@ -375,13 +362,6 @@ again:
         if (err) {
             break;
         }
-    }
-
-    /*
-     * XXX: Stop gap! I really need to finish interruption plumbing.
-     */
-    if (fticket_answered(ftick)) {
-        err = EINTR;
     }
 
     /*
@@ -682,51 +662,6 @@ fuse_device_ioctl(dev_t dev, u_long cmd, caddr_t udata,
 
     return ret;
 }
-
-#if M_MACFUSE_ENABLE_DSELECT
-
-int
-fuse_device_select(dev_t dev, int events, void *wql, struct proc *p)
-{
-    int unit, revents = 0;
-    struct fuse_device *fdev;
-    struct fuse_data  *data;
-
-    fuse_trace_printf_func();
-
-    unit = minor(dev);
-    if (unit >= MACFUSE_NDEVICES) {
-        return ENOENT;
-    }
-
-    fdev = FUSE_DEVICE_FROM_UNIT_FAST(unit);
-    if (!fdev) {
-        return ENXIO;
-    }
-
-    data = fdev->data;
-    if (!data) {
-        panic("MacFUSE: no device private data in device_select");
-    }
-
-    if (events & (POLLIN | POLLRDNORM)) {
-        fuse_lck_mtx_lock(data->ms_mtx);
-        if (fdata_dead_get(data) || STAILQ_FIRST(&data->ms_head)) {
-            revents |= (events & (POLLIN | POLLRDNORM));
-        } else {
-            selrecord((proc_t)p, (struct selinfo*)&data->d_rsel, wql);
-        }
-        fuse_lck_mtx_unlock(data->ms_mtx);
-    }
-
-    if (events & (POLLOUT | POLLWRNORM)) {
-        revents |= (events & (POLLOUT | POLLWRNORM));
-    }
-
-    return revents;
-}
-
-#endif /* M_MACFUSE_ENABLE_DSELECT */
 
 int
 fuse_device_kill(int unit, struct proc *p)

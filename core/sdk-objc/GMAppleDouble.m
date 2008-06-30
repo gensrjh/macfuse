@@ -35,10 +35,6 @@
 //  Created by ted on 12/29/07.
 //
 #import "GMAppleDouble.h"
-#import "libkern/OSByteOrder.h"
-
-#define GM_APPLE_DOUBLE_HEADER_MAGIC   0x00051607
-#define GM_APPLE_DOUBLE_HEADER_VERSION 0x00020000
 
 typedef struct {
   UInt32 magicNumber;      // Should be 0x00051607
@@ -53,15 +49,28 @@ typedef struct {
   UInt32 length;   // Length of entry data in bytes.
 } __attribute__((packed)) DoubleEntryHeader;
 
+@interface GMAppleDoubleEntry : NSObject {
+  UInt32 entryID_;
+  NSData* data_;
+}
+- (id)initWithEntryID:(UInt32)entryID data:(NSData *)data;
+- (void)dealloc;
+- (UInt32)entryID;
+- (NSData *)data;
+@end
+
 @implementation GMAppleDoubleEntry
 
-+ (GMAppleDoubleEntry *)entryWithID:(GMAppleDoubleEntryID)entryID 
-                               data:(NSData *)data {
++ (GMAppleDoubleEntry *)entryWithID:(UInt32)entryID data:(NSData *)data {
   return [[[GMAppleDoubleEntry alloc] 
            initWithEntryID:entryID data:data] autorelease];
 }
 
-- (id)initWithEntryID:(GMAppleDoubleEntryID)entryID
+- (id)init {
+  return [self initWithEntryID:0 data:nil];
+}
+
+- (id)initWithEntryID:(UInt32)entryID
                  data:(NSData *)data {
   if ((self = [super init])) {
     if (entryID == DoubleEntryInvalid || data == nil) {
@@ -79,7 +88,7 @@ typedef struct {
   [super dealloc];
 }
 
-- (GMAppleDoubleEntryID)entryID {
+- (UInt32)entryID {
   return entryID_;
 }
 - (NSData *)data {
@@ -94,14 +103,6 @@ typedef struct {
   return [[[GMAppleDouble alloc] init] autorelease];
 }
 
-+ (GMAppleDouble *)appleDoubleWithData:(NSData *)data {
-  GMAppleDouble* appleDouble = [[[GMAppleDouble alloc] init] autorelease];
-  if ([appleDouble addEntriesFromAppleDoubleData:data]) {
-    return appleDouble;
-  }
-  return nil;
-}
-
 - (id)init {
   if ((self = [super init])) {
     entries_ = [[NSMutableArray alloc] init];
@@ -114,52 +115,8 @@ typedef struct {
   [super dealloc];
 }
 
-- (void)addEntry:(GMAppleDoubleEntry *)entry {
-  [entries_ addObject:entry];
-}
-
 - (void)addEntryWithID:(GMAppleDoubleEntryID)entryID data:(NSData *)data {
-  GMAppleDoubleEntry* entry = [GMAppleDoubleEntry entryWithID:entryID data:data];
-  [self addEntry:entry];
-}
-
-- (BOOL)addEntriesFromAppleDoubleData:(NSData *)data {
-  const int len = [data length];
-  DoubleHeader header;
-  if (len < sizeof(header)) {
-    return NO;  // To small to even fit our header.
-  }
-  [data getBytes:&header length:sizeof(header)];
-  if (OSSwapBigToHostInt32(header.magicNumber) != GM_APPLE_DOUBLE_HEADER_MAGIC ||
-      OSSwapBigToHostInt32(header.versionNumber) != GM_APPLE_DOUBLE_HEADER_VERSION) {
-    return NO;  // Invalid header.
-  }
-  int count = OSSwapBigToHostInt16(header.numberOfEntries);
-  int offset = sizeof(DoubleHeader);
-  if (len < (offset + (count * sizeof(DoubleEntryHeader)))) {
-    return NO;  // Not enough data to hold all the DoubleEntryHeader.
-  }
-  for (int i = 0; i < count; ++i, offset += sizeof(DoubleEntryHeader)) {
-    // Extract header
-    DoubleEntryHeader entryHeader;
-    NSRange range = NSMakeRange(offset, sizeof(entryHeader));
-    [data getBytes:&entryHeader range:range];
-
-    // Extract data
-    range = NSMakeRange(OSSwapBigToHostInt32(entryHeader.offset), 
-                        OSSwapBigToHostInt32(entryHeader.length));
-    if (len < (range.location + range.length)) {
-      return NO;  // Given data too small to contain this entry.
-    }
-    NSData* entryData = [data subdataWithRange:range];
-    [self addEntryWithID:OSSwapBigToHostInt32(entryHeader.entryID) data:entryData];
-  }
-
-  return YES;
-}
-
-- (NSArray *)entries {
-  return entries_;
+  [entries_ addObject:[GMAppleDoubleEntry entryWithID:entryID data:data]];
 }
 
 - (NSData *)data {
@@ -172,10 +129,9 @@ typedef struct {
 
     DoubleEntryHeader entryHeader;
     memset(&entryHeader, 0, sizeof(entryHeader));
-    entryHeader.entryID = OSSwapHostToBigInt32((UInt32)[entry entryID]);
-    entryHeader.offset = 
-      OSSwapHostToBigInt32((UInt32)(dataStartOffset + [entryData length]));
-    entryHeader.length = OSSwapHostToBigInt32((UInt32)[[entry data] length]);
+    entryHeader.entryID = htonl([entry entryID]);
+    entryHeader.offset = htonl(dataStartOffset + [entryData length]);
+    entryHeader.length = htonl([[entry data] length]);
     [entryListData appendBytes:&entryHeader length:sizeof(entryHeader)];
     [entryData appendData:[entry data]];
   }
@@ -184,9 +140,9 @@ typedef struct {
 
   DoubleHeader header;
   memset(&header, 0, sizeof(header));
-  header.magicNumber = OSSwapHostToBigConstInt32(GM_APPLE_DOUBLE_HEADER_MAGIC);
-  header.versionNumber = OSSwapHostToBigConstInt32(GM_APPLE_DOUBLE_HEADER_VERSION);
-  header.numberOfEntries = OSSwapHostToBigInt16((UInt16)[entries_ count]);
+  header.magicNumber = htonl(0x00051607);
+  header.versionNumber = htonl(0x00020000);
+  header.numberOfEntries = htons([entries_ count]);
   [data appendBytes:&header length:sizeof(header)];
   [data appendData:entryListData];
   [data appendData:entryData];

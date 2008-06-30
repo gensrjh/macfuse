@@ -32,6 +32,7 @@ FSNodeGetOrCreateFileVNodeByID(vnode_t               *vnPtr,
 {
     int   err;
     int   junk;
+    dev_t dummy_device;
 
     vnode_t  vn    = NULLVP;
     HNodeRef hn    = NULL;
@@ -39,7 +40,6 @@ FSNodeGetOrCreateFileVNodeByID(vnode_t               *vnPtr,
 
     struct fuse_vnode_data *fvdat   = NULL;
     struct fuse_data       *mntdata = NULL;
-    fuse_device_t           dummy_device;
 
     enum vtype vtyp = IFTOVT(feo->attr.mode);
 
@@ -53,7 +53,7 @@ FSNodeGetOrCreateFileVNodeByID(vnode_t               *vnPtr,
     uint64_t generation = feo->generation;
 
     mntdata = fuse_get_mpdata(mp);
-    dummy_device = mntdata->fdev;
+    dummy_device = (dev_t)mntdata->fdev;
 
     err = HNodeLookupCreatingIfNecessary(dummy_device, feo->nodeid,
                                          0 /* fork index */, &hn, &vn);
@@ -95,15 +95,9 @@ FSNodeGetOrCreateFileVNodeByID(vnode_t               *vnPtr,
             fvdat->c_flag       = 0;
 
             /* meta */
-
-            /* XXX: truncation */
-            fvdat->entry_valid.tv_sec  = (time_t)feo->entry_valid;
-
+            fvdat->entry_valid.tv_sec  = feo->entry_valid; /* XXX:truncation */
             fvdat->entry_valid.tv_nsec = feo->entry_valid_nsec;
-
-            /* XXX: truncation */
-            fvdat->attr_valid.tv_sec   = (time_t)feo->attr_valid;
-
+            fvdat->attr_valid.tv_sec   = feo->attr_valid;  /* XXX:truncation */
             fvdat->attr_valid.tv_nsec  = feo->attr_valid_nsec;
             fvdat->filesize            = size;
             fvdat->nlookup             = 0;
@@ -156,8 +150,7 @@ FSNodeGetOrCreateFileVNodeByID(vnode_t               *vnPtr,
             params.vnfs_filesize   = size;
             params.vnfs_markroot   = markroot;
 
-            err = vnode_create(VNCREATE_FLAVOR, (uint32_t)sizeof(params),
-                               &params, &vn);
+            err = vnode_create(VNCREATE_FLAVOR, sizeof(params), &params, &vn);
         }
 
         if (err == 0) {

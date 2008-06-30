@@ -27,7 +27,6 @@ struct fuse_filehandle {
     int      open_count;
     int      open_flags;
     int      fuse_open_flags;
-    int      aux_count;
 };
 typedef struct fuse_filehandle * fuse_filehandle_t;
 
@@ -35,7 +34,6 @@ typedef struct fuse_filehandle * fuse_filehandle_t;
 #define FUFH_USE_INC(f)   ((f)->open_count++)
 #define FUFH_USE_DEC(f)   ((f)->open_count--)
 #define FUFH_USE_RESET(f) ((f)->open_count = 0)
-#define FUFH_AUX_INC(f)   ((f)->aux_count++)
 
 static __inline__
 fufh_type_t

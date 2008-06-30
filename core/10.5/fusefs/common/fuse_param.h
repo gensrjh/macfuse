@@ -17,9 +17,9 @@
 
 #if M_MACFUSE_ENABLE_UNSUPPORTED
   #define M_MACFUSE_ENABLE_DSELECT         0
-  #define M_MACFUSE_ENABLE_EXCHANGE        1
   #define M_MACFUSE_ENABLE_KQUEUE          1
   #define M_MACFUSE_ENABLE_KUNC            0
+  #define M_MACFUSE_ENABLE_LOCKLOCAL       1
 #endif
 
 /* User Control */
@@ -116,7 +116,7 @@
  * through the fuse.* sysctl interface.
  */
 #define FUSE_DEFAULT_MAX_FREE_TICKETS      1024
-#define FUSE_DEFAULT_IOV_PERMANENT_BUFSIZE (1 << 19)
+#define FUSE_DEFAULT_IOV_PERMANENT_BUFSIZE (1L << 19)
 #define FUSE_DEFAULT_IOV_CREDIT            16
 
 /* User-Kernel IPC Buffer */
