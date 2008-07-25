@@ -2,13 +2,13 @@
 
 = Introduction =
 
-Starting with version 1.3, MacFUSE Core comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
+Starting with version 1.3, MacFUSE comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
 
 = Requirements =
 
 In order to go through this HOWTO, you'll need to:
   # Be running XCode 2.5+ on Tiger or Leopard.
-  # If you haven't already, then install [http://code.google.com/p/macfuse/downloads MacFUSE Core].
+  # If you haven't already, then install [http://code.google.com/p/macfuse/downloads MacFUSE].
   # Check out the ytfs project that will serve as our starting point as follows (you can do all the work in your _/tmp_ directory if you'd like):
 {{{
 cd /tmp
