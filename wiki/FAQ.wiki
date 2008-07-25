@@ -11,7 +11,7 @@ MacFUSE is software that allows you to write arbitrary file systems as user-spac
 
 *Q 1.2. What is "MacFUSE Core"?*
 
-A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`).
+A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`). Note that with the advent of the built-in install/update engine in MacFUSE [AUTOINSTALL], the downloadable MacFUSE disk image doesn't have "Core" in its name.
 
 = 2. Install/Uninstall Questions =
 
