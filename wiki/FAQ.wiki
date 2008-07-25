@@ -11,7 +11,7 @@ MacFUSE is software that allows you to write arbitrary file systems as user-spac
 
 *Q 1.2. What is "MacFUSE Core"?*
 
-A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`). Note that with the advent of the built-in install/update engine in MacFUSE [AUTOINSTALL], the downloadable MacFUSE disk image doesn't have "Core" in its name.
+A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`). Note that with the advent of the built-in install/update engine in MacFUSE (See [AUTOINSTALL]), the downloadable MacFUSE disk image doesn't have "Core" in its name.
 
 = 2. Install/Uninstall Questions =
 
@@ -21,7 +21,11 @@ A: The preferred way is to install the `MacFUSE.pkg` from the latest `MacFUSE-<v
 
 http://code.google.com/p/macfuse/
 
-*Q 2.2. How can I uninstall MacFUSE?*
+*Q 2.2. How can I keep MacFUSE up-to-date?*
+
+A: The tools to keep MacFUSE up-to-date (query the installed version, query for available updates, download and install updates, and so on) are built into MacFUSE. See the [AUTOINSTALL] wiki page for details.
+
+*Q 2.3. How can I uninstall MacFUSE?*
 
 A: It depends on the MacFUSE version and the operating system version. Beginning with MacFUSE 0.4.0, you can use the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
 
@@ -39,7 +43,7 @@ sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 
 If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
-*Q 2.3. I'm using some software that needs an old/deprecated version of MacFUSE. I don't see that version available from your web site. What to do?
+*Q 2.4. I'm using some software that needs an old/deprecated version of MacFUSE. I don't see that version available from your web site. What to do?
 
 A: As far as possible, you should not be using a deprecated version of MacFUSE. Deprecated versions are not supported. In most cases, new MacFUSE versions should be drop in replacements for old versions. Sure, there has been a case or two where MacFUSE intentionally retired some command line options beginning with some version. However, that is very uncommon, and should be even more uncommon as MacFUSE grows older.
 
