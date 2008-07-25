@@ -1,7 +1,7 @@
-#summary Changes/Feature Additions in MacFUSE Core Binary Releases
+#summary Changes/Feature Additions in MacFUSE Binary Releases
 #labels Featured
 
-= Changes and Feature Additions in MacFUSE Core Binary Releases =
+= Changes and Feature Additions in MacFUSE Binary Releases =
 
 == MacFUSE 1.7 (June 30, 2008) ==
 
