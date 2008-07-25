@@ -1,5 +1,0 @@
-#summary Breaking News, Last Minute Issues, Other Important Stuff
-
-= Please Read This Before Using MacFUSE =
-
-MacFUSE requires Mac OS X 10.4 ("Tiger") or above.
