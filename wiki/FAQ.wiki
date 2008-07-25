@@ -45,7 +45,7 @@ If the file system bundle in your MacFUSE installation doesn't have a `Support` 
 
 *Q 2.4. I'm using some software that needs an old/deprecated version of MacFUSE. I don't see that version available from your web site. What to do?
 
-A: As far as possible, you should not be using a deprecated version of MacFUSE. Deprecated versions are not supported. In most cases, new MacFUSE versions should be drop in replacements for old versions. Sure, there has been a case or two where MacFUSE intentionally retired some command line options beginning with some version. However, that is very uncommon, and should be even more uncommon as MacFUSE grows older.
+A: Please don't use old/deprecated versions of MacFUSE. The only "good" version of MacFUSE is the latest one. Older versions become obsolete/unsupported as soon as a new release is out. It's an important goal of MacFUSE to not break existing applications written atop it. As you can read in the [AUTOINSTALL] wiki page, developers are encouraged to test their software against prerelease versions of MacFUSE to help meet this goal.
 
 = 3. File System Specific Questions =
 
