@@ -3,7 +3,7 @@
 
 = The Spotlight File System for MacFUSE =
 
-To use the MacFUSE version of the SpotlightFS file system, you must have the MacFUSE Core package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
+To use the MacFUSE version of the SpotlightFS file system, you must have the MacFUSE package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
 
 = Introduction =
 
@@ -40,8 +40,6 @@ $ ls -lrt /Volumes/SpotlightFS/SmarterFolder/Hasselhoff
 = Integration with Regular Smart "Folders" =
 
 You may notice that some folders show up in purple and look like the standard Finder smart folders.  This is because they are.  SpotlightFS looks in `~/Library/Saved Searches` for other saved searches, and if any are found, they are added to the display in SpotlightFS.  This is so these saved searches, which technically aren't folders, can be used just like real folders; from the command line and all.  
-
-
 
 
 
