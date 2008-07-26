@@ -17,9 +17,9 @@ A: MacFUSE Core is the official distribution of fundamental MacFUSE software you
 
 *Q 2.1. What is the preferred way to install MacFUSE?*
 
-A: The preferred way is to install the `MacFUSE.pkg` from the latest `MacFUSE-<version>.dmg` available from the Downloads tab of:
+A: The preferred way is to install the `MacFUSE.pkg` from the latest `MacFUSE-<version>.dmg` available from:
 
-http://code.google.com/p/macfuse/
+http://code.google.com/p/macfuse/downloads/list
 
 *Q 2.2. How can I keep MacFUSE up-to-date?*
 
