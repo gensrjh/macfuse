@@ -59,7 +59,11 @@ Suppose we somehow automagically provided unified buffer caching for block devic
 
 For comparison, you should try writing to an NTFS _disk image_--you will see that it's considerably faster because you do have some caching in that case.
 
-*Q 3.2. After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
+*Q 3.2. After installing ntfs-3g, my Boot Camp volume stopped showing up in the Startup Disk preference pane. I am devastated. Is reinstalling Mac OS X, Boot Camp, and Windows the only recourse?*
+
+A: Relax. The Startup Disk preference pane is simply filtering out (that is, not displaying) any mounted volumes that it doesn't consider bootable. Its definition of a Boot Camp volume includes that the mounted volume either be of type `msdos` or `ntfs`--this is hardcoded into the preference pane plugin. This doesn't mean your Boot Camp volume has become unbootable. It's merely not showing up in the GUI. You can hold the `opt` key during startup and choose the Windows partition to boot from. You can also remount it (read-only) using the NTFS file system built into Mac OS X and it should start showing up in Startup Disk.
+
+*Q 3.3. After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
 
 A: It's likely that you installed a broken ntfs-3g package you found on the Internet. The package might be interfering with the disk image/disc mounting process. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
 
