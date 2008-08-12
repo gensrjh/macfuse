@@ -27,7 +27,7 @@ A: The tools to keep MacFUSE up-to-date (query the installed version, query for 
 
 *Q 2.3. How can I uninstall MacFUSE?*
 
-A: It depends on the MacFUSE version and the operating system version. Beginning with MacFUSE 0.4.0, you can use the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
+A: Run the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
 
 For example, to uninstall MacFUSE on Mac OS X 10.4.x, you would run the following command in the Terminal:
 
@@ -35,13 +35,13 @@ For example, to uninstall MacFUSE on Mac OS X 10.4.x, you would run the followin
 sudo /System/Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 }}}
 
-To uninstall MacFUSE on Mac OS X 10.5.x, you would run:
+To uninstall MacFUSE on Mac OS X 10.5.x and above, you would run:
 
 {{{
 sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 }}}
 
-If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have a "really old" version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
+If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have an incredibly ancient version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
 
 *Q 2.4. I'm using some software that needs an old/deprecated version of MacFUSE. I don't see that version available from your web site. What to do?
 
@@ -59,13 +59,15 @@ Suppose we somehow automagically provided unified buffer caching for block devic
 
 For comparison, you should try writing to an NTFS _disk image_--you will see that it's considerably faster because you do have some caching in that case.
 
+There are versions of ntfs-3g available that have additional user-space caching with drastically improved performance. (See http://macntfs-3g.blogspot.com/).
+
 *Q 3.2. After installing ntfs-3g, my Boot Camp volume stopped showing up in the Startup Disk preference pane. I am devastated. Is reinstalling Mac OS X, Boot Camp, and Windows the only recourse?*
 
 A: Relax. The Startup Disk preference pane is simply filtering out (that is, not displaying) any mounted volumes that it doesn't consider bootable. Its definition of a Boot Camp volume includes that the mounted volume either be of type `msdos` or `ntfs`--this is hardcoded into the preference pane plugin. This doesn't mean your Boot Camp volume has become unbootable. It's merely not showing up in the GUI. You can hold the `opt` key during startup and choose the Windows partition to boot from. You can also remount it (read-only) using the NTFS file system built into Mac OS X and it should start showing up in Startup Disk.
 
 *Q 3.3. After installing MacFUSE, I can't mount any disk images, optical discs, etc. What's going on?*
 
-A: It's likely that you installed a broken ntfs-3g package you found on the Internet. The package might be interfering with the disk image/disc mounting process. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. 
+A: It's likely that you installed a broken ntfs-3g package you found on the Internet. The package might be interfering with the disk image/disc mounting process. Try removing the `/System/Library/Filesystems/ntfs-3g.fs/` directory. Remember that MacFUSE itself is not a "program" that runs--it's akin to a library. It's only when you actually run a MacFUSE-based file system that MacFUSE even comes into the picture.
 
 == sshfs ==
 
@@ -73,9 +75,9 @@ A: It's likely that you installed a broken ntfs-3g package you found on the Inte
 
 A: MacFUSE itself isn't a distributed remote file system! It's a mechanism for building arbitrary file systems. If you change things "externally" to MacFUSE (like, a file on the remote server in the case of sshfs), in general, things need to be done proactively to tell MacFUSE that something has changed, otherwise you'll get such "incorrect" behavior. In particular, sshfs isn't meant to _replace_ things such as NFS, AFP, and SMB--it's meant to be a substitute when you don't have any remote file sharing access to a computer, but you do have sftp access. When you use sshfs, from the server's standpoint, you are just accessing it using sftp. It's not as if the server is going to notify an sshfs client of modifications by other clients.
 
-For one, if you want this mode of operation (where you can change things remotely at any time) to work better, you should disable caching in sshfs (look at the various `-o cache` options in sshfs, in particular, `-o cache=no`).
+To make sshfs (or any other file system) "catch up" better with "remote" changes, there are a few things you can do. Beginning with MacFUSE 1.9, you can use the `-o auto_cache` option. This would make MacFUSE purge a file's in-kernel buffer cache if a change in the file's size or modification time is detected.
 
-Then, additionally, you need to tell MacFUSE not to cache things on its end too. You can use the `-o nolocalcaches` option, which turns off readaheads, the unified buffer cache, and the pathname resolution cache (all in the kernel). At the cost of some overhead, which could be substantial in certain cases, this will give you the behavior where most requests will have to go to the server and will therefore have more up-to-date information.
+A worse way to have this mode of operation (where you can change things remotely at any time) is to disable caching in sshfs (look at the various `-o cache` options in sshfs, in particular, `-o cache=no`). Then, additionally, you need to tell MacFUSE not to cache things on its end too. You can use the `-o nolocalcaches` option, which turns off readaheads, the unified buffer cache, and the pathname resolution cache (all in the kernel). At the cost of some overhead, which could be substantial in certain cases, this will give you the behavior where most requests will have to go to the server and will therefore have more up-to-date information. Note that `auto_cache` is vastly preferred over this approach.
 
 An example command line for this mode of operation could look like the following:
 
@@ -83,7 +85,7 @@ An example command line for this mode of operation could look like the following
 $ sshfs user@host:/dir /tmp/ssh -ocache=no -onolocalcaches -ovolname=ssh
 }}}
 
-If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should find out about the `FUSEALTERVNODEFORINODE` family of ioctls (see `common/fuse_ioctl.h` in the kernel source for MacFUSE).
+If you are developing a MacFUSE file system and you want to handle such scenarios better within your file system, you should consider mounting your file system with the `auto_cache` option. You also have the option of using the `fuse_purge_np()` library function directly, although it's likely to be overkill.
 
 *Q 3.4. I found a bug in sshfs.app (the GUI) and/or I have a feature request for sshfs.app (the GUI). I want you to do something about it. What would it take?*
 
