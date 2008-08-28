@@ -195,4 +195,4 @@ As it stands, our `iconDataAtPath:` is actually being called at least twice for 
 
 If you've gone through this HOWTO then you've created a working and marginally useful user-space file system! Don't forget to try dragging a video you like onto the desktop to see what happens.
 
-There is a lot more to using MacFUSE.framework, so please read the documentation in [http://macfuse.googlecode.com/svn/trunk/core/sdk-objc/GMUserFileSystem.h GMUserFileSystem.h] and feel free to ask questions on macfuse-devel@googlegroups.com.
+There is a lot more to using MacFUSE.framework, so please read the documentation in [http://macfuse.googlecode.com/svn/trunk/core/sdk-objc/GMUserFileSystem.h GMUserFileSystem.h] and feel free to ask questions on macfuse@googlegroups.com.
