@@ -104,9 +104,9 @@ ftp://ftp.gtk.org/pub/glib/
 You can compile `glib` (Universally) as follows:
 
 {{{
-$ tar -xzvf glib-2.15.4.tar.gz
+$ tar -xzvf glib-2.19.0.tar.gz
 ...
-$ cd glib-2.15.4
+$ cd glib-2.19.0
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
 }}}
