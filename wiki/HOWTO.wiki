@@ -140,9 +140,9 @@ http://fuse.sourceforge.net/sshfs.html
 You'll need to patch the source using an appropriate Mac OS X patch file available in the `filesystems/sshfs/` subdirectory in the MacFUSE subversion repository.
    
 {{{
-$ tar -xzvf sshfs-fuse-2.0.tar.gz # unpack sshfs source
-$ cd sshfs-fuse-2.0
-$ patch -p1 < /path/to/sshfs-fuse-2.0-macosx.patch # apply patch with a matching version
+$ tar -xzvf sshfs-fuse-2.2.tar.gz # unpack sshfs source
+$ cd sshfs-fuse-2.2
+$ patch -p1 < /path/to/sshfs-fuse-2.2-macosx.patch # apply patch with a matching version
 ...
 $ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
 ...
