@@ -153,7 +153,7 @@ $ sudo make install
 
 This will install the `sshfs` command-line program under `/usr/local/bin/`.
 
-*NB*: The `sshfs` binary package available from this project's website contains an `sshfs-static` binary that is statically linked against `glib` (but dynamically linked against `libfuse`). If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use `sshfs-static` without having to compile anything.
+*NB*: You can also get a precompiled `sshfs` binary for your platform from the `filesystems/sshfs/binary/` directory in the source tree. These binaries, called `sshfs-static-leopard` (etc.), are statically linked against `glib` but dynamically linked against `libfuse`. If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use the precompiled statically linked binaries without having to compile anything.
 
 = Compiling Other FUSE File Systems Written for Linux =
 
