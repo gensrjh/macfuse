@@ -3,27 +3,15 @@
 
 = The SSH File System for MacFUSE =
 
-To use the MacFUSE version of the SSH file system (sshfs), you must have the MacFUSE package installed. Please read the [QUICKER_START_GUIDE] document to learn how to install that package.
+*NB*: You can get a precompiled `sshfs` binary for your platform from the [http://code.google.com/p/macfuse/source/browse/#svn/trunk/filesystems/sshfs/binary filesystems/sshfs/binary/] directory in the source tree. These binaries, called `sshfs-static-leopard` (etc.), are statically linked against `glib` but dynamically linked against `libfuse`. If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use the precompiled statically linked binaries without having to compile anything.
 
-An easy way to use sshfs with MacFUSE is to get `sshfs.app`. Please look under the "Downloads" tab of this project to download it.
-
-*NB: If you are running an older version of sshfs, please be sure to upgrade to the latest version available. Newer versions might have important and useful updates. Scroll down to the bottom of this page to view the Changelog.
+*NB: If you are running an older version of sshfs, please be sure to upgrade to the latest version available. The latest source patch for `sshfs` is available in the [http://code.google.com/p/macfuse/source/browse/#svn/trunk/filesystems/sshfs/ filesystems/sshfs/] directory of the MacFUSE source tree. Newer versions might have important and useful updates.
 
 *NB: Please note that the "disk" usage information reported for sshfs is not "real" -- this is how it is implemented in the sshfs program. It's not a MacFUSE issue.*
 
-== Using the Graphical Application ==
+== Using the Command Line `sshfs` Program ==
 
-There are two main parts to the sshfs application. The first is `File > Connect to SSH Server...`, which lets you specify the server you want to connect to, the username you want to use, and (optionally) the remote directory you want to mount.
-
-When you click `Connect`, a short time will pass, and then sshfs will ask you for your password. Give your password, and the sshfs volume will appear on the desktop.
-
-At this point, you're done with the `sshfs.app` application, and you may quit it if you like. When you're done with the remote server, just click the "eject" button that the Finder provides, or select it and choose `File > Eject`.
-
-The second main part is a recent server list. From the list, you may select any server that you've successfully connected to in the past. The password dialog will come up, provide your password, and once again, you're all set.
-
-== Using the Command Line ==
-
-The `sshfs.app` bundle contains a binary called `sshfs-static`. This is the command-line `sshfs` program compiled such that it links dynamically with the FUSE user-space library, but statically with `libglib` and `libintl`. You can create a symbolic link called `sshfs` in `/usr/local/bin/` (or another place that you prefer) that points to this binary, and thus can use the command-line version too. If you prefer to use the command line, you can do something like:
+To use the command line `sshfs` program, you can do something like:
 
 {{{
 # Mounting the SSH file system
@@ -42,6 +30,11 @@ $ umount /some/mount/point
 }}}
 
 == Changelog ==
+
+=== sshfs(MacFUSE) 2.2.0 (October 22, 2008) ===
+
+  * Numerous bugfixes. See `ChangeLog` file in `sshfs` source for details.
+  * The GUI wrapper to `sshfs` (the `sshfs.app` application) is no longer available in precompiled form. It source is still available, of course.
 
 === sshfs(MacFUSE) 0.3.0 (May 7, 2007) ===
 
