@@ -1,5 +1,4 @@
 #summary Using MacFUSE in a Pinch.
-#labels Featured
 
 = Quick(er) Start Guide =
 
