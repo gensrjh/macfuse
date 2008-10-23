@@ -89,11 +89,11 @@ If you are developing a MacFUSE file system and you want to handle such scenario
 
 *Q 3.4. I found a bug in sshfs.app (the GUI) and/or I have a feature request for sshfs.app (the GUI). I want you to do something about it. What would it take?*
 
-A: Issues specific to `sshfs.app` (the GUI wrapper) should *not* be reported under the "Issues" tab of the MacFUSE project page. If people continue to report issues with sshfs.app (even after the download being marked as "unsupported" and me having said that umpteen times in my responses), I guess it'd be more appropriate to simply remove the download link. People need to understand that `sshfs.app` is how it is (minimal, skeletal) because it was written only for a single demo.
+A: `sshfs.app` is not a supported product. It started life as a one-off GUI wrapper for a conference demo and that's pretty much where it remained. Issues specific to `sshfs.app` (the GUI wrapper) should *not* be reported under the "Issues" tab of the MacFUSE project page. `sshfs.app` is how it is (minimal, skeletal) because it was written only for a single demo.
 
 It's fine by me if people discuss `sshfs.app` related matters in the mailing list, because unlike a formal "issue report", it doesn't create extra and unnecessary work for me.
 
-Issues with `sshfs`/`sshfs-static` (the _real_ program behind the GUI) _could_ be MacFUSE issues though, but it's often obvious that they're not. If you think you've found a bug in MacFUSE through your use of `sshfs`, then, by all means please do report it by opening a ticket.
+Issues with `sshfs`/`sshfs-static` (the _real_ command-line program behind the GUI) _could_ be MacFUSE issues though, but it's often obvious that they're not. If you think you've found a bug in MacFUSE through your use of `sshfs`, then, by all means please do report it by opening a ticket.
 
 There's a thread about this here:
 
