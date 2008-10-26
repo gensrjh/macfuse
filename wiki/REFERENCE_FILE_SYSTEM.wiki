@@ -29,7 +29,7 @@ To run `fusexmp_fh` in high-fidelity mode (that is, as close to a "real" Mac OS 
 {{{
 $ mkdir /d # This is the backing store directory; the volume's data will actually reside in here
 $ mkdir /Volumes/loopback # This is where we'll mount
-$ sudo ./fusexmp_fh /Volumes/loopback -omodules=threadid:subdir,subdir=/d -onative_xattr -oallow_other
+$ sudo ./fusexmp_fh /Volumes/loopback -omodules=threadid:subdir -osubdir=/d -onative_xattr -oallow_other
 }}}
 
 The `threadid` stacking module in conjunction with the `allow_other` mount-time option and the fact that you run `fusexmp_fh` as root lets you run the loopback file system in multi-user mode.
