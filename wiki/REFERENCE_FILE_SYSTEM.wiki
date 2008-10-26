@@ -32,6 +32,8 @@ $ mkdir /Volumes/loopback # This is where we'll mount
 $ sudo ./fusexmp_fh /Volumes/loopback -omodules=threadid:subdir -osubdir=/d -onative_xattr -oallow_other
 }}}
 
-The `threadid` stacking module in conjunction with the `allow_other` mount-time option and the fact that you run `fusexmp_fh` as root lets you run the loopback file system in multi-user mode.
+The `threadid` stacking module in conjunction with the `allow_other` mount-time option (and the fact that you run `fusexmp_fh` as root) lets you run the loopback file system in multi-user mode. The `threadid` module automatically sets the user/group ID of each thread that calls into your file system to that of the process that made the original request.
 
 The `subdir` stacking module in conjunction with the `subdir=/d` module option lets you limit `fusexmp_fh` to a single directory. Normally, `fusexmp_fh` would actually remount the root file system. It's nicer and cleaner to contain experimentation to one directory. Note that if you conduct file system tests that involve long path names, the `fusexmp_fh` program will have to work with path names that are longer on the back-end side: for example, if a call comes in to create a file `/foo`, `fusexmp_fh` will attempt to create `/d/foo` on the underlying file system. Thus, the back-end will hit the path name length limit earlier than the front-end.
+
+The `native_xattr` mount-time option tells the kernel that the user-space file system supports /true/ native extended attributes. Unless you really, *really* understand what this means and entails, you shouldn't enable this option. In any case, this is an undocumented, unsupported option.
