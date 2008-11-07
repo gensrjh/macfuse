@@ -163,7 +163,7 @@ By default, the MacFUSE user-space library runs a file system in multithreaded m
 
   * `volicon=PATH`, where `PATH` is path to an icon (`.icns`) file
 
-You can use the `volicon` option to specify an icon file that would be used as the Desktop icon for the mounted MacFUSE volume. MacFUSE will then do the needful (simulating Finder information for the root folder, simulating a `/.VolumeIcon.icns` file, etc.) to make the custom volume icon work. Note that MacFUSE uses library-level stacking for this--it generates a shim file system atop the regular user-space file system, with the shim's only purpose being to simulate what's necessary for the icon to work.
+You can use the `volicon` option to specify an icon file that would be used as the Desktop icon for the mounted MacFUSE volume. MacFUSE will then do the needful (simulating Finder information for the root folder, simulating a `/.VolumeIcon.icns` file, etc.) to make the custom volume icon work. Note that MacFUSE uses library-level stacking for this--it generates a shim file system atop the regular user-space file system, with the shim's only purpose being to simulate what's necessary for the icon to work. *NB*: the `volicon` argument WILL NOT WORK correctly if you use any other library stack module along with the volicon module. To make custom volume icons work alongside other stack modules, you have to specify the modules and their arguments using the "long form" (`volicon=PATH` is a convenience shortcut). For details, see the note at the end of the [http://code.google.com/p/macfuse/wiki/CUSTOM_VOLUME_ICON CUSTOM_VOLUME_ICON] wiki page.
 
   * `volname=NAME`, where `NAME` is a string
 
