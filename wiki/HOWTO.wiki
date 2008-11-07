@@ -27,7 +27,7 @@ If you have developer access to the repository, you can do the following:
 Compiling MacFUSE Core, the software atop which all MacFUSE file systems run, is no longer a complex process. Once you have the source tree checked out, you just need to run a single command from the appropriate directory, for example:
 
 {{{
-$ macfuse/core/macfuse_buildtool.sh -t smalldist
+$ /path/to/macfuse/source/macfuse/core/macfuse_buildtool.sh -t smalldist
 ...
 }}}
 
