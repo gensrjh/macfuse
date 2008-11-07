@@ -27,15 +27,14 @@ If you have developer access to the repository, you can do the following:
 Compiling MacFUSE Core, the software atop which all MacFUSE file systems run, is no longer a complex process. Once you have the source tree checked out, you just need to run a single command from the appropriate directory, for example:
 
 {{{
-$ cd macfuse/core/
-$ sudo ./build_macfuse.sh # need root access to chmod and chown output correctly
+$ macfuse/core/macfuse_buildtool.sh -t smalldist
 ...
 }}}
 
-This will compile the kernel extension, the user-space library (`libfuse`), the mount utility (`mount_fusefs`), the load utility (`load_fusefs`), and will create the file system bundle (`fusefs.fs`). If everything goes fine, a ready-to-install Universal package can be found in `/tmp/macfuse-core-<OS version>-<MacFUSE version>`. For example, if you compile MacFUSE version 1.3.1 on Mac OS X 10.5, the package will be generated at:
+This will compile the kernel extension, the user-space library (`libfuse`), the mount utility (`mount_fusefs`), the load utility (`load_fusefs`), and will create the file system bundle (`fusefs.fs`). If everything goes fine, a ready-to-install Universal package can be found in `/tmp/macfuse-core-<OS version>-<MacFUSE version>`. For example, if you compile MacFUSE version 2.0 on Mac OS X 10.5, the package will be generated at:
 
 {{{
-/tmp/macfuse-core-10.5-1.3.1/MacFUSE Core.pkg
+/tmp/macfuse-core-10.5-2.0.1/MacFUSE Core.pkg
 }}}
 
 You can install this package by double clicking on it or through the command line:
@@ -65,7 +64,7 @@ To compile and install `pkg-config` as a set of Universal binaries, do the follo
 $ tar -xzvf pkg-config-0.23.tar.gz
 ...
 $ cd pkg-config-0.23
-$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
+$ /path/to/macfuse/source/macfuse/core/macfuse_buildtool.sh -t swconfigure
 ...
 $ make
 ...
@@ -89,7 +88,7 @@ You can compile gettext (Universally) as follows:
 $ tar -xzvf gettext-0.17.tar.gz
 ...
 $ cd gettext-0.17
-$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
+$ /path/to/macfuse/source/macfuse/core/macfuse_buildtool.sh -t swconfigure
 ...
 $ make
 ...
@@ -107,7 +106,7 @@ You can compile `glib` (Universally) as follows:
 $ tar -xzvf glib-2.19.0.tar.gz
 ...
 $ cd glib-2.19.0
-$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
+$ /path/to/macfuse/source/macfuse/core/macfuse_buildtool.sh -t swconfigure
 ...
 }}}
 
@@ -144,7 +143,7 @@ $ tar -xzvf sshfs-fuse-2.2.tar.gz # unpack sshfs source
 $ cd sshfs-fuse-2.2
 $ patch -p1 < /path/to/sshfs-fuse-2.2-macosx.patch # apply patch with a matching version
 ...
-$ /bin/sh /path/to/macfuse/source/macfuse/tools/configure_for_macfuse.sh
+$ /path/to/macfuse/source/macfuse/core/macfuse_buildtool.sh -t swconfigure
 ...
 $ make
 ...
