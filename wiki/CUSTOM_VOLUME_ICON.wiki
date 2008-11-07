@@ -24,3 +24,15 @@ File system developers, take note of the following:
   * While developing, if you experiment with different icon files, know that the Finder's in-memory cache causes it to "remember" icon file contents a bit too much. Even if you pass another icon file through the `volicon` option, the Finder will keep using the old one. Relaunching the Finder (through `killall Finder`, for example) should "fix" this.
 
 A substantial amount of new code was added to the user-space library to handle all of this. Please test enough. If you don't use the `volicon` option, the newly added code will all be bypassed.
+
+*NB*: Custom volume icon support is implemented as a "stack module" within the MacFUSE user-space library. The `volicon=/path/to/icon/file` argument is actually a convenience shortcut for the following long form:
+
+{{{
+    ... -omodules=volicon -oiconpath=/path/to/icon/file
+}}}
+
+The shortcut form will work *only* if you do not have any other stack module enabled. If you do, the library will not parse module arguments correctly. For example, if you want to use custom volume icons together with the `subdir` stack module (which takes one argument called `subdir`, the same as the stack module's name), you have to do the following:
+
+{{{
+    ... -omodules=subdir:volicon -oiconpath=/path/to/icon/file -osubdir=/path/to/subdir
+}}}
