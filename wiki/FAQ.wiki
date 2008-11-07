@@ -141,7 +141,7 @@ Alternatively, you can use the `-o local` MacFUSE mount-time option to tag the v
 
 A: Ah the Finder and its infinite wisdom. On "Leopard", the Finder by default won't show a MacFUSE volume under the "DEVICES" section of the sidebar because the volume isn't "local". The Finder won't show the volume under "SHARED" (even though it's "nonlocal") because it apparently thinks that nonlocal volumes must be of types such as AFP, NFS, SMB, and such. If you really want the volume to show up in the sidebar, you can use the `-o local` MacFUSE mount-time option. Also see *Q 4.1* and *Q 4.2*.
 
-*Q 4.4. I tried to use file system <whatever> with MacFUSE and I am not happy because of <whatever else>. What to do?*
+*Q 4.4. I tried to use file system ${whatever} with MacFUSE and I am not happy because of ${whatever else}. What to do?*
 
 A: MacFUSE is like a programming library. Individual MacFUSE file systems (like ntfs-3g, procfs, sshfs, etc.) are programs written using that library. The quality and behavior of individual programs--of any kind--can vary wildly, and may or may not be an issue with the underlying library. If you have poor experience with an individual MacFUSE file system, please determine (or help determine) if it's an issue specific to that file system or if it's a general issue with MacFUSE. File systems are complex beasts. MacFUSE does simplify their implementation enormously, but nontrivial user-space file systems can still be complex, and their performance/behavior can depend upon numerous factors besides MacFUSE itself. When in doubt, feel free to post your questions on the [http://groups.google.com/group/macfuse macfuse] group.
 
