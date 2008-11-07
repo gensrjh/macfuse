@@ -9,14 +9,12 @@ Kernel programming can be rather challenging in itself, but programming in-kerne
 The MacFUSE user-space library comes with a /reference file system/ that can be an important tool in helping you understand MacFUSE behavior and use that knowledge to test your file system better. The reference file system,  called `fusexmp_fh`, can be found in the `example/` subdirectory in the library source. The file system is easy to compile. You can either do so manually as follows. We will assume that you have the MacFUSE source tree checked out under `/work/macfuse/`. (Note that version numbers etc. might not match what's shown here.)
 
 {{{
-$ cd /work/macfuse
-$ ./tools/build_lib.sh
-Using MacFUSE source root /work/macfuse
-Initiating Universal build of libfuse for Mac OS X "Leopard"
-Using package name fuse-2.7.3
-...
-fuse-2.7.3 compiled OK in /tmp/fuse-2.7.3
-
+$ /work/macfuse/core/macfuse_buildtool.sh -t lib -q
+MacFUSEBuildTool(lib)         : initiating Universal build for Mac OS X "Leopard"
+MacFUSEBuildTool(lib)         : preparing library source
+MacFUSEBuildTool(lib)         : configuring library source
+MacFUSEBuildTool(lib)         : running make
+MacFUSEBuildTool(lib)         : succeeded, results in '/tmp/fuse-2.7.3'.
 $
 }}}
 
