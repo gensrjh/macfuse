@@ -9,7 +9,7 @@
 
 [http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary/sshfs-static-tiger sshfs-static-tiger]
 
-These binaries, called `sshfs-static-leopard` (etc.), are statically linked against `glib` but dynamically linked against `libfuse`. If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use the precompiled statically linked binaries without having to compile anything.
+These binaries, called `sshfs-static-leopard` (etc.), are statically linked against `glib` but dynamically linked against `libfuse`. If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use the precompiled statically linked binaries without having to compile anything. You can rename them to `sshfs` if you so prefer.
 
 *NB: If you are running an older version of sshfs, please be sure to upgrade to the latest version available. The latest source patch for `sshfs` is available in the [http://code.google.com/p/macfuse/source/browse/#svn/trunk/filesystems/sshfs/ filesystems/sshfs/] directory of the MacFUSE source tree. Newer versions might have important and useful updates.
 
