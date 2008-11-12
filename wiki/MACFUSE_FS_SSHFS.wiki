@@ -6,6 +6,7 @@
 *NB*: You can get a precompiled `sshfs` binary for your platform from the MacFUSE subversion tree:
 
 [http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary/sshfs-static-leopard sshfs-static-leopard]
+
 [http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary/sshfs-static-tiger sshfs-static-tiger]
 
 These binaries, called `sshfs-static-leopard` (etc.), are statically linked against `glib` but dynamically linked against `libfuse`. If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use the precompiled statically linked binaries without having to compile anything.
