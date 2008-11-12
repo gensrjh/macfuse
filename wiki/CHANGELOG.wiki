@@ -114,7 +114,7 @@
 
 === Build and Packaging Improvements ===
 
-  * MacFUSE releases for "Leopard" and "Tiger" now have different version numbers. See [MACFUSE_VERSIONING] for details.
+  * MacFUSE releases for "Leopard" and "Tiger" now have different version numbers. See [VERSIONING] for details.
   * Fixed `make-pkg.sh` so as not to include spurious `.svn` directories in its output on Leopard.
   * Added operating system version to the disk image volume name.
 
