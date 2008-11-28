@@ -1,0 +1,3 @@
+#summary Forum for MacFUSE Questions, Issues, and General Discussion
+
+Please post all your MacFUSE-related questions and issues in the [http://groups.google.com/group/macfuse MacFUSE discussion forum].
