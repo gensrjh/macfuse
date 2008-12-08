@@ -1,7 +1,7 @@
 #summary Changes/Feature Additions in MacFUSE Releases
 #labels Featured
 
-= Changes and Feature Additions in MacFUSE Binary Releases =
+= Changes and Feature Additions in MacFUSE Releases =
 
 == MacFUSE 2.0 (December 8, 2008) ==
 
