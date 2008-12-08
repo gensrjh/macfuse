@@ -3,7 +3,7 @@
 
 = The SSH File System for MacFUSE =
 
-*NB*: You can get a precompiled `sshfs` binary for your platform from the MacFUSE subversion tree (these *require* MacFUSE 1.9 or above; at the time of this writing, MacFUSE 1.9 is available as a [AUTOINSTALL prerelease]):
+*NB*: You can get a precompiled `sshfs` binary for your platform from the MacFUSE subversion tree (these *require* MacFUSE 2.0 or above.):
 
 [http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary/sshfs-static-leopard sshfs-static-leopard]
 
