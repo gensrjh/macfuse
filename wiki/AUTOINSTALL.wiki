@@ -1,5 +1,4 @@
 #summary The MacFUSE Install/Update Engine
-#labels Featured
 
 Summary: MacFUSE has a new install/update mechanism that greatly simplifies and improves things both for end users and for developers who use MacFUSE in their software.
 
