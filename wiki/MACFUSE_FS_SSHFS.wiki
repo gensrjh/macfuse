@@ -3,11 +3,12 @@
 
 = The SSH File System for MacFUSE =
 
-*NB*: You can get a precompiled `sshfs` binary for your platform from the MacFUSE subversion tree (these *require* MacFUSE 2.0 or above.):
+*NB*: You can get a precompiled `sshfs` binary for your platform from the MacFUSE subversion tree (these *require* MacFUSE 2.0 or above.) Here's how you can acquire these binaries using the `svn` command. (The command sequence shown will leave the binaries in a folder called `sshfs-binaries` on your Desktop.)
 
-[http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary/sshfs-static-leopard sshfs-static-leopard]
-
-[http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary/sshfs-static-tiger sshfs-static-tiger]
+{{{
+$ cd ~/Desktop
+$ svn co http://macfuse.googlecode.com/svn/trunk/filesystems/sshfs/binary sshfs-binaries
+}}}
 
 These binaries, called `sshfs-static-leopard` (etc.), are statically linked against `glib` but dynamically linked against `libfuse`. If you wish to quickly try out `sshfs`, you can just install the MacFUSE Core package and use the precompiled statically linked binaries without having to compile anything. You can rename them to `sshfs` if you so prefer.
 
