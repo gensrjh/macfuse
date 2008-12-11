@@ -6,6 +6,7 @@
 *NB*: You can get a precompiled `sshfs` binary for your platform from the MacFUSE subversion tree (these *require* MacFUSE 2.0 or above.)
 
 [http://osxbook.com/download/sshfs/sshfs-static-leopard.gz sshfs-static-leopard.gz]
+
 [http://osxbook.com/download/sshfs/sshfs-static-tiger.gz sshfs-static-tiger.gz]
 
 Alternatively, here's how you can acquire these binaries using the `svn` command. (The command sequence shown will leave the binaries in a folder called `sshfs-binaries` on your Desktop.)
