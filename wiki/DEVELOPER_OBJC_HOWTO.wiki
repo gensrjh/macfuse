@@ -16,7 +16,7 @@ In order to go through this HOWTO, you'll need to:
   # Check out the helper files that will be used in our tutorial project (you can do all the work in your _/tmp_ directory if you'd like):
 {{{
 cd /tmp
-svn checkout http://macfuse.googlecode.com/svn/trunk/filesystems-objc/Support/ Suport
+svn checkout http://macfuse.googlecode.com/svn/trunk/filesystems-objc/Support/ Support
 }}}
 
 = The Tutorial Project =
