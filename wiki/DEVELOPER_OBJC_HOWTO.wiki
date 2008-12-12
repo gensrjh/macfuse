@@ -69,7 +69,7 @@ If you look at the template-generated controller code in `applicationDidFinishLa
 
 It then allocates a `GMUserFileSystem` instance to handle the file system and gives it a `YTFS_Filesystem` instance as the delegate that serves file system contents. By the way, since our file system is thread-safe, you may optionally change `isThreadSafe:NO` to `isThreadSafe:YES` in the line that initializes `fs_`.
 
-Finally, it sets up the MacFUSE options and instructs the `GMUserFileSystem` instance to mount. You always need to carefully consider what options to use when mounting your file system. By default, with this project template the file system is mounted read-only (rdonly) and use a custom name and icon so that things look nice.
+Finally, it sets up the MacFUSE options and instructs the `GMUserFileSystem` instance to mount. You always need to carefully consider what options to use when mounting your file system. By default, with this project template the file system is mounted read-only (rdonly) and uses a custom name and icon so that things look nice.
 
 == Part 2: YTFS_Filesystem.h ==
 
@@ -78,7 +78,7 @@ Finally, it sets up the MacFUSE options and instructs the `GMUserFileSystem` ins
 You might prefer to `@class YTVideo` and import the header file from `YTFS_Filesystem.m`, but we'll import it from here for now. Add:
 
 {{{
-#import YTVideo.h
+#import "YTVideo.h"
 }}}
 
 Add a member variable to hold our video dictionary:
@@ -110,6 +110,31 @@ We actually don't need to use all of the delegate methods for this tutorial, so 
   * `destinationOfSymbolicLinkAtPath:`
   * `extendedAttributesOfItemAtPath:error:`
   * `valueOfExtendedAttribute:ofItemAtPath:position:error:`
+
+=== Add Init and Helper Methods ===
+
+We'll add our initialization and cleanup methods as well as a helper method that looks up a video based on a givne path. The should go near the top of the `YTFS_Filesystem` implementation, just above `contentsOfDirectoryAtPath:error:`.
+
+{{{
+- (id)initWithVideos:(NSDictionary *)videos {
+  if ((self = [super init])) {
+    videos_ = [videos retain];
+  }
+  return self;
+}
+- (void)dealloc {
+  [videos_ release];
+  [super dealloc];
+}
+- (YTVideo *)videoAtPath:(NSString *)path {
+  NSArray* components = [path pathComponents];
+  if ([components count] != 2) {
+    return nil;
+  }
+  YTVideo* video = [videos_ objectForKey:[components objectAtIndex:1]];
+  return video;
+}
+}}}
 
 === Directory Contents ===
 
