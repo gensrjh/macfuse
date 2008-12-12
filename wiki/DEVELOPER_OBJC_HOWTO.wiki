@@ -63,6 +63,8 @@ to:
 fs_delegate_ = [[YTFS_Filesystem alloc] initWithVideos:[YTVideo fetchTopRatedVideos]];
 }}}
 
+The code won't compile cleanly any more until we do a bit of work in `YTFS_Filesystem.m`.
+
 === GMUserFileSystem, Mounting, and Notifications ===
 
 If you look at the template-generated controller code in `applicationDidFinishLaunching`, you will see that it starts off by registering for MacFUSE file system notifications. This is how it handles quitting the application on unmount and showing you a Finder window when the file system finishes mounting.
@@ -135,6 +137,8 @@ We'll add our initialization and cleanup methods as well as a helper method that
   return video;
 }
 }}}
+
+Things should compile cleanly again at this point.
 
 === Directory Contents ===
 
