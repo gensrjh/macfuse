@@ -247,7 +247,7 @@ If we implement this method then `MacFUSE.framework` will populate `FinderInfo` 
 
 You'll notice that we download the thumbnail every time this routine is called. In practice this is not a very good idea and caching the .icns data would be preferred. For this tutorial the system url cache should be sufficient in preventing us from actually downloading from the server repeatedly.
 
-We take advantage of a category on NSImage (see NSImage+icnsData.{h,m} in the project) to create .icns data for us from an NSImage on the fly. Note: If you want to use this NSImage category in your own stuff then you should probably use the latest version in [http://macfuse.googlecode.com/svn/trunk/filesystems-objc/Support/ filesystems-objc/Support]. There are other useful classes there as well.
+We take advantage of a category on NSImage (see NSImage+icnsData.{h,m} in the project) to create .icns data for us from an NSImage on the fly.
 
 == Conclusion ==
 
