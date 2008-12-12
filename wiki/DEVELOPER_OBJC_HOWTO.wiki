@@ -33,6 +33,8 @@ If you inspect the files in your project then you'll see the `YTFS_FileSystem` a
 
 We still need a few more classes in order to complete YTFS. From the ytfs-tutorial directory, add the `NSImage+IconData.{h,m}` and `YTVideo.{h,m}` files to the project. The former will be used for our thumbnails; it provides handy code to turn an NSImage into NSData for the .icns file that represents the image. The latter is a small class that fetches an xml feed of top videos from YouTube and provides a class to access information about the videos.
 
+Finally, in order to use `NSImage+IconData` you'll need to add `Accelerate.framework` to your project.
+
 = Time To Code = 
 
 I recommend as you follow along in this that you take the time to compile and run the app at each step. This iterative process will give you the best idea about what each step is accomplishing.
