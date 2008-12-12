@@ -6,12 +6,12 @@ This page is currently being updated to reflect the MacFUSE 2.0 release. This me
 
 = Introduction =
 
-MacFUSE comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  Given the changes in MacFUSE and the Objective-C API, the presentation is slightly out of date compared with this HOWTO. However, it is still probably worth watching if you decide to write an Objective-C MacFUSE file system. The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
+MacFUSE comes with a framework to assist in developing user-space file systems written in Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`. The video for that presentation can be found [http://theocacao.com/document.page/543 here], but keep in mind that this HOWTO has been revised since the presentation.
 
 = Requirements =
 
 In order to go through this HOWTO, you'll need to:
-  # Be running XCode 3.1.1+ on Leopard.
+  # Be running XCode 3.1.1+ on Leopard+.
   # If you haven't already, then install [http://code.google.com/p/macfuse/downloads MacFUSE] 2.0+.
   # Check out the ytfs helper files that will be used in our tutorial project (you can do all the work in your _/tmp_ directory if you'd like):
 {{{
@@ -25,7 +25,7 @@ We'll create a simple read-only file system that downloads a feed of top-rated [
 
 = Project Setup =
 
-Start Xcode and choose `File -> New Project...`. From here select `MacFUSE` under "User Templates" and choose the `Objective-C File System (Read-Only)` project template to create your project. We'll refer to this project as YTFS from now on.
+Start Xcode and choose `File -> New Project...`. From here select `MacFUSE` under `User Templates` and choose the `Objective-C File System (Read-Only)` project template to create your project. We'll refer to this project as YTFS from now on.
 
 At this point you should have a working read-only file system! If you `Build and Go` from Xcode then your YTFS file system should mount and a Finder window will appear showing an empty root directory. If you quit the YTFS application then the file system will unmount; conversely if you unmount the file system the application will terminate.
 
@@ -33,15 +33,15 @@ If you inspect the files in your project then you'll see the `YTFS_FileSystem` a
 
 We still need a few more classes in order to complete YTFS. From the ytfs-tutorial directory, add the `NSImage+IconData.{h,m}` and `YTVideo.{h,m}` files to the project. The former will be used for our thumbnails; it provides handy code to turn an NSImage into NSData for the .icns file that represents the image. The latter is a small class that fetches an xml feed of top videos from YouTube and provides a class to access information about the videos.
 
-Finally, in order to use `NSImage+IconData` you'll need to add `Accelerate.framework` to your project.
+Finally, in order to use `NSImage+IconData` you'll need to add `Accelerate.framework` to the project.
 
 = Time To Code = 
 
-I recommend as you follow along in this that you take the time to compile and run the app at each step. This iterative process will give you the best idea about what each step is accomplishing.
+I recommend that as you follow along in this you take the time to compile and run the app at each step. This iterative process will give you the best idea about what each step is accomplishing.
 
 == Part 1: YTFS_Controller.m ==
 
-For the first part, we'll make changes to the `YTFS_Controller.m` file.
+For the first part, we'll make changes to the `YTFS_Controller.m` file that handles the lifecycle of our file system.
 
 === Include YTVideo.h Header File ===
 
@@ -49,7 +49,7 @@ For the first part, we'll make changes to the `YTFS_Controller.m` file.
 #import YTVideo.h
 }}}
 
-=== Initialize YTFS_FileSystem With Videos ===
+=== Initialize the File System With Videos ===
 
 Change the following:
 
@@ -63,7 +63,7 @@ to:
 fs_delegate_ = [[YTFS_Filesystem alloc] initWithVideos:[YTVideo fetchTopRatedVideos]];
 }}}
 
-The code won't compile cleanly any more until we do a bit of work in `YTFS_Filesystem.m`.
+Note: The code won't compile cleanly any more until we do a bit of work in `YTFS_Filesystem.m`.
 
 === GMUserFileSystem, Mounting, and Notifications ===
 
@@ -74,8 +74,6 @@ It then allocates a `GMUserFileSystem` instance to handle the file system and gi
 Finally, it sets up the MacFUSE options and instructs the `GMUserFileSystem` instance to mount. You always need to carefully consider what options to use when mounting your file system. By default, with this project template the file system is mounted read-only (rdonly) and uses a custom name and icon so that things look nice.
 
 == Part 2: YTFS_Filesystem.h ==
-
-=== Include YTVideo.h Header File ===
 
 Add a member variable to hold our video dictionary:
 
@@ -95,9 +93,7 @@ We'll also need an iniitalizer:
 
 Now we'll be fleshing out the code that serves the file system contents. Open YTFS_Filesystem.m and take a look around. You should see that the complete set of delegate methods that you can implement to serve read-only file system data are already stubbed out for you. 
 
-=== Add Headers ===
-
-Add our utility classes:
+=== Add Headers For Utility Classes ===
 
 {{{
 #import "YTVideo.h"
@@ -170,7 +166,7 @@ Since the Finder will ask about a lot of files that probably don't exist, every 
 }
 }}}
 
-The framework will translate a `nil` return value into `ENOENT`. Another option would be to explicitly set the error out parameter to an `NSError` in the `NSPOSIXErrorDomain`. The template provides a category on NSError to make this easier.
+The framework will translate a `nil` return value into `ENOENT`. Another option would be to explicitly set the error out parameter to an `NSError` in the `NSPOSIXErrorDomain`. You can only return POSIX errors from your delegate methods. The `NSError` out parameter muThe template provides a category on NSError to make this easier.
 
 === File Contents ===
 
@@ -192,7 +188,7 @@ What good are weblocs if you can't click on them? Change `resourceAttributesAtPa
 
 {{{
 - (NSDictionary *)resourceAttributesAtPath:(NSString *)path
-                                                                  error:(NSError **)error {
+                                     error:(NSError **)error {
   NSMutableDictionary* attribs = nil;
   YTVideo* video = [self videoAtPath:path];
   if (video) {
@@ -213,20 +209,23 @@ This looks up the video in our list of videos and, if found, returns the url of 
 Now that we can view our videos, we'll need some help in figuring out which ones look interesting. We can display a custom icon thumbnail for each of our videos. First change `finderAttributesAtPath:error:` to notify that we have a custom icon in our resource fork:
 
 {{{
-NSDictionary* attribs = nil;
-if ([self videoAtPath:path]) {
-  NSNumber* finderFlags = [NSNumber numberWithLong:kHasCustomIcon];
-  attribs = [NSDictionary dictionaryWithObject:finderFlags
-                                        forKey:kGMUserFileSystemFinderFlagsKey];
+- (NSDictionary *)finderAttributesAtPath:(NSString *)path 
+                                   error:(NSError **)error {
+  NSDictionary* attribs = nil;
+  if ([self videoAtPath:path]) {
+    NSNumber* finderFlags = [NSNumber numberWithLong:kHasCustomIcon];
+    attribs = [NSDictionary dictionaryWithObject:finderFlags
+                                          forKey:kGMUserFileSystemFinderFlagsKey];
+  }
+  return attribs;
 }
-return attribs;
 }}}
 
 If we implement this method then `MacFUSE.framework` will populate `FinderInfo` with the attributes we give it. We still need to add the custom icon to the file's resource fork, so update `resourceAttributesAtPath:error:` to look like:
 
 {{{
 - (NSDictionary *)resourceAttributesAtPath:(NSString *)path
-                                                                   error:(NSError **)error {
+                                     error:(NSError **)error {
   NSMutableDictionary* attribs = nil;
   YTVideo* video = [self videoAtPath:path];
   if (video) {
