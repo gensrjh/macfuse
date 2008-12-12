@@ -2,7 +2,7 @@
 
 = NOTE =
 
-This page is currently being updated to reflect the MacFUSE 2.0 release. This message will go away when that is complete.
+This page is currently being updated to reflect the MacFUSE 2.0 release. The update is almost done, so feel free to try it out. This message will go away when the update is complete.
 
 = Introduction =
 
@@ -13,10 +13,10 @@ MacFUSE comes with a framework to assist in developing user-space file systems w
 In order to go through this HOWTO, you'll need to:
   # Be running XCode 3.1.1+ on Leopard+.
   # If you haven't already, then install [http://code.google.com/p/macfuse/downloads MacFUSE] 2.0+.
-  # Check out the ytfs helper files that will be used in our tutorial project (you can do all the work in your _/tmp_ directory if you'd like):
+  # Check out the helper files that will be used in our tutorial project (you can do all the work in your _/tmp_ directory if you'd like):
 {{{
 cd /tmp
-svn checkout http://macfuse.googlecode.com/svn/trunk/filesystems-objc/ytfs-tutorial/ ytfs-tutorial
+svn checkout http://macfuse.googlecode.com/svn/trunk/filesystems-objc/Support/ Suport
 }}}
 
 = The Tutorial Project =
@@ -31,7 +31,7 @@ At this point you should have a working read-only file system! If you `Build and
 
 If you inspect the files in your project then you'll see the `YTFS_FileSystem` and `YTFS_Controller` classes. The `YTFS_Controller` class will control the lifecycle of both our app and the file system, while the `YTFS_FileSystem` class will serve the contents of our file system.
 
-We still need a few more classes in order to complete YTFS. From the ytfs-tutorial directory, add the `NSImage+IconData.{h,m}` and `YTVideo.{h,m}` files to the project. The former will be used for our thumbnails; it provides handy code to turn an NSImage into NSData for the .icns file that represents the image. The latter is a small class that fetches an xml feed of top videos from YouTube and provides a class to access information about the videos.
+We still need a few more classes in order to complete YTFS. From the `Support` directory that you checked out earlier, add the `NSImage+IconData.{h,m}` and `YTVideo.{h,m}` files to the project. The former will be used for our thumbnails; it provides handy code to turn an NSImage into NSData for the .icns file that represents the image. The latter is a small class that fetches an xml feed of top videos from YouTube and provides a class to access information about the videos.
 
 Finally, in order to use `NSImage+IconData` you'll need to add `Accelerate.framework` to the project.
 
