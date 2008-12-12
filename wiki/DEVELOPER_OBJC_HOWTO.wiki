@@ -77,12 +77,6 @@ Finally, it sets up the MacFUSE options and instructs the `GMUserFileSystem` ins
 
 === Include YTVideo.h Header File ===
 
-You might prefer to `@class YTVideo` and import the header file from `YTFS_Filesystem.m`, but we'll import it from here for now. Add:
-
-{{{
-#import "YTVideo.h"
-}}}
-
 Add a member variable to hold our video dictionary:
 
 {{{
@@ -100,6 +94,15 @@ We'll also need an iniitalizer:
 == Part 3: YTFS_Filesystem.m ==
 
 Now we'll be fleshing out the code that serves the file system contents. Open YTFS_Filesystem.m and take a look around. You should see that the complete set of delegate methods that you can implement to serve read-only file system data are already stubbed out for you. 
+
+=== Add Headers ===
+
+Add our utility classes:
+
+{{{
+#import "YTVideo.h"
+#import "NSImage+IconData.h"
+}}}
 
 === Remove Unused Delegate Selectors ===
 
