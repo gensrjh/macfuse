@@ -1,27 +1,37 @@
 #summary Writing a File System in Objective-C Using MacFUSE.framework
 
+= NOTE =
+
+This page is currently being updated to reflect the MacFUSE 2.0 release. This message will go away when that is complete.
+
 = Introduction =
 
-Starting with version 1.3, MacFUSE comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
+MacFUSE comes with a framework to assist in developing user-space file systems with Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`.  Given the changes in MacFUSE and the Objective-C API, the presentation is slightly out of date compared with this HOWTO. However, it is still probably worth watching if you decide to write an Objective-C MacFUSE file system. The video for that presentation, which includes a walkthrough of this HOWTO, can be found [http://theocacao.com/document.page/543 here].
 
 = Requirements =
 
 In order to go through this HOWTO, you'll need to:
-  # Be running XCode 2.5+ on Tiger or Leopard.
-  # If you haven't already, then install [http://code.google.com/p/macfuse/downloads MacFUSE].
-  # Check out the ytfs project that will serve as our starting point as follows (you can do all the work in your _/tmp_ directory if you'd like):
+  # Be running XCode 3.1.1+ on Leopard.
+  # If you haven't already, then install [http://code.google.com/p/macfuse/downloads MacFUSE] 2.0+.
+  # Check out the ytfs helper files that will be used in our tutorial project (you can do all the work in your _/tmp_ directory if you'd like):
 {{{
 cd /tmp
-svn checkout http://macfuse.googlecode.com/svn/tags/macfuse-1.5/filesystems-objc/ytfs-tutorial/ ytfs
+svn checkout http://macfuse.googlecode.com/svn/trunk/filesystems-objc/ytfs-tutorial/ ytfs-tutorial
 }}}
 
 = The Tutorial Project =
 
-We'll create a simple file system that downloads a feed of top-rated [http://www.youtube.com/ YouTube] videos and presents them in the root directory as a clickable webloc to the video. Please open the `ytfs.xcodeproj` and start looking around.
+We'll create a simple read-only file system that downloads a feed of top-rated [http://www.youtube.com/ YouTube] videos and presents them in the root directory as a clickable webloc to the video. A completed version of this tutorial can be found [http://macfuse.googlecode.com/svn/trunk/filesystems-objc/YTFS/ here], but it is highly recommended that you follow along with this tutorial to get an understanding of how things work. It should be fun and painless!
 
-At this point you should notice that the ytfs project has already been setup to build and run as an application and that there are some methods that have already been completed. This is simply to make the tutorial a bit simpler; we won't miss out on the fun part. The project is a standard Cocoa Application. We've also already opened `mainmenu.nib`, instantiated a YTController object, and made that the delegate for File's Owner.
+= Project Setup =
 
-If you inspect the files then you'll see the YTFS class and the YTController class. The YTController class will control the lifecycle of both our app and the file system. If you look at `YTController.m`, you'll see the `- (NSDictionary *)fetchVideos` method.  This simply fetches the xml feed for eleven of the top rated videos. It then populates a dictionary with the keys being the name of the video with .webloc appended and the contents being the xml for that video.  The YTFS class will act as a delegate that serves up the file system contents. In there you will find some convenience methods for getting at the xml data for a video given a path string.
+Start Xcode and choose `File -> New Project...`. From here select `MacFUSE` under "User Templates" and choose the `Objective-C File System (Read-Only)` project template to create your project. We'll refer to this project as YTFS from now on.
+
+At this point you should have a working read-only file system! If you `Build and Go` from Xcode then your YTFS file system should mount and a Finder window will appear showing an empty root directory. If you quit the YTFS application then the file system will unmount; conversely if you unmount the file system the application will terminate.
+
+If you inspect the files in your project then you'll see the `YTFS_FileSystem` and `YTFS_Controller` classes. The `YTFS_Controller` class will control the lifecycle of both our app and the file system, while the `YTFS_FileSystem` class will serve the contents of our file system.
+
+We still need a few more classes in order to complete YTFS. From the ytfs-tutorial directory, add the `NSImage+IconData.{h,m}` and `YTVideo.{h,m}` files to the project. The former will be used for our thumbnails; it provides handy code to turn an NSImage into NSData for the .icns file that represents the image. The latter is a small class that fetches an xml feed of top videos from YouTube and provides a class to access information about the videos.
 
 = Time To Code = 
 
