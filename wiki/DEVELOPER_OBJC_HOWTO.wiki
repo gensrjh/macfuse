@@ -169,6 +169,20 @@ Since the Finder will ask about a lot of files that probably don't exist, every 
 
 The framework will translate a `nil` return value into `ENOENT`. Another option would be to explicitly set the error out parameter to an `NSError` in the `NSPOSIXErrorDomain`. The template provides a category on NSError to make this easier.
 
+=== File Contents ===
+
+Just to show you how to do it, let's return the xml data for the video as the file contents. A .webloc file can actually be 0 bytes, since the url is stored in the resource fork. If you prefer you can return an empty NSData as the contents or remove the `contentsAtPath:` delegate method altogether. However, let's implement it so that you can drag the file to TextEdit.app and see the xml data that we've been using:
+
+{{{
+- (NSData *)contentsAtPath:(NSString *)path {
+  YTVideo* video = [self videoAtPath:path];
+  if (video) {
+    return [video xmlData];
+  }
+  return nil;
+}
+}}}
+
 === Webloc URLs ===
 
 What good are weblocs if you can't click on them? Change `resourceAttributesAtPath:error:` to be the following:
@@ -232,20 +246,6 @@ If we implement this method then `MacFUSE.framework` will populate `FinderInfo` 
 You'll notice that we download the thumbnail every time this routine is called. In practice this is not a very good idea and caching the .icns data would be preferred. For this tutorial the system url cache should be sufficient in preventing us from actually downloading from the server repeatedly.
 
 We take advantage of a category on NSImage (see NSImage+icnsData.{h,m} in the project) to create .icns data for us from an NSImage on the fly. Note: If you want to use this NSImage category in your own stuff then you should probably use the latest version in [http://macfuse.googlecode.com/svn/trunk/filesystems-objc/Support/ filesystems-objc/Support]. There are other useful classes there as well.
-
-=== File Contents For Fun ===
-
-Just to show you how to do it, let's return the xml data for the video as the file contents. A .webloc file can actually be 0 bytes, since the url is stored in the resource fork, and up until now that is what we've done. If we implement `contentsAtPath:` then you can drag the file to TextEdit.app and see the xml data we've been using:
-
-{{{
-- (NSData *)contentsAtPath:(NSString *)path {
-  YTVideo* video = [self videoAtPath:path];
-  if (video) {
-    return [video xmlData];
-  }
-  return nil;
-}
-}}}
 
 == Conclusion ==
 
