@@ -91,7 +91,7 @@ We'll also need an iniitalizer:
 
 == Part 3: YTFS_Filesystem.m ==
 
-Now we'll be fleshing out the code that serves the file system contents. Open _YTFS_Filesystem.m_ and take a look around. You should see that the complete set of delegate methods that you can implement to serve read-only file system data are already stubbed out for you. 
+Now we'll be fleshing out the code that serves the file system contents. Open _YTFS_Filesystem.m_ and take a look around. You should see that the complete set of [http://macfuse.googlecode.com/svn/trunk/core/sdk-objc/Documentation/GMUserFileSystem/Categories/NSObject_GMUserFileSystemOperations_/index.html] delegate methods] that you can implement to serve read-only file system data are already stubbed out for you. 
 
 === Add Headers For Utility Classes ===
 
@@ -221,7 +221,7 @@ Now that we can view our videos, we'll need some help in figuring out which ones
 }
 }}}
 
-If we implement this method then _MacFUSE.framework_ will populate _!FinderInfo_ data with the attributes we give it. We still need to add the custom icon to the file's resource fork, so update `resourceAttributesAtPath:error:` to look like:
+If we implement this method then _MacFUSE.framework_ will populate _Finder Info_ data with the attributes we give it. We still need to add the custom icon to the file's resource fork, so update `resourceAttributesAtPath:error:` to look like:
 
 {{{
 - (NSDictionary *)resourceAttributesAtPath:(NSString *)path
