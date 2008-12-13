@@ -6,7 +6,7 @@ This page is currently being updated to reflect the MacFUSE 2.0 release. The upd
 
 = Introduction =
 
-MacFUSE comes with a framework to assist in developing user-space file systems written in Objective-C.  The framework resides in _/Library/Frameworks/MacFUSE.framework_.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses _MacFUSE.framework_. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using _MacFUSE.framework_. The video for that presentation can be found [http://theocacao.com/document.page/543 here], but keep in mind that this HOWTO has been revised since the presentation.
+MacFUSE comes with a framework to assist in developing user-space file systems written in Objective-C.  The framework resides in _/Library/Frameworks/MacFUSE.framework_.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses _MacFUSE.framework_. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on writing file system using Objective-C. The video for that presentation can be found [http://theocacao.com/document.page/543 here], but keep in mind that this HOWTO has been revised since the presentation.
 
 = Requirements =
 
