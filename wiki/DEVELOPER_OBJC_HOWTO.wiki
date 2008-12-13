@@ -6,7 +6,7 @@ This page is currently being updated to reflect the MacFUSE 2.0 release. The upd
 
 = Introduction =
 
-MacFUSE comes with a framework to assist in developing user-space file systems written in Objective-C.  The framework resides in `/Library/Frameworks/MacFUSE.framework`.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses `MacFUSE.framework`. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using `MacFUSE.framework`. The video for that presentation can be found [http://theocacao.com/document.page/543 here], but keep in mind that this HOWTO has been revised since the presentation.
+MacFUSE comes with a framework to assist in developing user-space file systems written in Objective-C.  The framework resides in _/Library/Frameworks/MacFUSE.framework_.  This HOWTO walks through an example of creating a simple Cocoa-app file system in Objective-C that uses _MacFUSE.framework_. The author of this HOWTO gave a presentation at !CocoaHeads that may be another useful source of information on using _MacFUSE.framework_. The video for that presentation can be found [http://theocacao.com/document.page/543 here], but keep in mind that this HOWTO has been revised since the presentation.
 
 = Requirements =
 
@@ -25,15 +25,15 @@ We'll create a simple read-only file system that downloads a feed of top-rated [
 
 = Project Setup =
 
-Start Xcode and choose `File -> New Project...`. From here select `MacFUSE` under `User Templates` and choose the `Objective-C File System (Read-Only)` project template to create your project. We'll refer to this project as YTFS from now on.
+Start Xcode and choose _File -> New Project..._. From here select _MacFUSE_ under _User Templates_ and choose the _Objective-C File System (Read-Only)_ project template to create your project. We'll refer to this project as YTFS from now on.
 
-At this point you should have a working read-only file system! If you `Build and Go` from Xcode then your YTFS file system should mount and a Finder window will appear showing an empty root directory. If you quit the YTFS application then the file system will unmount; conversely if you unmount the file system the application will terminate.
+At this point you should have a working read-only file system! If you _Build and Go_ from Xcode then your YTFS file system should mount and a Finder window will appear showing an empty root directory. If you quit the YTFS application then the file system will unmount; conversely if you unmount the file system the application will terminate.
 
-If you inspect the files in your project then you'll see the `YTFS_FileSystem` and `YTFS_Controller` classes. The `YTFS_Controller` class will control the lifecycle of both our app and the file system, while the `YTFS_FileSystem` class will serve the contents of our file system.
+If you inspect the files in your project then you'll see the `YTFS_FileSystem` and `YTFS_Controller` classes. The `YTFS_Controller` class will control the life cycle of both our app and the file system, while the `YTFS_FileSystem` class will serve the contents of our file system.
 
-We still need a few more classes in order to complete YTFS. From the `Support` directory that you checked out earlier, add the `NSImage+IconData.{h,m}` and `YTVideo.{h,m}` files to the project. The former will be used for our thumbnails; it provides handy code to turn an NSImage into NSData for the .icns file that represents the image. The latter is a small class that fetches an xml feed of top videos from YouTube and provides a class to access information about the videos.
+We still need a few more classes in order to complete YTFS. From the _Support_ directory that you checked out earlier, add the _NSImage+IconData.{h,m}_ and _YTVideo.{h,m}_ files to the project. The former will be used for our thumbnails; it provides handy code to turn an `NSImage` into `NSData` for the _.icns_ file that represents the image. The latter is a small class that fetches an xml feed of top videos from !YouTube and provides a class to access information about the videos.
 
-Finally, in order to use `NSImage+IconData` you'll need to add `Accelerate.framework` to the project.
+Finally, in order to use `NSImage+IconData` you'll need to add _Accelerate.framework_ to the project.
 
 = Time To Code = 
 
@@ -41,7 +41,7 @@ I recommend that as you follow along in this you take the time to compile and ru
 
 == Part 1: YTFS_Controller.m ==
 
-For the first part, we'll make changes to the `YTFS_Controller.m` file that handles the lifecycle of our file system.
+For the first part, we'll make changes to the _YTFS_Controller.m_ file that handles the life cycle of our file system.
 
 === Include YTVideo.h Header File ===
 
@@ -67,7 +67,7 @@ Note: The code won't compile cleanly any more until we do a bit of work in `YTFS
 
 === GMUserFileSystem, Mounting, and Notifications ===
 
-If you look at the template-generated controller code in `applicationDidFinishLaunching`, you will see that it starts off by registering for MacFUSE file system notifications. This is how it handles quitting the application on unmount and showing you a Finder window when the file system finishes mounting.
+If you look at the template-generated controller code in `applicationDidFinishLaunching:`, you will see that it starts off by registering for MacFUSE file system notifications. This is how it handles quitting the application on unmount and showing you a Finder window when the file system finishes mounting.
 
 It then allocates a `GMUserFileSystem` instance to handle the file system and gives it a `YTFS_Filesystem` instance as the delegate that serves file system contents. By the way, since our file system is thread-safe, you may optionally change `isThreadSafe:NO` to `isThreadSafe:YES` in the line that initializes `fs_`.
 
@@ -91,7 +91,7 @@ We'll also need an iniitalizer:
 
 == Part 3: YTFS_Filesystem.m ==
 
-Now we'll be fleshing out the code that serves the file system contents. Open YTFS_Filesystem.m and take a look around. You should see that the complete set of delegate methods that you can implement to serve read-only file system data are already stubbed out for you. 
+Now we'll be fleshing out the code that serves the file system contents. Open _YTFS_Filesystem.m_ and take a look around. You should see that the complete set of delegate methods that you can implement to serve read-only file system data are already stubbed out for you. 
 
 === Add Headers For Utility Classes ===
 
@@ -114,7 +114,7 @@ We actually don't need to use all of the delegate methods for this tutorial, so 
 
 === Add Init and Helper Methods ===
 
-We'll add our initialization and cleanup methods as well as a helper method that looks up a video based on a givne path. The should go near the top of the `YTFS_Filesystem` implementation, just above `contentsOfDirectoryAtPath:error:`.
+We'll add our initialization and cleanup methods as well as a helper method that looks up a video based on a given path. The should go near the top of the `YTFS_Filesystem` implementation, just above `contentsOfDirectoryAtPath:error:`.
 
 {{{
 - (id)initWithVideos:(NSDictionary *)videos {
@@ -166,11 +166,11 @@ Since the Finder will ask about a lot of files that probably don't exist, every 
 }
 }}}
 
-The framework will translate a `nil` return value into `ENOENT`. Another option would be to explicitly set the error out parameter to an `NSError` in the `NSPOSIXErrorDomain`. You can only return POSIX errors from your delegate methods. The `NSError` out parameter muThe template provides a category on NSError to make this easier.
+The framework will translate a `nil` return value into `ENOENT`. Another option would be to explicitly set the error out parameter to an `NSError` in the `NSPOSIXErrorDomain`. You can only return POSIX errors from your delegate methods in the `NSError` out parameter. The template provides a category on `NSError` to make this easier.
 
 === File Contents ===
 
-Just to show you how to do it, let's return the xml data for the video as the file contents. A .webloc file can actually be 0 bytes, since the url is stored in the resource fork. If you prefer you can return an empty NSData as the contents or remove the `contentsAtPath:` delegate method altogether. However, let's implement it so that you can drag the file to TextEdit.app and see the xml data that we've been using:
+Just to show you how to do it, let's return the xml data for the video as the file contents. A _.webloc_ file can actually be 0 bytes, since the url is stored in the resource fork. If you prefer you can return an empty NSData as the contents or remove the `contentsAtPath:` delegate method altogether. However, let's implement it so that you can drag the file to _TextEdit.app_ and see the xml data that we've been using:
 
 {{{
 - (NSData *)contentsAtPath:(NSString *)path {
@@ -202,7 +202,7 @@ What good are weblocs if you can't click on them? Change `resourceAttributesAtPa
 }
 }}}
 
-This looks up the video in our list of videos and, if found, returns the url of the video as a resource fork attribute. `MacFUSE.framework` will automatically create a resource fork for us so that clicking on the video via the Finder will open up the URL in the default browser. If you run the app now you should be able to double-click on a video and watch it!
+This looks up the video in our list of videos and, if found, returns the url of the video as a resource fork attribute. _MacFUSE.framework_ will automatically create a resource fork for us so that clicking on the video via the Finder will open up the URL in the default browser. If you run the app now you should be able to double-click on a video and watch it!
 
 === Custom Icons ===
 
@@ -221,7 +221,7 @@ Now that we can view our videos, we'll need some help in figuring out which ones
 }
 }}}
 
-If we implement this method then `MacFUSE.framework` will populate `FinderInfo` with the attributes we give it. We still need to add the custom icon to the file's resource fork, so update `resourceAttributesAtPath:error:` to look like:
+If we implement this method then _MacFUSE.framework_ will populate _FinderInfo_ data with the attributes we give it. We still need to add the custom icon to the file's resource fork, so update `resourceAttributesAtPath:error:` to look like:
 
 {{{
 - (NSDictionary *)resourceAttributesAtPath:(NSString *)path
@@ -245,12 +245,12 @@ If we implement this method then `MacFUSE.framework` will populate `FinderInfo` 
 }
 }}}
 
-You'll notice that we download the thumbnail every time this routine is called. In practice this is not a very good idea and caching the .icns data would be preferred. For this tutorial the system url cache should be sufficient in preventing us from actually downloading from the server repeatedly.
+You'll notice that we download the thumbnail every time this routine is called. In practice this is not a very good idea and caching the _.icns_ data would be preferred. For this tutorial the system url cache should be sufficient in preventing us from actually downloading from the server repeatedly.
 
-We take advantage of a category on NSImage (see NSImage+icnsData.{h,m} in the project) to create .icns data for us from an NSImage on the fly.
+We take advantage of a category on `NSImage` (see _NSImage+icnsData.{h,m}_ in the project) to create _.icns_ data for us from an `NSImage` on the fly.
 
 == Conclusion ==
 
-If you've gone through this HOWTO then you've created a working and marginally useful user-space file system! Don't forget to try dragging a video you like onto the desktop to see what happens.
+If you've gone through this HOWTO then you've created a working and marginally useful user-space file system! Don't forget to try dragging a video that you like onto the desktop to see what happens.
 
-There is a lot more to using MacFUSE.framework, so please read the [http://macfuse.googlecode.com/svn/trunk/core/sdk-objc/Documentation/index.html documentation] and feel free to ask questions on the macfuse@googlegroups.com mailing list.
+There is a lot more to using MacFUSE.framework, so please read the [http://macfuse.googlecode.com/svn/trunk/core/sdk-objc/Documentation/index.html documentation] and feel free to ask questions on the [http://groups.google.com/group/macfuse MacFUSE mailing list].
