@@ -29,7 +29,7 @@ To use the command line `sshfs` program, you can do something like:
 {{{
 # Mounting the SSH file system
 $ mkdir /some/mount/point # or use one that already exists
-$ sshfs user@host:/some/directory /some/mount/point -oreconnect,volname=<volname>
+$ sshfs user@host:/some/directory /some/mount/point -oauto_cache,reconnect,volname=<volname>
 }}}
 
 The `reconnect` option is useful when the network connection goes down and you have a mounted sshfs volume.
