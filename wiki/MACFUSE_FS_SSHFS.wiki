@@ -20,8 +20,6 @@ These binaries, called `sshfs-static-leopard` (etc.), are statically linked agai
 
 *NB: If you are running an older version of sshfs, please be sure to upgrade to the latest version available. The latest source patch for `sshfs` is available in the [http://code.google.com/p/macfuse/source/browse/#svn/trunk/filesystems/sshfs/ filesystems/sshfs/] directory of the MacFUSE source tree. Newer versions might have important and useful updates.
 
-*NB: Please note that the "disk" usage information reported for sshfs is not "real" -- this is how it is implemented in the sshfs program. It's not a MacFUSE issue.*
-
 == Using the Command Line `sshfs` Program ==
 
 To use the command line `sshfs` program, you can do something like:
