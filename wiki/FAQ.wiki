@@ -52,7 +52,7 @@ You can keep the MacFUSE preference pane around should you decide to install Mac
 Note that an official (correct) MacFUSE installation will have a preference pane if you have MacFUSE 2.0 or later installed. If you have an older version of MacFUSE, you can uninstall as follows.
 
 ----
-===Deprecated Uninstallation Information===
+*Deprecated Installation Information*
 
 Run the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
 
@@ -69,6 +69,7 @@ sudo /Library/Filesystems/fusefs.fs/Support/uninstall-macfuse-core.sh
 }}}
 
 If the file system bundle in your MacFUSE installation doesn't have a `Support` subdirectory, that means you have an incredibly ancient version of MacFUSE. Please look for the uninstall script within the `fusefs.fs/` directory itself.
+----
 
 *Q 2.4. I'm using some software that needs an old/deprecated version of MacFUSE. I don't see that version available from your web site. What to do?
 
