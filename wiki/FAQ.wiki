@@ -7,11 +7,27 @@ If the question you have isn't answered here, try posting it to the [http://grou
 
 *Q 1.1. What is MacFUSE? Is it the same as FUSE on Linux?*
 
-MacFUSE is software that allows you to write arbitrary file systems as user-space programs. You can think of it as a library for easily developing file systems. Another crude way to look at this would be to think of MacFUSE as something that makes Mac OS X work like a _microkernel_ for the purpose of writing/running file systems. MacFUSE has two major components: an in-kernel loadable file system and a user-space library (`libfuse`). The in-kernel file system is specific to Mac OS X and is not based on Linux FUSE. (Some of its code is based on the FreeBSD version of FUSE.) The user-space library is a port of the Linux FUSE library, but has been heavily modified and extended to support Mac OS X specific features and nuances. From a user-space file system developer's standpoint, the API provided by the MacFUSE version of `libfuse` is almost identical to that on Linux.
+MacFUSE is software that allows you to write arbitrary file systems as user-space programs. You can think of it as a library for easily developing Mac OS X file systems. Another crude way to look at this would be to think of MacFUSE as something that makes Mac OS X work like a _microkernel_ for the purpose of writing/running file systems. MacFUSE has two major components: an in-kernel loadable file system and a user-space library (`libfuse`). The in-kernel file system is specific to Mac OS X and is *not* based on Linux FUSE. (Some of its code is based on the FreeBSD implementation of FUSE.) The user-space library (`libfuse`), which provides the developer-visible FUSE API, has numerous Mac OS X specific extensions and features.
 
-*Q 1.2. What is "MacFUSE Core"?*
+*Q 1.2. What is "MacFUSE-x.y.z.dmg"?*
 
-A: MacFUSE Core is the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. MacFUSE Core consists of the MacFUSE file system bundle (`fusefs.fs`) and the user-space libraries/headers. Besides bundle metadata, the file system bundle contains the MacFUSE kernel extension (`fusefs.kext`), the MacFUSE mount utility (`mount_fusefs`), and the extension loading utility (`load_fusefs`). Note that with the advent of the built-in install/update engine in MacFUSE (See [AUTOINSTALL]), the downloadable MacFUSE disk image doesn't have "Core" in its name.
+A: MacFUSE-x.y.z.dmg (where x, y, and z constitute the MacFUSE version number) is the disk image containing the official distribution of fundamental MacFUSE software you need to use other software built atop MacFUSE. The core MacFUSE software consists of the following components *when installed* on your system:
+
+  * MacFUSE file system bundle (`/Library/Filesystems/fusefs.fs`)
+  * MacFUSE Objective-C framework (`/Library/Frameworks/MacFUSE.framework`)
+  * MacFUSE C-based libraries (`/usr/local/lib/*fuse*.dylib`) and headers (`/usr/local/include/fuse*`)
+  * MacFUSE preference pane (`/Library/PreferencePanes/MacFUSE.prefPane`)
+  * MacFUSE project templates for Xcode (`/Library/Application Support/Developer/Shared/Xcode/Project Templates/MacFUSE`)
+
+The `fusefs.fs` bundle in turn contains most of the core MacFUSE software. Besides bundle metadata, its components include:
+
+  * MacFUSE kernel extension (`fusefs.kext`).
+  * MacFUSE mount program (`mount_fusefs`)
+  * MacFUSE kernel extension loader (`load_fusefs`)
+  * MacFUSE auto-update mechanism (`autoinstall-macfuse-core`)
+  * MacFUSE uninstall script (`uninstall-macfuse-core`)
+
+You should not need to call the MacFUSE uninstall script manually any more should you need to uninstall. The MacFUSE preference pane uses this script.
 
 = 2. Install/Uninstall Questions =
 
