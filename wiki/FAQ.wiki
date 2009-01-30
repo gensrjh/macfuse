@@ -45,7 +45,13 @@ A: The tools to keep MacFUSE up-to-date (query the installed version, query for 
 
 *Q 2.3. How can I uninstall MacFUSE?*
 
-A: Run the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
+A: Launch the Mac OS X System Preferences application and go to the MacFUSE preference pane. Click on the "Remove MacFUSE" button. This will uninstall all MacFUSE components except the preference pane itself.
+
+You can keep the MacFUSE preference pane around should you decide to install MacFUSE again in the future. If you do wish to remove it, you do it just like how you would remove any other non-Apple preference pane: In System Preferences, control-click (right-click) on the MacFUSE icon and you will see "Remove ..." as an action.
+
+Note that an official (correct) MacFUSE installation will have a preference pane if you have MacFUSE 2.0 or later installed. If you have an older version of MacFUSE, you can uninstall as follows.
+
+Run the `uninstall-macfuse-core.sh` script that resides in the `Support` subdirectory of the MacFUSE file system bundle. The bundle itself resides in `/System/Library/Filesystems/` on Mac OS X 10.4.x and in `/Library/Filesystems/` on Mac OS X 10.5.x.
 
 For example, to uninstall MacFUSE on Mac OS X 10.4.x, you would run the following command in the Terminal:
 
