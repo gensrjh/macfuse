@@ -19,9 +19,11 @@ A: MacFUSE-x.y.z.dmg (where x, y, and z constitute the MacFUSE version number) i
   * MacFUSE preference pane (`/Library/PreferencePanes/MacFUSE.prefPane`)
   * MacFUSE project templates for Xcode (`/Library/Application Support/Developer/Shared/Xcode/Project Templates/MacFUSE`)
 
+*NB*: On Mac OS X 10.4 (Tiger), the file system bundle is installed under `/System/Library/Filesystems`/.
+
 The `fusefs.fs` bundle in turn contains most of the core MacFUSE software. Besides bundle metadata, its components include:
 
-  * MacFUSE kernel extension (`fusefs.kext`).
+  * MacFUSE kernel extension (`fusefs.kext`)
   * MacFUSE mount program (`mount_fusefs`)
   * MacFUSE kernel extension loader (`load_fusefs`)
   * MacFUSE auto-update mechanism (`autoinstall-macfuse-core`)
@@ -39,7 +41,7 @@ http://code.google.com/p/macfuse/downloads/list
 
 *Q 2.2. How can I keep MacFUSE up-to-date?*
 
-A: The tools to keep MacFUSE up-to-date (query the installed version, query for available updates, download and install updates, and so on) are built into MacFUSE. See the [AUTOINSTALL] wiki page for details.
+A: The tools to keep MacFUSE up-to-date (query the installed version, query for available updates, download and install updates, and so on) are built into MacFUSE. Simply launch the Mac OS X System Preferences application and go to the MacFUSE preference pane. It should tell you if there's and update and if so, will also let you download and install it.
 
 *Q 2.3. How can I uninstall MacFUSE?*
 
