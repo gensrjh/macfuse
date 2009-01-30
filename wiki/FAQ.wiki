@@ -29,7 +29,7 @@ The `fusefs.fs` bundle in turn contains most of the core MacFUSE software. Besid
   * MacFUSE auto-update mechanism (`autoinstall-macfuse-core`)
   * MacFUSE uninstall script (`uninstall-macfuse-core`)
 
-You should not need to call the MacFUSE uninstall script manually any more should you need to uninstall. The MacFUSE preference pane uses this script.
+You should not need to call the MacFUSE uninstall script manually any more should you need to uninstall. The MacFUSE preference pane uses this script. Also see Q 2.3.
 
 = 2. Install/Uninstall Questions =
 
@@ -48,6 +48,8 @@ A: The tools to keep MacFUSE up-to-date (query the installed version, query for 
 A: Launch the Mac OS X System Preferences application and go to the MacFUSE preference pane. Click on the "Remove MacFUSE" button. This will uninstall all MacFUSE components except the preference pane itself.
 
 You can keep the MacFUSE preference pane around should you decide to install MacFUSE again in the future. If you do wish to remove it, you do it just like how you would remove any other non-Apple preference pane: In System Preferences, control-click (right-click) on the MacFUSE icon and you will see "Remove ..." as an action.
+
+*Only* if you had the "Show Beta Versions" button checked in the MacFUSE prefpane, you'll have a property list (plist) file remaining at this point: `/Library/Preferences/com.google.macfuse.plist`. To remove it, you should uncheck the button before you remove the prefpane as described above.
 
 Note that an official (correct) MacFUSE installation will have a preference pane if you have MacFUSE 2.0 or later installed. If you have an older version of MacFUSE, you can uninstall as follows.
 
