@@ -141,7 +141,7 @@ Things should compile cleanly again at this point.
 
 === Directory Contents ===
 
-Add the following to show our root directory contents:
+Edit `contentsOfDirectoryAtPath:error` to show our root directory contents:
 
 {{{
 - (NSArray *)contentsOfDirectoryAtPath:(NSString *)path 
@@ -154,7 +154,7 @@ If you run it now you should see a bunch of .webloc files. If you click on them 
 
 === File Attributes ===
 
-Since the Finder will ask about a lot of files that probably don't exist, every file system should implement `attributesOfItemAtPath:userData:error:`:
+Since the Finder will ask about a lot of files that probably don't exist, every file system should implement `attributesOfItemAtPath:userData:error:`. Edit it to be as follows:
 
 {{{
 - (NSDictionary *)attributesOfItemAtPath:(NSString *)path 
