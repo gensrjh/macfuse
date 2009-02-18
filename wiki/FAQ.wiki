@@ -45,12 +45,14 @@ Even the MacFUSE updater runs only when explicitly asked by the user.
 
 With this context, no matter how convinced you are that "it happened right after/only when you installed MacFUSE", keep in mind that MacFUSE cannot do the following:
 
-  * Do anything to your computer's firmware
   * Affect the display
   * Affect wireless networking
   * Slow down the computer
   * Prevent the computer from booting
   * Affect Finder settings, or any other program's settings
+  * Do anything to your computer's firmware
+  * Do anything to your computer's optical drive
+  * Cause HFS+ corruption or any other non-MacFUSE-based file system's corruption
   * Cause car trouble
 
 = 2. Install/Uninstall Questions =
