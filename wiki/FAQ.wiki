@@ -35,7 +35,7 @@ You should not need to call the MacFUSE uninstall script manually any more shoul
 
 A: Circumstantial evidence such as "right after I installed MacFUSE" is unfortunately not enough to go on. To realize why MacFUSE *cannot* cause the kind of problems people sometimes ascribe to it, you need to understand *what* MacFUSE is, and just as importantly, what it's *not*.
 
-MacFUSE is *not* an application. It's not a background process. It's not something that launches automatically at boot time or any other time. It does not configure, reconfigure, or modify the normal working of OS X by itself. It does not alter any OS X settings.
+MacFUSE is not an application. It's not a background process. It's not something that launches automatically at boot time or any other time. It does not configure, reconfigure, or modify the normal working of OS X by itself. It does not alter any OS X settings.
 
 MacFUSE is a bunch of libraries and headers along with a kernel extension. Developers use MacFUSE APIs to write applications--just like how developers use Apple's Cocoa APIs to write applications. Just as Cocoa is not a user-tangible entity (as an end user, you don't "run" or "launch" Cocoa, do you?), MacFUSE isn't either.
 
