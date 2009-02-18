@@ -55,6 +55,8 @@ With this context, no matter how convinced you are that "it happened right after
   * Cause HFS+ corruption or any other non-MacFUSE-based file system's corruption
   * Cause car trouble
 
+*NB*: "MacFUSE" refers to the official version that you download from this web site. Everything I've said here should generally apply to other repackagings/redistributions of MacFUSE, but they aren't officially supported.
+
 = 2. Install/Uninstall Questions =
 
 *Q 2.1. What is the preferred way to install MacFUSE?*
