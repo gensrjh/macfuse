@@ -57,6 +57,8 @@ With this context, no matter how convinced you are that "it happened right after
 
 *NB*: "MacFUSE" refers to the official version that you download from this web site. Everything I've said here should generally apply to other repackagings/redistributions of MacFUSE, but they aren't officially supported.
 
+If you remain convinced that your woes are MacFUSE's fault, please provide more information than circumstantial evidence.
+
 = 2. Install/Uninstall Questions =
 
 *Q 2.1. What is the preferred way to install MacFUSE?*
