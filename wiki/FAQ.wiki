@@ -35,15 +35,15 @@ You should not need to call the MacFUSE uninstall script manually any more shoul
 
 A: Circumstantial evidence such as "right after I installed MacFUSE" is unfortunately not enough to go on. To realize why MacFUSE *cannot* cause the kind of problems people sometimes ascribe to it, you need to understand *what* MacFUSE is, and just as importantly, what it's *not*.
 
-MacFUSE is not an application. It's not a background process. It's not something that launches automatically at boot time or any other time. It does not configure, reconfigure, or modify the normal working of OS X by itself. It does not alter any OS X settings.
+MacFUSE is not an application. It's not a background process. It's not something that launches automatically at boot time or any other time. It does not configure, reconfigure, or modify the normal working of OS X by itself. It does not alter settings of any OS X components besides placing its preference pane for System Preferences to use.
 
-MacFUSE is a bunch of libraries and headers along with a kernel extension. Developers use MacFUSE APIs to write applications--just like how developers use Apple's Cocoa APIs to write applications. Just as Cocoa is not a user-tangible entity (as an end user, you don't "run" or "launch" Cocoa, do you?), MacFUSE isn't either.
+MacFUSE is a bunch of libraries and headers along with a kernel extension. Developers use MacFUSE APIs to write applications--just like how developers use Apple's Cocoa APIs to write applications. Just as Cocoa is not a user-tangible entity, MacFUSE isn't either.  (As an end user, you don't "run" or "launch" Cocoa, do you?)
 
-The MacFUSE kernel extension is *not* loaded automatically at boot time or any other time. It's loaded when a MacFUSE-based application runs.
+The MacFUSE kernel extension is *not* loaded automatically at boot time or any other time. It's dynamically loaded when a MacFUSE-based application runs. Even when loaded, the kernel extension just occupies some memory--its code doesn't kick in until you actually *mount* a MacFUSE-based file system.
 
-Even the MacFUSE updater runs only when explicitly asked by the user.
+The MacFUSE updater runs only when explicitly asked by the user, say, by going to the MacFUSE preference pane.
 
-With this context, no matter how convinced you are that "it happened right after/only when you installed MacFUSE", keep in mind that MacFUSE cannot do the following:
+With this context, no matter how convinced you are that "it happened right after/only when you installed MacFUSE", keep in mind that MacFUSE cannot do things such as the following:
 
   * Affect the display
   * Affect wireless networking
