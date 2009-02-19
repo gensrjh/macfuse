@@ -48,6 +48,7 @@ With this context, no matter how convinced you are that "it happened right after
   * Affect the display
   * Affect wireless networking
   * Slow down the computer
+  * Affect the computer's sleep or hibernate cycles
   * Prevent the computer from booting
   * Affect Finder settings, or any other program's settings
   * Do anything to your computer's firmware
