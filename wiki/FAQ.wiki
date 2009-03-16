@@ -82,6 +82,10 @@ You can keep the MacFUSE preference pane around should you decide to install Mac
 
 Note that an official (correct) MacFUSE installation will have a preference pane if you have MacFUSE 2.0 or later installed. If you have an older version of MacFUSE, you can uninstall as follows.
 
+*Q 2.4. Am I required to reboot my system after installing MacFUSE? Why?
+
+A: No, you are not *required* to do so. See [http://www.osxbook.com/blog/2009/03/02/why-macfuse-installation-recommends-a-reboot/ this] for more details.
+
 ----
 *Deprecated Installation Information*
 
