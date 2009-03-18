@@ -71,7 +71,7 @@ MacFUSE supports Mac OS X access control lists (ACLs). The `extended_security` o
 
 The `-f` option causes a user-space file system to run in foregrounded mode.
 
-  * `fsid=N`, where `N` is a 24-bit integer (0 and 0xFFFFFF *not* valid)
+  * `fsid=N`, where `N` is a 24-bit integer (`0` and `0xFFFFFF` *not* valid)
 
 Normally, MacFUSE will use a newly generated file system ID for every mount. This is fine except in a case where you /do/ want the volume, when mounted again, to have a persistent file system ID (think aliases, for example). Since MacFUSE volumes do not have "real" devices backing them, this isn't possible without extra help. The `fsid` option is that extra help: you use it to specify a 24-bit number that will be used to generate the file system ID.
 
