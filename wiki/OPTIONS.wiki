@@ -22,7 +22,7 @@ With `allow_other`, the volume will be accessible normally to all users, but usu
 {{{
 $ sudo sysctl macfuse.tunables.admin_group # get
 macfuse.tunables.admin_group: 80
-$ sudo sysctl -w macfuse.tunables.admin_group=20 # set
+$ sudo sysctl -w macfuse.tunables.admin_group=81 # set
 macfuse.tunables.admin_group: 80 -> 81
 }}}
 
